@@ -116,6 +116,236 @@
 
         });
 
+        jq(document).ready(function () {
+            $allRows_other = jq(this).find('.multi-drug-other');
+            $allRows_other.hide();
+            jq('#1-removeEntry-other').remove();
+            jq('#10-addEntry-other').remove();
+            jq('#1-toggleContainer-other').show();
+
+            jq('#11-removeEntry-other').remove();
+            jq('#20-addEntry-other').remove();
+            jq('#11-toggleContainer-other').show();
+        });
+
+        jq(document).ready(function () {
+            jq('.addEntry-other').on("click", function () {
+                var correctedAddButtonId = parseFloat(this.id) + 1;
+                var contentAddId = "#" + correctedAddButtonId + "-toggleContainer-other";
+                jq(contentAddId).toggle(true);
+                jq('#' + this.id).toggle(false);
+                jq('#' + parseFloat(this.id) + '-removeEntry-other').toggle(true);
+                return false;
+            });
+        });
+
+        jq(document).ready(function () {
+            jq('.removeEntry-other').on("click", function () {
+                var correctedRemoveButtonId = parseFloat(this.id) - 1;
+                var contentAddId = "#" + parseFloat(this.id) + "-toggleContainer-other";
+                jq(contentAddId).toggle(false);
+                jq(':input:not(:button)', contentAddId).val([]);
+                jq('#' + correctedRemoveButtonId + '-addEntry-other').toggle(true);
+                jq('#' + correctedRemoveButtonId + '-removeEntry-other').toggle(true);
+
+                return false;
+            });
+
+        });
+
+        jq(document).ready(function () {
+            $allRows = jq(this).find('.multi-arv-drug');
+            $allRows.hide();
+            jq('#1-removeEntry1-other').remove();
+            jq('#10-addEntry1-other').remove();
+            jq('#1-toggleContainer1-other').show();
+
+            jq('#11-removeEntry').remove();
+            jq('#20-addEntry1-other').remove();
+            jq('#11-toggleContainer1-other').show();
+        });
+
+        jq(document).ready(function () {
+            jq('.addEntry-other1').on("click", function () {
+                var correctedAddButtonId = parseFloat(this.id) + 1;
+                var contentAddId = "#" + correctedAddButtonId + "-toggleContainer1-other";
+                jq(contentAddId).toggle(true);
+                jq('#' + this.id).toggle(false);
+                jq('#' + parseFloat(this.id) + '-removeEntry1-other').toggle(true);
+                return false;
+            });
+        });
+
+        jq(document).ready(function () {
+            jq('.removeEntry-other1').on("click", function () {
+                var correctedRemoveButtonId = parseFloat(this.id) - 1;
+                var contentAddId = "#" + parseFloat(this.id) + "-toggleContainer1-other";
+                jq(contentAddId).toggle(false);
+                jq(':input:not(:button)', contentAddId).val([]);
+                jq('#' + correctedRemoveButtonId + '-addEntry1-other').toggle(true);
+                jq('#' + correctedRemoveButtonId + '-removeEntry1-other').toggle(true);
+                return false;
+            });
+
+        });
+
+
+
+
+        jq(document).ready(function () {
+            $allRows = jq(this).find('.multi-drug');
+            $allRows.hide();
+            jq('#1-removeEntry').remove();
+            jq('#10-addEntry').remove();
+            jq('#1-toggleContainer').show();
+
+            jq('#11-removeEntry').remove();
+            jq('#20-addEntry').remove();
+            jq('#11-toggleContainer').show();
+        });
+
+
+        jq(document).ready(function () {
+            jq('.addEntry').on("click", function () {
+                var correctedAddButtonId = parseFloat(this.id) + 1;
+                var contentAddId = "#" + correctedAddButtonId + "-toggleContainer";
+                jq(contentAddId).toggle(true);
+                jq('#' + this.id).toggle(false);
+                jq('#' + parseFloat(this.id) + '-removeEntry').toggle(true);
+                return false;
+            });
+        });
+
+        jq(document).ready(function () {
+            jq('.removeEntry').on("click", function () {
+                var correctedRemoveButtonId = parseFloat(this.id) - 1;
+                var contentAddId = "#" + parseFloat(this.id) + "-toggleContainer";
+                jq(contentAddId).toggle(false);
+                jq(':input:not(:button)', contentAddId).val([]);
+                jq('#' + correctedRemoveButtonId + '-addEntry').toggle(true);
+                jq('#' + correctedRemoveButtonId + '-removeEntry').toggle(true);
+
+                return false;
+            });
+
+        });
+
+        jq(document).ready(function () {
+            $allRows = jq(this).find('.multi-test');
+            $allRows.hide();
+            jq('#1-removeEntry3').remove();
+            jq('#10-addEntry3').remove();
+            jq('#1-toggleContainer3').show();
+
+            jq('#11-removeEntry').remove();
+            jq('#20-addEntry3').remove();
+            jq('#11-toggleContainer3').show();
+        });
+
+        jq(document).ready(function () {
+            jq('.addEntry3').on("click", function () {
+                var correctedAddButtonId = parseFloat(this.id) + 1;
+                var contentAddId = "#" + correctedAddButtonId + "-toggleContainer3";
+                jq(contentAddId).toggle(true);
+                jq('#' + this.id).toggle(false);
+                jq('#' + parseFloat(this.id) + '-removeEntry3').toggle(true);
+                return false;
+            });
+        });
+
+        jq(document).ready(function () {
+            jq('.removeEntry3').on("click", function () {
+                var correctedRemoveButtonId = parseFloat(this.id) - 1;
+                var contentAddId = "#" + parseFloat(this.id) + "-toggleContainer3";
+                jq(contentAddId).toggle(false);
+                jq(':input:not(:button)', contentAddId).val([]);
+                jq('#' + correctedRemoveButtonId + '-addEntry3').toggle(true);
+                jq('#' + correctedRemoveButtonId + '-removeEntry3').toggle(true);
+                return false;
+            });
+        });
+
+
+        jq(document).ready(function () {
+            $allRows = jq(this).find('.multi-arv-drug');
+            $allRows.hide();
+            jq('#1-removeEntry1').remove();
+            jq('#10-addEntry1').remove();
+            jq('#1-toggleContainer1').show();
+
+            jq('#11-removeEntry').remove();
+            jq('#20-addEntry1').remove();
+            jq('#11-toggleContainer1').show();
+
+            jq('.addEntry1').on("click", function () {
+                var correctedAddButtonId = parseFloat(this.id) + 1;
+                var contentAddId = "#" + correctedAddButtonId + "-toggleContainer1";
+                jq(contentAddId).toggle(true);
+                jq('#' + this.id).toggle(false);
+                jq('#' + parseFloat(this.id) + '-removeEntry1').toggle(true);
+                return false;
+            });
+
+            jq('.removeEntry1').on("click", function () {
+                var correctedRemoveButtonId = parseFloat(this.id) - 1;
+                var contentAddId = "#" + parseFloat(this.id) + "-toggleContainer1";
+                jq(contentAddId).toggle(false);
+                jq(':input:not(:button)', contentAddId).val([]);
+                jq('#' + correctedRemoveButtonId + '-addEntry1').toggle(true);
+                jq('#' + correctedRemoveButtonId + '-removeEntry1').toggle(true);
+
+                return false;
+            });
+
+        });
+        <ifMode mode = "EDIT" >
+            jq(document).ready(function () {
+                $allRows = jq(this).find('.multi-drug');
+                $allRows.hide();
+                jq('#1-removeEntry').remove();
+                jq('#10-addEntry').remove();
+                jq('#1-toggleContainer').show();
+                jq('#11-removeEntry').remove();
+                jq('#20-addEntry').remove();
+                jq('#11-toggleContainer').show();
+                for (let x = 0; x&lt;= 10; x++) {
+                    if (jq(this).find('#' +x+ '-drug').find("input[type$='text']").val()!='')
+                    {
+                        jq(this).find('#' +x+ '-toggleContainer').show();
+                        jq(this).find('#' +x+ '-addEntry').hide();
+                    }
+                    else {
+                        x-=1;
+                        jq(this).find('#' +x+ '-addEntry').show();
+                        break;
+                    }
+                }
+            });
+
+        jq(document).ready(function () {
+            $allRows_other = jq(this).find('.multi-drug-other');
+            $allRows_other.hide();
+            jq('#1-removeEntry-other').remove();
+            jq('#10-addEntry-other').remove();
+            jq('#1-toggleContainer-other').show();
+            jq('#11-removeEntry-other').remove();
+            jq('#20-addEntry-other').remove();
+            jq('#11-toggleContainer-other').show();
+            for (let x = 0; x&lt;= 10; x++) {
+                if (jq(this).find('#' +x+ '-drugother').find("input[type$='text']").val()!='')
+                {
+                    jq(this).find('#' +x+ '-toggleContainer-other').show();
+                    jq(this).find('#' +x+ '-addEntry-other').hide();
+                }
+                else {
+                    x-=1;
+                    jq(this).find('#' +x+ '-addEntry-other').show();
+                    break;
+                }
+            }
+        });
+        </ifMode>
+
     </script>
 
     <div>
@@ -141,7 +371,11 @@
                                 <a class="nav-link" data-toggle="tab" href="#clinical-assessment-section">Clinical Assessment</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#treatment-section">Treatment</a>
+                                <a class="nav-link" data-toggle="tab" href="#investigation-section">Investigations</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#treatment-section">Medication and Treatment</a>
                             </li>
                         </ul>
                     </div>
@@ -358,6 +592,68 @@
                             <div class="tab-pane" id="treatment-section">
                                 <section>
                                     <div class="card">
+                                        <div class="card-header">
+                                            <label>Other Medications</label>
+                                        </div>
+                                        <div class="card-body">
+                                            <div>
+                                                <repeat>
+                                                    <template>
+                                                        <obsgroup groupingConceptId="160741">
+                                                            <div class="row multi-drug" id="{id}-toggleContainer">
+                                                                <div class="col-md-3">
+                                                                    <obs id="other-meds-trigger" labelText="Drug"
+                                                                         conceptId="1282" answerClasses="Drug"
+                                                                         style="autocomplete" class="fullwidth"/>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <obs class="drug-strength" conceptId="1444"
+                                                                         labelText="Strength"/>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <obs id="other-meds-quantity" labelText="Quantity"
+                                                                         conceptId="160856"/>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <obs labelText="Qty unit" conceptId="165791"
+                                                                         answerConceptSetIds="162402,162384"/>
+                                                                </div>
+                                                                <div class="col-md-3 duration">
+                                                                    <label>Duration</label>
+                                                                    <obs conceptId="159368"/>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <obs conceptId="1732" labelText="Duration unit"/>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="add-entry">
+                                                                        <a href="#" id="{id}-addEntry"
+                                                                           class="addEntry add-more-link"><i
+                                                                                class="icon-plus-sign"></i></a>
+                                                                        <a href="#" class="removeEntry remove-more-link"
+                                                                           id="{id}-removeEntry"><i
+                                                                                class="icon-minus"></i></a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </obsgroup>
+                                                    </template>
+                                                    <render id="1"/>
+                                                    <render id="2"/>
+                                                    <render id="3"/>
+                                                    <render id="4"/>
+                                                    <render id="5"/>
+                                                    <render id="6"/>
+                                                    <render id="7"/>
+                                                    <render id="8"/>
+                                                    <render id="9"/>
+                                                    <render id="10"/>
+                                                </repeat>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card">
                                         <div class="card-header">Prophylaxis</div>
                                         <div class="card-body">
                                             <div class="row">
@@ -439,10 +735,37 @@
                                     </div>
                                 </section>
                             </div>
+
+                            <div class="tab-pane" id="investigation-section">
+                                <section>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <label>Laboratory Tests</label>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row investigations">
+                                                <span class="lablex2">
+                                                    <repeat with="['165418','CrAg'],['165417','RPR'],['165416','TB LAM'],['165413','GeneXpert'],['165415','Microscopy'],['1019','CBC'],['844','PCR']">
+                                                        <obs id="{0}" conceptId="1271" answerConceptId="{0}"
+                                                             answerLabel="{1}" style="checkbox"/>
+                                                    </repeat>
+                                                </span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </section>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <postSubmissionAction class="org.openmrs.module.ugandaemr.htmlformentry.ExposedInfantClinicalEncounterEnrollmentPostSubmissionAction"/>
 </htmlform>
