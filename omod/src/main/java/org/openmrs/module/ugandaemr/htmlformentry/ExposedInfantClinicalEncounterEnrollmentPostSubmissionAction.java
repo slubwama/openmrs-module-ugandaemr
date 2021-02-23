@@ -19,21 +19,20 @@ import org.openmrs.module.ugandaemr.metadata.core.Programs;
  * Enrolls patients into the MCH program
  */
 public class ExposedInfantClinicalEncounterEnrollmentPostSubmissionAction implements CustomFormSubmissionAction {
+    UgandaEMRService ugandaEMRService = Context.getService(UgandaEMRService.class);
 
-	private static final Log log = LogFactory.getLog(TBEncounterPageSubmissionAction.class);
-	UgandaEMRService ugandaEMRService = Context.getService(UgandaEMRService.class);
-	@Override
-	public void applyAction(FormEntrySession session) {
-		FormEntryContext.Mode mode = session.getContext().getMode();
-		if (!(mode.equals(FormEntryContext.Mode.ENTER) || mode.equals(FormEntryContext.Mode.EDIT))) {
-			return;
-		}
-		if (ugandaEMRService.getPreviousQueue(session.getPatient(), session.getEncounter().getLocation(), PatientQueue.Status.PENDING) != null) {
-			ugandaEMRService.processLabTestOrdersFromEncounterObs(session, true);
+    @Override
+    public void applyAction(FormEntrySession session) {
+        FormEntryContext.Mode mode = session.getContext().getMode();
+        if (!(mode.equals(FormEntryContext.Mode.ENTER) || mode.equals(FormEntryContext.Mode.EDIT))) {
+            return;
+        }
+        if (ugandaEMRService.getPreviousQueue(session.getPatient(), session.getEncounter().getLocation(), PatientQueue.Status.PENDING) != null) {
+            ugandaEMRService.processLabTestOrdersFromEncounterObs(session, true);
 
-			ugandaEMRService.processDrugOrdersFromEncounterObs(session, true);
-		}
+            ugandaEMRService.processDrugOrdersFromEncounterObs(session, true);
+        }
 
 
-	}
+    }
 }
