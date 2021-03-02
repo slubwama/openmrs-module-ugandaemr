@@ -239,7 +239,11 @@
         <description>A comma separated list of location uuids for locations that clinicians operate from</description>
     </globalProperty>
 
-
+    <globalProperty>
+        <property>ugandaemr.enableMaximumPatientsPerDay</property>
+        <defaultValue>false</defaultValue>
+        <description>enable or disable the functionality to allow the limiting the number of patients per day</description>
+    </globalProperty>
 
     <privilege>
         <name>Task: HIV Clinic Access</name>
