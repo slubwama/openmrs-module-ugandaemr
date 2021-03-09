@@ -1245,7 +1245,7 @@
                 </includeIf>
 
             <restrictByRole exclude="Data Clerk,System Developer,Organizational: System Administrator">
-                if (getValue('art-regimen.value') != "" &amp;&amp; getValue('no-of-art-pills.value') == "") {
+                if (!jq("#split-regimen").find(':checkbox').prop('checked') &amp;&amp; getValue('art-regimen.value') != "" &amp;&amp; getValue('no-of-art-pills.value') == "") {
                      getField('no-of-art-pills.error').html('No of ' + jq("#art-regimen").find(":selected").text() + ' pills required').show();
                     return false;
                 }
