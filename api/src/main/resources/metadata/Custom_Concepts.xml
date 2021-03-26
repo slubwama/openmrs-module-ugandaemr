@@ -8194,4 +8194,6 @@
     <concept  concept_id="163029"  retired="0" datatype_id="1"  class_id="5"  is_set="0"  creator="1"  date_created="2016-06-07 12:04:47"  version="1.0"  changed_by="1"  date_changed="2020-09-22 20:17:53" uuid="33096391-d101-4e89-bbe8-8d1d4861e855"/>
     <concept  concept_id="99601"  retired="0"  datatype_id="10"  class_id="5"  is_set="0"  creator="1"  date_created="2014-09-23 16:02:50"  version=""  changed_by="1"  date_changed="2021-03-09 20:17:53"   uuid="9e5ac0a8-6041-4feb-8c07-fe522ef5f9ab"/>
 
+    <!-- Change Data type to Coded-->
+    <concept  concept_id="162476"  retired="0" datatype_id="2"  class_id="10"  is_set="1"  creator="1"  date_created="2014-05-16 15:26:52"  version=""  changed_by="1"  date_changed="2014-05-16 15:27:31"  uuid="162476AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
 </dataset>
