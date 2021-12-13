@@ -157,7 +157,7 @@
       "widget": "latestobsforconceptlist",
       "icon": "icon-user-md",
       "label": "LAST ART VISIT SUMMARY",
-      "concepts": "dcac04cf-30ab-102d-86b0-7a5022ba4115,160288AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,dd2b0b4d-30ab-102d-86b0-7a5022ba4115,97c48198-3cf7-4892-a3e6-d61fb1125882,b0e53f0a-eaca-49e6-b663-d0df61601b70,7593ede6-6574-4326-a8a6-3d742e843659,dcdff274-30ab-102d-86b0-7a5022ba4115"
+      "concepts": "160288AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,dd2b0b4d-30ab-102d-86b0-7a5022ba4115,97c48198-3cf7-4892-a3e6-d61fb1125882,b0e53f0a-eaca-49e6-b663-d0df61601b70,7593ede6-6574-4326-a8a6-3d742e843659,dcdff274-30ab-102d-86b0-7a5022ba4115"
     },
     "requiredPrivilege": "App: ugandaemr.widget.lastARTVisitSummary",
     "extensions": [
