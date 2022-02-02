@@ -1601,6 +1601,10 @@
     </span>
     <span class="hidden" id="numberOfPatients"><lookup expression="fn.globalProperty('ugandaemr.maximumPatientsPerDay')"/></span>
 
+    <div class="hidden">
+        <encounterLocation id="location_id" default="SessionAttribute:emrContext.sessionLocationId"/>
+    </div>
+
     <restrictByRole exclude="HIV Clinic">
         <div>
             <div class="row">
@@ -2852,8 +2856,6 @@
                         <div class="hidden">
                             <label>Encounter Date</label>
                             <encounterDate default="today" disallowMultipleEncountersOnDate="block"/>
-                            <encounterLocation id="location_id"
-                                               default="SessionAttribute:emrContext.sessionLocationId"/>
 
                         </div>
                         <div class="submission-section hidden">
