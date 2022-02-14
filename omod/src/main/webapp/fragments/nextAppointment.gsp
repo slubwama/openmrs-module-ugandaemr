@@ -2,6 +2,7 @@
 
     var urlParams = new URLSearchParams(window.location.search);
     var patientUUID = "${patientUUID}";
+    var healthCenterName = "${healthCenterName}";
 
     jq(document).ready(function () {
         getNextAppointemt(urlParams.get("patientId"))
@@ -35,10 +36,16 @@
 
     function renderNextAppointment(appointment) {
 
-        var appointment_date = jq.datepicker.formatDate('dd.M.yy',new Date(appointment.value));
+        var appointment_date = jq.datepicker.formatDate('dd.M.yy', new Date(appointment.value));
 
 
-        var appointment_location = appointment.location.display;
+        var appointment_location;
+
+        if (appointment.location === null) {
+            appointment_location = healthCenterName;
+        } else {
+            appointment_location = appointment.location.display;
+        }
 
         return '<div class="info-body" style="margin-top:4px"> <div style="display: block; overflow: hidden; padding-right: 5px; padding-bottom: 2px"> <span style="float: left" class="ng-binding"> Date:&nbsp;&nbsp;</span><span style="float: left"><strong class="ng-binding">' + appointment_date + '</strong></span></div><div style="display: block; overflow: hidden; padding-right: 5px; padding-bottom: 2px"><span style="float: left" class="ng-binding">Location:&nbsp;&nbsp;</span><span style="float: left"> <strong class="ng-binding">' + appointment_location + '</strong></span></div></div>';
     }

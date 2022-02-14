@@ -11,6 +11,7 @@ import org.openmrs.api.ConceptService;
 import org.openmrs.api.ObsService;
 import org.openmrs.api.PersonService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.ugandaemr.UgandaEMRConstants;
 import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentConfiguration;
@@ -29,7 +30,8 @@ public class NextAppointmentFragmentController {
 
     public void controller(FragmentConfiguration config,
                            FragmentModel model, @FragmentParam("patientId") Patient patient) throws ParseException {
+        model.put("healthCenterName", Context.getAdministrationService().getGlobalProperty(UgandaEMRConstants.GP_HEALTH_CENTER_NAME));
 
-	    model.addAttribute("patientUUID",Context.getAdministrationService().executeSQL("select uuid from person where person_id="+patient.getId(),true).get(0).get(0));
+        model.addAttribute("patientUUID", Context.getAdministrationService().executeSQL("select uuid from person where person_id=" + patient.getId(), true).get(0).get(0));
     }
 }
