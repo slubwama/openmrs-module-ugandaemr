@@ -38,6 +38,13 @@
 		<developer>
 			<name>Semujju  David</name>
 		</developer>
+		<developer>
+			<name>Isaac  Akileng</name>
+		</developer>
+
+		<developer>
+			<name>Jacob Wasswa </name>
+		</developer>
 	</developers>
 
 	<organization>
@@ -113,7 +120,7 @@
 		<uilibraryVersion>2.0.7</uilibraryVersion>
 		<xformsVersion>4.3.12</xformsVersion>
 		<patientqueueingVersion>1.2.0</patientqueueingVersion>
-		<ugandaemrSyncVersion>1.1.4</ugandaemrSyncVersion>
+		<ugandaemrSyncVersion>1.1.6</ugandaemrSyncVersion>
 		<ugandaemrfingerprintVersion>1.0.11</ugandaemrfingerprintVersion>
 		<cohortModuleVersion>2.2.1</cohortModuleVersion>
 		<spaModuleVersion>1.0.8</spaModuleVersion>
@@ -121,7 +128,7 @@
 		<spa.version>latest</spa.version>
 
 		<!-- core configuration library -->
-		<ugandaemrReportsVersion>2.0.31</ugandaemrReportsVersion>
+		<ugandaemrReportsVersion>2.0.32</ugandaemrReportsVersion>
 
 	</properties>
 
