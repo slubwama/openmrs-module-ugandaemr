@@ -76,6 +76,7 @@ public class CommonMetadataBundle extends AbstractMetadataBundle {
         install(EncounterTypes.CACX_TREATMENT_REGISTER);
         install(EncounterTypes.COVID19_VACCINATION_TRACKING);
 
+        install(EncounterTypes.SMS_ENROLLMENT);
 
 
         //installing programs metadata

@@ -371,4 +371,20 @@ public class EncounterTypes {
             return "6d647bd4-33d6-4d04-a04a-595d2159b456";
         }
     };
+
+    public static EncounterTypeDescriptor SMS_ENROLLMENT = new EncounterTypeDescriptor() {
+        @Override
+        public String name() {
+            return "SMS Enrollment Encounter";
+        }
+
+        @Override
+        public String description() {
+            return "SMS Enrollment Encounter";
+        }
+
+        public String uuid() {
+            return "05fa932f-4203-43c9-8985-60f2bea8a773";
+        }
+    };
 }
