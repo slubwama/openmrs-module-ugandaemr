@@ -5,6 +5,8 @@ import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.util.JSONPObject;
 import org.json.JSONObject;
 import org.openmrs.Cohort;
+import org.openmrs.CohortMembership;
+import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.ugandaemr.UgandaEMRConstants;
 import org.openmrs.module.webservices.rest.SimpleObject;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 
 @Controller
@@ -73,6 +76,27 @@ public class CohortRegistrationController {
 		response.add("description", cohort.getDescription());
 		response.add("uuid", cohort.getUuid());
 
+		return response;
+	}
+
+	@RequestMapping(value = "/rest/" + RestConstants.VERSION_1 + "/" + UgandaEMRConstants.UGANDAEMR_MODULE_ID
+			+ "/cohort/member/", method = RequestMethod.POST)
+	@ResponseBody
+	public SimpleObject deleteCohortMember(@RequestBody String body) {
+		SimpleObject response = new SimpleObject();
+
+		JSONObject newBody  = new JSONObject(body);
+		Cohort cohort = Context.getCohortService().getCohortByUuid(newBody.getString("cohort"));
+		Patient patient = Context.getPatientService().getPatientByUuid(newBody.getString("patient"));
+
+		//		check member in  cohort
+		if(cohort !=null && cohort.contains(patient.getPatientId())){
+			CohortMembership cohortMembership = cohort.getActiveMembership(patient);
+
+			response.add("uuid", cohortMembership.getUuid());
+		}else {
+			log.debug("Cohort does not contain the specified patient");
+		}
 		return response;
 	}
 
