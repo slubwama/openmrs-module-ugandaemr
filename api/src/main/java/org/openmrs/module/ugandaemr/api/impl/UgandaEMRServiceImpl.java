@@ -1215,7 +1215,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         Set<Obs> obsList = encounter.getObs();
 
         for (Obs obs : obsList) {
-            if ((obs.getValueCoded() != null && (obs.getValueCoded().getConceptClass().getName().equals(LAB_SET_CLASS) || obs.getValueCoded().getConceptClass().getName().equals(TEST_SET_CLASS))) && !orderExists(obs.getValueCoded(), obs.getEncounter())) {
+            if (!obs.getConcept().getDatatype().getName().equals("Boolean") && (obs.getValueCoded() != null && (obs.getValueCoded().getConceptClass().getName().equals(LAB_SET_CLASS) || obs.getValueCoded().getConceptClass().getName().equals(TEST_SET_CLASS))) && !orderExists(obs.getValueCoded(), obs.getEncounter())) {
                 TestOrder testOrder = new TestOrder();
                 testOrder.setConcept(obs.getValueCoded());
                 testOrder.setEncounter(obs.getEncounter());
