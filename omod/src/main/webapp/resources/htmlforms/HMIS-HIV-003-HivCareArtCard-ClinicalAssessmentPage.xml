@@ -1352,7 +1352,7 @@
                 }
 
                 //Return visit date is required if any prescription is made
-                if(prescription=="true" &amp;&amp; returnDate=="") {
+                if(prescription=="true" &amp;&amp; returnDate=="" &amp;&amp; transferOut !== 90003) {
                     jq().toastmessage('showErrorToast', "The return visit date is required");
                     return false;
                 }
@@ -1911,6 +1911,8 @@
                                                     <obs conceptId="160288" answerConceptId="90012"     answerLabel="PMTCT" class="col-md-3"/>
                                                     <obs conceptId="160288" answerConceptId="903"  answerLabel="Hypertension/ Diabetes" class="col-md-3"/>
                                                     <obs conceptId="160288" answerConceptId="5484"  answerLabel="Nutrition" class="col-md-3"/>
+                                                    <obs conceptId="160288" answerConceptId="165315"  answerLabel="Cervical Cancer Screening" class="col-md-3"/>
+                                                    <obs conceptId="160288" answerConceptId="656"  answerLabel="INH Refill" class="col-md-3"/>
                                                     <obs id="check-other-reason-for-next-appointment" conceptId="160288" answerConceptId="90002"  answerLabel="Other Specify" class="col-md-3"/>
                                                 </div>
                                                 <div class="row">
