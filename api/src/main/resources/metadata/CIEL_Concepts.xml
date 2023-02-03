@@ -357,6 +357,13 @@
      <concept  concept_id="163693"  retired="0"   datatype_id="2"  class_id="1"   is_set="0"  creator="1"  date_created="2016-07-28 21:11:07"  version=""  changed_by="1"  date_changed="2022-11-04 13:41:08"  retired_by="1"  uuid="163693AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
      <concept  concept_id="163694"  retired="0"   datatype_id="2"  class_id="1"   is_set="0"  creator="1"  date_created="2016-07-28 21:13:09"  version=""  changed_by="1"  date_changed="2016-07-28 21:13:59"  retired_by="1"  uuid="163694AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
 
+     <concept  concept_id="163342"  retired="0" datatype_id="2"  class_id="1"  is_set="0"  creator="1"  date_created="2016-04-07 04:05:49"  version=""  changed_by="1"  date_changed="2016-04-07 19:44:18"  retired_by="1" uuid="163342AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+     <concept  concept_id="163610"  retired="0" datatype_id="3"  class_id="1"  is_set="0"  creator="1"  date_created="2016-07-28 00:46:53"  version=""  changed_by="1"  date_changed="2016-07-28 00:48:26"  retired_by="1" uuid="163610AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+     <concept  concept_id="163722"  retired="0" datatype_id="2"  class_id="1"  is_set="0"  creator="1"  date_created="2016-07-30 02:34:28"  version=""  changed_by="1"  date_changed="2016-08-12 02:17:11"  retired_by="1" uuid="163722AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+     <concept  concept_id="167441"  retired="0" datatype_id="2"  class_id="1"  is_set="0"  creator="1"  date_created="2022-08-24 14:20:37"  version=""  changed_by="1"  date_changed="2022-08-24 14:21:05"  retired_by="1" uuid="167441AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+
+
+
      <concept_name  concept_id="159981"  name="tuberculosis culture construct"  locale="en"  creator="1"  date_created="2010-12-16 14:24:38"  concept_name_id="107547"  voided="0"  voided_by="1" uuid="107547BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"  concept_name_type="FULLY_SPECIFIED"  locale_preferred="1" changed_by="1"/>
      <concept_name  concept_id="159981"  name="AFB culture construct"  locale="en"  creator="1"  date_created="2010-12-16 14:24:38"  concept_name_id="107548"  voided="0"  voided_by="1" uuid="107548BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"  locale_preferred="0" changed_by="1"/>
      <concept_name  concept_id="161152"  name="Prothrombin Time (with INR)"  locale="en"  creator="1"  date_created="2012-08-29 14:49:05"  concept_name_id="110265"  voided="0"  voided_by="1" uuid="110265BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"  concept_name_type="FULLY_SPECIFIED"  locale_preferred="1" changed_by="1"/>
@@ -960,6 +967,14 @@
      <concept_name  concept_id="72695"  name="Calcium phosphate"  locale="en"  creator="1"  date_created="2006-12-17 00:00:00"  concept_name_id="180008"  voided="0"  voided_by="1"  uuid="9c83e00e-a2d7-11ed-a8fc-0242ac120002"  concept_name_type="FULLY_SPECIFIED"  locale_preferred="1" changed_by="1"/>
      <concept_name  concept_id="72703"  name="Calcium sulfate"  locale="en"  creator="1"  date_created="2006-12-17 00:00:00"  concept_name_id="180009"  voided="0"  voided_by="1"  uuid="9c83e81a-a2d7-11ed-a8fc-0242ac120002"  concept_name_type="FULLY_SPECIFIED"  locale_preferred="1" changed_by="1"/>
      <concept_name  concept_id="74167"  name="Cystine"  locale="en"  creator="1"  date_created="2006-12-17 00:00:00"  concept_name_id="180010"  voided="0"  voided_by="1"  uuid="9c83ea5e-a2d7-11ed-a8fc-0242ac120002"  concept_name_type="FULLY_SPECIFIED"  locale_preferred="1" changed_by="1"/>
+     <concept_name  concept_id="163342"  concept_name_id="136068"  name="Human immunodeficiency virus p24 antigen test"  locale="en"  creator="1"  date_created="2016-04-07 04:05:49"  voided="0"  voided_by="1" uuid="136068BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"  concept_name_type="FULLY_SPECIFIED"  locale_preferred="1"  changed_by="1"/>
+     <concept_name  concept_id="163342"  concept_name_id="136070"  name="HIV p24 antigen test"  locale="en"  creator="1"  date_created="2016-04-07 04:05:49"  voided="0"  voided_by="1" uuid="136070BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"  concept_name_type="SHORT"  locale_preferred="0"  changed_by="1"/>
+     <concept_name  concept_id="163610"  concept_name_id="138195"  name="HIV gentotype susceptibility test"  locale="en"  creator="1"  date_created="2016-07-28 00:46:53"  voided="0"  voided_by="1"  uuid="138195BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"  locale_preferred="0"  changed_by="1"/>
+     <concept_name  concept_id="163610"  concept_name_id="138198"  name="HIV drug-resistance test"  locale="en"  creator="1"  date_created="2016-07-28 00:46:53"  voided="0"  voided_by="1"  uuid="138198BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"  locale_preferred="0"  changed_by="1"/>
+     <concept_name  concept_id="163610"  concept_name_id="138202"  name="Human immunodeficiency virus (HIV) genotype susceptibility test"  locale="en"  creator="1"  date_created="2016-07-28 00:46:53"  voided="0"  voided_by="1" uuid="138202BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"  concept_name_type="FULLY_SPECIFIED"  locale_preferred="1"  changed_by="1"/>
+     <concept_name  concept_id="163722"  concept_name_id="139124"  name="Rapid test for HIV"  locale="en"  creator="1"  date_created="2016-07-30 02:34:28"  voided="0"  voided_by="1" uuid="139124BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"  concept_name_type="FULLY_SPECIFIED"  locale_preferred="1"  changed_by="1"/>
+     <concept_name  concept_id="167441"  concept_name_id="147814"  name="HIV DNA polymerase chain reaction, dried blood spot (DBS)"  locale="en"  creator="1"  date_created="2022-08-24 14:20:37"  voided="0"  voided_by="1" uuid="147814BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"  concept_name_type="FULLY_SPECIFIED"  locale_preferred="1"  changed_by="1"/>
+     <concept_name  concept_id="167441"  concept_name_id="147815"  name="HIV PCR, DBS"  locale="en"  creator="1"  date_created="2022-08-24 14:20:55"  voided="0"  voided_by="1" uuid="147815BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"  concept_name_type="SHORT"  locale_preferred="0"  changed_by="1"/>
 
      <concept_set  concept_set_id="586"  concept_id="159952"  concept_set="159981"  sort_weight="2"  creator="1"  date_created="2011-01-17 14:42:47"  uuid="586AEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"/>
      <concept_set  concept_set_id="587"  concept_id="159953"  concept_set="159981"  sort_weight="6"  creator="1"  date_created="2011-01-17 14:42:47"  uuid="587AEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"/>
@@ -1483,6 +1498,17 @@
      <concept_answer  concept_answer_id="50012"  concept_id="159607"  answer_concept="703"   creator="1"  date_created="2010-10-29 16:16:21"  uuid="ccb8f334-a2a7-11ed-a8fc-0242ac120002"  sort_weight="2540"/>
      <concept_answer  concept_answer_id="50013"  concept_id="159606"  answer_concept="664"   creator="1"  date_created="2010-10-29 16:17:09"  uuid="ccb8f4ce-a2a7-11ed-a8fc-0242ac120002"  sort_weight="2541"/>
      <concept_answer  concept_answer_id="50014"  concept_id="159606"  answer_concept="703"   creator="1"  date_created="2010-10-29 16:17:09"  uuid="ccb8f67c-a2a7-11ed-a8fc-0242ac120002"  sort_weight="2542"/>
+
+     <concept_answer  concept_answer_id="50015"  concept_id="163342"  answer_concept="1138"  creator="1"  date_created="2016-04-07 04:05:49"  uuid="9117278c-a37f-11ed-a8fc-0242ac120002"  sort_weight="5648"/>
+     <concept_answer  concept_answer_id="50016"  concept_id="163342"  answer_concept="664"   creator="1"  date_created="2016-04-07 04:05:49"  uuid="91172a8e-a37f-11ed-a8fc-0242ac120002"  sort_weight="5649"/>
+     <concept_answer  concept_answer_id="50017"  concept_id="163342"  answer_concept="703"   creator="1"  date_created="2016-04-07 04:05:49"  uuid="91172bd8-a37f-11ed-a8fc-0242ac120002"  sort_weight="5650"/>
+     <concept_answer  concept_answer_id="6004"  concept_id="163722"  answer_concept="1138"  creator="1"  date_created="2016-07-30 02:34:28"  uuid="6004CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"  sort_weight="6004"/>
+     <concept_answer  concept_answer_id="6005"  concept_id="163722"  answer_concept="664"   creator="1"  date_created="2016-07-30 02:34:28"  uuid="6005CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"  sort_weight="6005"/>
+     <concept_answer  concept_answer_id="6006"  concept_id="163722"  answer_concept="703"   creator="1"  date_created="2016-07-30 02:34:28"  uuid="6006CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"  sort_weight="6006"/>
+     <concept_answer  concept_answer_id="8215"  concept_id="167441"  answer_concept="1138"  creator="1"  date_created="2022-08-24 14:20:37"  uuid="8215CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"  sort_weight="8215"/>
+     <concept_answer  concept_answer_id="8216"  concept_id="167441"  answer_concept="664"   creator="1"  date_created="2022-08-24 14:20:37"  uuid="8216CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"  sort_weight="8216"/>
+     <concept_answer  concept_answer_id="8217"  concept_id="167441"  answer_concept="703"   creator="1"  date_created="2022-08-24 14:20:37"  uuid="8217CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"  sort_weight="8217"/>
+
 
      <concept_numeric  concept_id="1458" units="mmol/L"  allow_decimal="1"/>
      <concept_numeric  concept_id="159653" units="%"  allow_decimal="0"/>
