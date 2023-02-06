@@ -1371,7 +1371,7 @@
                 }
 
                 //Return visit date is required if there is no transfer out in non POC mode
-                if(transferOut !==90003 &amp;&amp; returnDatePocClassLength &lt;=0) {
+                if(transferOut !==90003 &amp;&amp; returnDatePocClassLength &lt;=0 &amp;&amp; (returnDate === "" || returnDate === null)) {
                     jq().toastmessage('showErrorToast', "The return visit date is required");
                     return false;
                 }
