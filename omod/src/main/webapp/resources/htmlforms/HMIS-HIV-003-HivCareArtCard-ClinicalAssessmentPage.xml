@@ -1919,37 +1919,23 @@
                                                 Reasons for next appointment
                                             </div>
                                             <div class="card-body">
-                                                <div class="row reason-for-next-appointment">
-                                                    <obs conceptId="160288" answerConceptId="164968"
-                                                         answerLabel="ART Initiation" class="col-md-3"/>
-                                                    <obs conceptId="160288" answerConceptId="164972"
-                                                         answerLabel="ART Refill" class="col-md-3"/>
-                                                    <obs conceptId="160288" answerConceptId="164970"
-                                                         answerLabel="ART Regimen Switch/ Substitution"
-                                                         class="col-md-3"/>
-                                                    <obs conceptId="160288" answerConceptId="856"
-                                                         answerLabel="Viral Load" class="col-md-3"/>
-                                                    <obs conceptId="160288" answerConceptId="5497" answerLabel="CD4"
-                                                         class="col-md-3"/>
-                                                    <obs conceptId="160288" answerConceptId="163153" answerLabel="IAC"
-                                                         class="col-md-3"/>
-                                                    <obs conceptId="160288" answerConceptId="164971"
-                                                         answerLabel="T.B Drug Refill" class="col-md-3"/>
-                                                    <obs conceptId="160288" answerConceptId="164973"
-                                                         answerLabel="T.B Follow up" class="col-md-3"/>
-                                                    <obs conceptId="160288" answerConceptId="99324" answerLabel="ANC"
-                                                         class="col-md-3"/>
-                                                    <obs conceptId="160288" answerConceptId="164974" answerLabel="EID"
-                                                         class="col-md-3"/>
-                                                    <obs conceptId="160288" answerConceptId="90012" answerLabel="PMTCT"
-                                                         class="col-md-3"/>
-                                                    <obs conceptId="160288" answerConceptId="903"
-                                                         answerLabel="Hypertension/ Diabetes" class="col-md-3"/>
-                                                    <obs conceptId="160288" answerConceptId="5484"
-                                                         answerLabel="Nutrition" class="col-md-3"/>
-                                                    <obs id="check-other-reason-for-next-appointment" conceptId="160288"
-                                                         answerConceptId="90002" answerLabel="Other Specify"
-                                                         class="col-md-3"/>
+                                                <div class="row reason-for-next-appointment" >
+                                                    <obs conceptId="160288" answerConceptId="164968"   answerLabel="ART Initiation" class="col-md-3"/>
+                                                    <obs conceptId="160288" answerConceptId="164972"   answerLabel="ART Refill" class="col-md-3" />
+                                                    <obs conceptId="160288" answerConceptId="164970"   answerLabel="ART Regimen Switch/ Substitution" class="col-md-3" />
+                                                    <obs conceptId="160288" answerConceptId="856"   answerLabel="Viral Load" class="col-md-3"/>
+                                                    <obs conceptId="160288" answerConceptId="5497"   answerLabel="CD4" class="col-md-3"/>
+                                                    <obs conceptId="160288" answerConceptId="163153"  answerLabel="IAC" class="col-md-3"/>
+                                                    <obs conceptId="160288" answerConceptId="164971"     answerLabel="T.B Drug Refill" class="col-md-3"/>
+                                                    <obs conceptId="160288" answerConceptId="164973"  answerLabel="T.B Follow up" class="col-md-3"/>
+                                                    <obs conceptId="160288" answerConceptId="99324"  answerLabel="ANC" class="col-md-3"/>
+                                                    <obs conceptId="160288" answerConceptId="164974"  answerLabel="EID" class="col-md-3"/>
+                                                    <obs conceptId="160288" answerConceptId="90012"     answerLabel="PMTCT" class="col-md-3"/>
+                                                    <obs conceptId="160288" answerConceptId="903"  answerLabel="Hypertension/ Diabetes" class="col-md-3"/>
+                                                    <obs conceptId="160288" answerConceptId="5484"  answerLabel="Nutrition" class="col-md-3"/>
+                                                    <obs conceptId="160288" answerConceptId="165315"  answerLabel="Cervical Cancer Screening" class="col-md-3"/>
+                                                    <obs conceptId="160288" answerConceptId="656"  answerLabel="INH Refill" class="col-md-3"/>
+                                                    <obs id="check-other-reason-for-next-appointment" conceptId="160288" answerConceptId="90002"  answerLabel="Other Specify" class="col-md-3"/>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-4">
