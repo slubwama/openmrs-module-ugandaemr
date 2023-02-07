@@ -1357,7 +1357,7 @@
                 }
 
                 //Return visit date is required if any prescription is made
-                if (prescription == "true" &amp;&amp; returnDate == "") {
+                if(prescription=="true" &amp;&amp; returnDate=="" &amp;&amp; transferOut !== 90003) {
                     jq().toastmessage('showErrorToast', "The return visit date is required");
                     return false;
                 }
@@ -1376,7 +1376,7 @@
                 }
 
                 //Return visit date is required if there is no transfer out in non POC mode
-                if (transferOut !== 90003 &amp;&amp; returnDatePocClassLength &lt;= 0) {
+                if (transferOut !== 90003 &amp;&amp; returnDatePocClassLength &lt;= 0  &amp;&amp; (returnDate=="" || returnDate==null )) {
                     jq().toastmessage('showErrorToast', "The return visit date is required");
                     return false;
                 }
@@ -3474,10 +3474,9 @@
                                                                         <label>TB Status</label>
                                                                     </div>
                                                                     <div class="col-md-7">
-                                                                        <obs id="tb-status" class="long-value-select"
-                                                                             conceptId="90216"
-                                                                             answerConceptIds="90079,90073, 165295, 165296, 165297, 165298, 165299,165300,90071"
-                                                                             answerLabels="1 - No signs,2 - Presumptive, 3C - TB Diagnosed - Clinically diagnosed,  3G - TB Diagnosed - Gene Xpert, 3L - TB Diagnosed - TB LAM,3M - TB Diagnosed -TB Microscopy, 3X - TB Diagnosed - Chest Xray, 3O - TB Diagnosed - Others, 4 - Tb Rx"/>
+                                                                        <obs id="tb-status" class="long-value-select" conceptId="90216"
+                                                                             answerConceptIds="90079,90073, 165295, 165296, 165297, 165298, 165299,165300,90071,99421"
+                                                                             answerLabels="1 - No signs,2 - Presumptive, 3C - TB Diagnosed - Clinically diagnosed,  3G - TB Diagnosed - Gene Xpert, 3L - TB Diagnosed - TB LAM,3M - TB Diagnosed -TB Microscopy, 3X - TB Diagnosed - Chest Xray, 3O - TB Diagnosed - Others, 4 - Tb Rx - Currently on TB treatment, 5 - Completed TB Treatment"/>
                                                                     </div>
                                                                 </div>
                                                             </div>
