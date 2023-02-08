@@ -1250,6 +1250,7 @@
                 jq("#medication-poc").hide();
                 jq("#programing-dsdm-poc").hide();
                 jq("#next-course-of-action").hide();
+                jq("#clinical-notes-poc").hide();
 
                 jq("#clinical-encounter-menu-poc").click(function () {
 
@@ -1259,6 +1260,7 @@
                     jq("#medication-poc").hide();
                     jq("#programing-dsdm-poc").hide();
                     jq("#next-course-of-action").hide();
+                    jq("#clinical-notes-poc").hide();
 
                 });
 
@@ -1270,6 +1272,7 @@
                     jq("#medication-poc").hide();
                     jq("#programing-dsdm-poc").hide();
                     jq("#next-course-of-action").hide();
+                    jq("#clinical-notes-poc").hide();
 
                 });
 
@@ -1278,6 +1281,18 @@
                     jq("#encounter-card-poc").hide();
                     jq("#investigation-reports-poc").hide();
                     jq("#diagnosis-poc").show();
+                    jq("#medication-poc").hide();
+                    jq("#programing-dsdm-poc").hide();
+                    jq("#next-course-of-action").hide();
+                    jq("#clinical-notes-poc").hide();
+
+                });
+
+                jq("#clinical-notes-menu-poc").click(function () {
+                    jq("#clinical-notes-poc").show();
+                    jq("#encounter-card-poc").hide();
+                    jq("#investigation-reports-poc").hide();
+                    jq("#diagnosis-poc").hide();
                     jq("#medication-poc").hide();
                     jq("#programing-dsdm-poc").hide();
                     jq("#next-course-of-action").hide();
@@ -1292,6 +1307,7 @@
                     jq("#medication-poc").show();
                     jq("#programing-dsdm-poc").hide();
                     jq("#next-course-of-action").hide();
+                    jq("#clinical-notes-poc").hide();
 
                 });
 
@@ -1303,6 +1319,7 @@
                     jq("#medication-poc").hide();
                     jq("#programing-dsdm-poc").show();
                     jq("#next-course-of-action").hide();
+                    jq("#clinical-notes-poc").hide();
                 });
 
                 jq("#course-of-action-menu-poc").click(function () {
@@ -1313,6 +1330,7 @@
                     jq("#medication-poc").hide();
                     jq("#programing-dsdm-poc").hide();
                     jq("#next-course-of-action").show();
+                    jq("#clinical-notes-poc").hide();
 
                 });
 
@@ -3114,6 +3132,11 @@
                                    href="#next-course-of-action" data-toggle="pill"
                                    role="tab" aria-selected="false">Next Course of Action
                                 </a>
+
+                                <a class="nav-link links nav-link-1" id="clinical-notes-menu-poc" href="#clinical-notes-poc"
+                                   data-toggle="pill"
+                                   role="tab" aria-selected="false">Clinical Notes
+                                </a>
                             </div>
                         </div>
 
@@ -3774,6 +3797,13 @@
                                 <encounterDiagnoses selectedDiagnosesTarget="#encounter-diagnoses-target"
                                                     preferredCodingSource="ICD-10-WHO"
                                                     diagnosisConceptClasses="Diagnosis"/>
+                            </div>
+                        </div>
+
+                        <div class="card" id="clinical-notes-poc">
+                            <div class="card-header">Clinical Notes</div>
+                            <div class="card-body">
+                                <obs conceptId="159395" rows="6" cols="90"/>
                             </div>
                         </div>
 
