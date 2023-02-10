@@ -217,7 +217,27 @@
       "requiredPrivilege": "App: coreapps.systemAdministration"
     }
     ]
-   },
+  },
+  {
+    "id": "covid.findPatient",
+    "instanceOf": "coreapps.template.findPatient",
+    "description": "Basic patient search that goes to the patient dashboard",
+    "order": 2,
+    "extensions": [
+      {
+        "id": "covid.findPatientLink",
+        "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+        "type": "link",
+        "label": "Find Covid Patient",
+        "url": "ugandaemr/findpatient/covid/findPatient.page?app=covid.findPatient",
+        "icon": "icon-search",
+        "requiredPrivilege": "App: ugandaemrpoc.findPatient"
+      }
+    ],
+    "config": {
+      "registrationAppLink": "registrationapp/registerPatient.page?appId=ugandaemr.registrationapp.registerPatient"
+    }
+  },
   {
   "id": "ugandaemr.cohortTypeConfigs",
   "description": "DSD SubGroup Registration",
@@ -233,5 +253,21 @@
       "requiredPrivilege": "App: coreapps.systemAdministration"
     }
   ]
-}
+},
+  {
+    "id": "ugandaemr.facility.dashboard.link",
+    "description": "Facility Dashboard",
+    "order": 511,
+    "extensions": [
+      {
+        "id": "ugandaemr.facility.emrdashboard.homepageLink",
+        "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+        "type": "link",
+        "label": "Facility Dashboard",
+        "url": "ugandaemrreports/dashboard.page",
+        "icon": "icon-bar-chart",
+        "requiredPrivilege": ""
+      }
+    ]
+  }
 ]
