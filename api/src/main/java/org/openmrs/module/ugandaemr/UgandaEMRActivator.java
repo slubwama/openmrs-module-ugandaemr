@@ -133,6 +133,7 @@ public class UgandaEMRActivator extends org.openmrs.module.BaseModuleActivator {
             dataImporter.importData("metadata/Custom_Concepts.xml");
             dataImporter.importData("metadata/Drug_Concepts.xml");
             dataImporter.importData("metadata/CIEL_Concepts.xml");
+            dataImporter.importData("metadata/Concept_Mbarara.xml");
             log.info("Custom Concepts imported");
 
             log.info("Start import of person attributes");
