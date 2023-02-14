@@ -187,7 +187,6 @@
         <defaultValue></defaultValue>
     </globalProperty>
 
-
     <globalProperty>
         <property>ugandaemr.autoCloseVisit.visitTypeUUID</property>
         <description>The UUID of the visit type that will be closed</description>
