@@ -27,7 +27,7 @@
         setInterval(function () {
             console.log("Checking IF Reloading works");
             getPatientQueue();
-        }, 1 * 60000);
+        }, 1*60000);
         jq(document).ready(function () {
 
             jq(document).on('sessionLocationChanged', function () {
@@ -75,22 +75,17 @@
 
     function getPatientQueue() {
         jq("#clinician-queue-list-table").html("");
-        jq.ajax({
-            type: "GET",
-            url: "/openmrs/ws/rest/v1/patientqueue?v=full&location=" + ${currentLocation.uuid},
-            dataType: "json",
-            async: false,
-            success: function (response) {
-                if (response) {
-                    var responseData = JSON.parse(response.replace("patientClinicianQueueList=", "\"patientClinicianQueueList\":").trim());
-                    displayClinicianData(responseData);
-                } else if (!response) {
-                    jq("#clinician-queue-list-table").append(${ ui.message("coreapps.none ") });
-                }
+        jq.get('${ ui.actionLink("getPatientQueueList") }', {
+            searchfilter: jq("#patient-search").val().trim().toLowerCase()
+        }, function (response) {
+            if (response) {
+                var responseData = JSON.parse(response.replace("patientClinicianQueueList=", "\"patientClinicianQueueList\":").trim());
+                displayClinicianData(responseData);
+            } else if (!response) {
+                jq("#clinician-queue-list-table").append(${ ui.message("coreapps.none ") });
             }
         });
     }
-
 
     function setLocationsToSelect() {
         jq("#error_location_id").html("");
