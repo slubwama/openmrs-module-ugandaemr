@@ -1545,8 +1545,6 @@
      <concept_answer  concept_answer_id="5863"   concept_id="163647"  answer_concept="664"   creator="1"  date_created="2016-07-28 03:01:15"  uuid="5863CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"  sort_weight="5863"/>
      <concept_answer  concept_answer_id="5864"   concept_id="163647"  answer_concept="1364"  creator="1"  date_created="2016-07-28 03:01:15"  uuid="5864CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"  sort_weight="5864"/>
      <concept_answer  concept_answer_id="5865"   concept_id="163647"  answer_concept="1362"  creator="1"  date_created="2016-07-28 03:01:15"  uuid="5865CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"  sort_weight="5865"/>
-
-
      <concept_answer  concept_answer_id="5815"  sort_weight="5815"  concept_id="163605"  answer_concept="1363" creator="1"  date_created="2016-07-26 02:50:20"  uuid="5815CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"/>
      <concept_answer  concept_answer_id="5816"  sort_weight="5816"  concept_id="163605"  answer_concept="664"  creator="1"  date_created="2016-07-26 02:50:20"  uuid="5816CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"/>
      <concept_answer  concept_answer_id="5817"  sort_weight="5817"  concept_id="163605"  answer_concept="1364" creator="1"  date_created="2016-07-26 02:50:20"  uuid="5817CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"/>
