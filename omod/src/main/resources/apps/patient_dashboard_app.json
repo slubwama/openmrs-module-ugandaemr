@@ -346,28 +346,5 @@
         }
       }
     ]
-  },{
-  "id": "ugandaemr.patientClinicalNotes",
-  "instanceOf": "coreapps.template.dashboardWidget",
-  "description": "Patient Clinical NOtes",
-  "order": 0,
-  "config": {
-    "widget": "obsacrossencounters",
-    "icon": "icon-user-md",
-    "label": "Clinical NOtes",
-    "concepts": "159395AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,6965a8c4-7be5-47ee-a872-e158bd9545b1",
-    "maxRecords": "6"
-  },
-  "extensions": [
-    {
-      "id": "org.openmrs.module.coreapps.mostRecentVitals.clinicianDashboardFirstColumn",
-      "appId": "ugandaemr.patientClinicalNotes",
-      "extensionPointId": "patientDashboard.firstColumnFragments",
-      "extensionParams": {
-        "provider": "coreapps",
-        "fragment": "dashboardwidgets/dashboardWidget"
-      }
-    }
-  ]
-}
+  }
 ]

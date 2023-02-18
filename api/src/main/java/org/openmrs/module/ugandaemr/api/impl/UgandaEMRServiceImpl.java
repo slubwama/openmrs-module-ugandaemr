@@ -817,6 +817,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         return orderMappers;
     }
 
+
     /**
      * Processes Orders from Encounter to Order Mapper
      *
@@ -826,7 +827,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
 
     public Set<DrugOrderMapper> processDrugOrders(Set<Order> orders) {
         Set<DrugOrderMapper> orderMappers = new HashSet<>();
-
+        boolean enableStockManagement = Boolean.parseBoolean(Context.getAdministrationService().getGlobalProperty("ugandaemr.enableStockManagement"));
         OrderType orderType = Context.getOrderService().getOrderTypeByUuid(ORDER_TYPE_DRUG_UUID);
         orders = orders.stream().filter(order -> order.getOrderType().equals(orderType) && order.isActive()).collect(Collectors.toSet());
 
@@ -871,6 +872,10 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
             drugOrderMapper.setEncounterId(drugOrder.getEncounter().getEncounterId());
             if (order.isActive()) {
                 drugOrderMapper.setStatus(QUEUE_STATUS_ACTIVE);
+            }
+
+            if (testOrderHasResults(order)) {
+                drugOrderMapper.setStatus(QUEUE_STATUS_HAS_RESULTS);
             }
             orderMappers.add(drugOrderMapper);
         });
@@ -1297,7 +1302,6 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         Encounter encounter = session.getEncounter();
         CareSetting careSetting = Context.getOrderService().getCareSettingByName(CARE_SETTING_OPD);
         Set<Obs> obsList = encounter.getObs().stream().filter(obs -> !obs.getConcept().getDatatype().getName().equals("Boolean") && obs.getValueCoded() != null && (obs.getValueCoded().getConceptClass().getName().equals("Drug"))).collect(Collectors.toSet());
-        ;
 
         OrderService orderService = Context.getOrderService();
         for (Obs obs : obsList) {
@@ -1380,13 +1384,20 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
             encounterService.saveEncounter(encounter);
             List<String> orderLocations = new ArrayList<>();
             if (!session.getEncounter().getOrders().isEmpty()) {
-                orders.forEach(order -> {
-                    orderLocations.add(getDispesingLocation((DrugOrder) order));
-                });
+                boolean enableStockManagement = Boolean.parseBoolean(Context.getAdministrationService().getGlobalProperty("ugandaemr.enableStockManagement"));
+                if (enableStockManagement) {
+                    orders.forEach(order -> {
+                        orderLocations.add(getDispesingLocation((DrugOrder) order));
+                    });
 
-                orderLocations.forEach(orderLocation -> {
-                    sendPatientToNextLocation(session, orderLocation, encounter.getLocation().getUuid(), PatientQueue.Status.PENDING, completePreviousQueue);
-                });
+                    orderLocations.forEach(orderLocation -> {
+                        sendPatientToNextLocation(session, orderLocation, encounter.getLocation().getUuid(), PatientQueue.Status.PENDING, completePreviousQueue);
+                    });
+                } else {
+                    sendPatientToNextLocation(session, PHARMACY_LOCATION_UUID, encounter.getLocation().getUuid(), PatientQueue.Status.PENDING, completePreviousQueue);
+                }
+
+
                 completePreviousQueue(session.getPatient(), session.getEncounter().getLocation(), PatientQueue.Status.PENDING);
             }
         }
@@ -1534,9 +1545,14 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
 
         encounter.setObs(obs);
 
+        boolean enableStockManagement = Boolean.parseBoolean(Context.getAdministrationService().getGlobalProperty("ugandaemr.enableStockManagement"));
+
 
         try {
-            reduceStockBalances(resultWrapper);
+            if (enableStockManagement) {
+                reduceStockBalances(resultWrapper);
+            }
+
             encounterService.saveEncounter(encounter);
             patientQueue.setEncounter(encounter);
             patientQueueingService.savePatientQue(patientQueue);
