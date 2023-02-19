@@ -25,8 +25,6 @@
     if (jQuery) {
         jq(document).ready(function () {
             displayClinicalNotes()
-            jq('#collapse_index_1').removeClass('hide');
-            jq('#collapse_index_1').addClass('show');
         });
     }
 
@@ -59,7 +57,6 @@
             if(element.encounter.encounterProviders.length>0){
                 encounterProvider=" -  "+element.encounter.encounterProviders[0].display
             }
-
             var openCardHeader = "<div class=\"card\"><div class=\"card-header\" id=\"heading_" + index + "\"><button class=\"btn-link clinical-button\" data-toggle=\"collapse\" data-target=\"#collapse" + index + "\" aria-expanded=\"true\" aria-controls=\"collaps" + index + "\">";
             var header = element.encounter.encounterType.display+" - "+jq.datepicker.formatDate('dd.M.yy', new Date(element.obsDatetime))+encounterProvider
             var closeCardHeader = "</button></div>"

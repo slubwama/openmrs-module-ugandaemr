@@ -69,5 +69,14 @@
       "provider": "${project.parent.artifactId}",
       "fragment": "clinicalNotes"
     }
+  },
+  {
+    "id": "${project.parent.groupId}.${project.parent.artifactId}.patientDashboard.firstColumnFragments.displayLabResults",
+    "extensionPointId": "patientDashboard.firstColumnFragments",
+    "order": 0,
+    "extensionParams": {
+      "provider": "${project.parent.artifactId}",
+      "fragment": "displayLabResults"
+    }
   }
 ]
