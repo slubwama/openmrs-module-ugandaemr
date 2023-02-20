@@ -56,9 +56,9 @@ public class ClinicianQueueListFragmentController {
 
         List<PatientQueue> patientQueueList = new ArrayList();
         if (!searchfilter.equals("")) {
-            patientQueueList = patientQueueingService.getPatientQueueListBySearchParams(searchfilter, OpenmrsUtil.firstSecondOfDay(new Date()), OpenmrsUtil.getLastMomentOfDay(new Date()), uiSessionContext.getSessionLocation(), uiSessionContext.getSessionLocation(), null);
+            patientQueueList = patientQueueingService.getPatientQueueListBySearchParams(searchfilter, OpenmrsUtil.firstSecondOfDay(new Date()), OpenmrsUtil.getLastMomentOfDay(new Date()), uiSessionContext.getSessionLocation(), null, null);
         } else {
-            patientQueueList = patientQueueingService.getPatientQueueListBySearchParams(searchfilter, OpenmrsUtil.firstSecondOfDay(new Date()), OpenmrsUtil.getLastMomentOfDay(new Date()), uiSessionContext.getSessionLocation(), uiSessionContext.getSessionLocation(), null);
+            patientQueueList = patientQueueingService.getPatientQueueListBySearchParams(searchfilter, OpenmrsUtil.firstSecondOfDay(new Date()), OpenmrsUtil.getLastMomentOfDay(new Date()), uiSessionContext.getSessionLocation(), null, null);
         }
         List<PatientQueueVisitMapper> patientQueueMappers = ugandaEMRService.mapPatientQueueToMapper(patientQueueList);
         try {
