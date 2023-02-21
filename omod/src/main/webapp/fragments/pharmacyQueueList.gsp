@@ -83,7 +83,7 @@ button, input {
                 var patientQueueListElement = element;
 
 
-                var isPatientPicked = isQueueIsPicked(element.patientQueueId);
+                var isPatientPicked = element.status === "PICKED";
 
 
                 var ordersNo = noOfDrugPrescriptions(element);
@@ -157,23 +157,6 @@ button, input {
         jq("#pharmacy-completed-list-table").append(completed);
         jq("#pharmacy-completed-number").html("");
         jq("#pharmacy-completed-number").append("   " + completedCount);
-    }
-
-    function isQueueIsPicked(patientQueueId) {
-        var isQueuePicked = false;
-        jq.ajax({
-            type: "GET",
-            url: '/' + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/patientqueue/" + patientQueueId + "",
-            dataType: "json",
-            contentType: "application/json;",
-            async: false,
-            success: function (data) {
-                if (data.status === "PICKED") {
-                    isQueuePicked = true;
-                }
-            }
-        });
-        return isQueuePicked;
     }
 
     function noOfDrugPrescriptions(drugList) {

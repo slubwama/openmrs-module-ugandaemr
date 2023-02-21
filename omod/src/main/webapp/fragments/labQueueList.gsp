@@ -219,7 +219,7 @@
         jq.each(dataToDisplay, function (index, element) {
                 var orders = displayLabOrderData(element, true);
                 if (orders !== null) {
-                    var isPatientPicked = isQueueIsPicked(element.patientQueueId);
+                    var isPatientPicked = element.status === "PICKED";
                     var patientQueueListElement = element;
                     var waitingTime = getWaitingTime(patientQueueListElement.dateCreated, patientQueueListElement.dateChanged);
 
@@ -280,24 +280,6 @@
         } else {
             return null;
         }
-    }
-
-
-    function isQueueIsPicked(patientQueueId) {
-        var isQueuePicked = false;
-        jq.ajax({
-            type: "GET",
-            url: '/' + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/patientqueue/" + patientQueueId + "",
-            dataType: "json",
-            contentType: "application/json;",
-            async: false,
-            success: function (data) {
-                if (data.status === "PICKED") {
-                    isQueuePicked = true;
-                }
-            }
-        });
-        return isQueuePicked;
     }
 
     function noOfTests(labQueueList) {
