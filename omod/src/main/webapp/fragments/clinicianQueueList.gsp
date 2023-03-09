@@ -24,12 +24,13 @@
 </style>
 <script>
     if (jQuery) {
+
         setInterval(function () {
             console.log("Checking IF Reloading works");
             getPatientQueue();
         }, 1*60000);
-        jq(document).ready(function () {
 
+        jq(document).ready(function () {
             jq(document).on('sessionLocationChanged', function () {
                 window.location.reload();
             });
@@ -40,9 +41,11 @@
                 var modal = jq(this)
                 modal.find("#patient_id").val(patientId);
             });
+
             setLocationsToSelect();
 
-            getPatientQueue();
+            getPatientQueue()
+
             jq("#patient-search").change(function () {
                 if (jq("#patient-search").val().length >= 3) {
                     getPatientQueue();

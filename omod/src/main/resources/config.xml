@@ -286,6 +286,18 @@
         <description>This is a facility SMS Template used by the SMS Program</description>
     </globalProperty>
 
+    <globalProperty>
+        <property>ugandaemr.labWorkListBackLogDaysToDisplay</property>
+        <defaultValue>5</defaultValue>
+        <description>The number of months for tests backlog to display in the lab worklist and referred tests</description>
+    </globalProperty>
+
+    <globalProperty>
+        <property>ugandaemr.labReferenceListBackLogDaysToDisplay</property>
+        <defaultValue>1</defaultValue>
+        <description>The number of months for tests backlog to display in the lab worklist and referred tests</description>
+    </globalProperty>
+
     <privilege>
         <name>Task: HIV Clinic Access</name>
         <description>Able to access HIV patient clinic information</description>

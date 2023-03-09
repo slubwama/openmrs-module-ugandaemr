@@ -101,7 +101,7 @@
         var stockIventoryItems = []
         jq.ajax({
             type: "GET",
-            url: '/' + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/stockmanagement/stockiteminventory?v=default&limit=10&totalCount=true&drugUuid=" + druguuid + "&groupBy=LocationStockItemBatchNo&dispenseLocationUuid=" + currentLocationUUID + "&includeStrength=1&includeConceptRefIds=1&emptyBatch=1&emptyBatchLocationUuid="+currentLocationUUID+"",
+            url: '/' + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/stockmanagement/stockiteminventory?v=default&limit=10&totalCount=true&drugUuid=" + druguuid + "&groupBy=LocationStockItemBatchNo&dispenseLocationUuid=" + currentLocationUUID + "&includeStrength=1&includeConceptRefIds=1&emptyBatch=1&emptyBatchLocationUuid=" + currentLocationUUID + "",
             dataType: "json",
             async: false,
             success: function (data) {
@@ -112,13 +112,26 @@
         return stockIventoryItems
     }
 
-    function getEditPrescriptionTempLate(pharmacyData, encounterId, position) {
-        var editPrescriptionParameterOptions = getDrugOrderData(pharmacyData, encounterId, position);
+    function getEditPrescriptionTempLate(queue_id, encounterId) {
+        var pharmacyData = {};
+        jq.get('${ ui.actionLink("getPharmacyMapper") }', {
+            queue_id: queue_id,
+            async: false
+        }, function (response) {
+            if (response) {
+                var responseData = JSON.parse(response.replace("patientPharmacyQueueList=", "\"patientPharmacyQueueList\":").trim());
+                pharmacyData = responseData;
+            }
+        });
+
+        if(pharmacyData.length>0){
+        var editPrescriptionParameterOptions = getDrugOrderData(pharmacyData, encounterId, 0);
         jq.each(editPrescriptionParameterOptions, function (index, editPrescriptionParameterOption) {
             editPrescriptionParameterOpts.editPrescriptionParameterOptions.push(editPrescriptionParameterOption);
         });
 
         editPrescriptionDialog.show();
+        }
     }
 
     function saveEditResult() {
