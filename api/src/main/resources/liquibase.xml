@@ -1,47 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE databaseChangeLog [
-		<!ELEMENT databaseChangeLog (changeSet)*>
-		<!ATTLIST databaseChangeLog
-				xmlns CDATA #REQUIRED
-				xmlns:xsi CDATA #REQUIRED
-				xsi:schemaLocation CDATA #REQUIRED>
-		<!ELEMENT changeSet (preConditions|comment|sql|insert|createTable)*>
-		<!ATTLIST changeSet
-				author CDATA #REQUIRED
-				id CDATA #REQUIRED>
-		<!ELEMENT preConditions (sqlCheck|not|tableExists)*>
-		<!ATTLIST preConditions
-				onError CDATA #IMPLIED
-				onFail CDATA #REQUIRED>
-		<!ELEMENT sqlCheck (#PCDATA)>
-		<!ATTLIST sqlCheck
-				expectedResult CDATA #REQUIRED>
-		<!ELEMENT comment (#PCDATA)>
-		<!ELEMENT sql (#PCDATA)>
-		<!ELEMENT insert (column)*>
-		<!ATTLIST insert
-				tableName CDATA #REQUIRED>
-		<!ELEMENT column (constraints)*>
-		<!ATTLIST column
-				autoIncrement CDATA #IMPLIED
-				name CDATA #REQUIRED
-				type CDATA #IMPLIED
-				value CDATA #IMPLIED
-				valueDate CDATA #IMPLIED>
-		<!ELEMENT not (tableExists)*>
-		<!ELEMENT tableExists (#PCDATA)>
-		<!ATTLIST tableExists
-				tableName CDATA #REQUIRED>
-		<!ELEMENT createTable (column)*>
-		<!ATTLIST createTable
-				tableName CDATA #REQUIRED>
-		<!ELEMENT constraints (#PCDATA)>
-		<!ATTLIST constraints
-				nullable CDATA #IMPLIED
-				primaryKey CDATA #IMPLIED
-				unique CDATA #IMPLIED>
-		]>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
