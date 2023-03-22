@@ -23,12 +23,16 @@ import org.openmrs.ui.framework.fragment.FragmentModel;
 import org.openmrs.util.OpenmrsUtil;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.rmi.CORBA.Util;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Date;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.GregorianCalendar;
 
 import static org.openmrs.module.ugandaemr.UgandaEMRConstants.*;
 
