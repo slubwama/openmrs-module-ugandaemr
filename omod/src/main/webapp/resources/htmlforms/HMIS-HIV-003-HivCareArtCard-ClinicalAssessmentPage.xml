@@ -80,6 +80,7 @@
 
                 jq("#refill_point_select_id").attr("disabled", true);
                 disable_fields("cddp_category");
+                disable_fields("next_facility_visit_date");
 
 
                 jq("#refill_point_select_id").change(function () {
@@ -112,8 +113,9 @@
 
                 jq("#165143 select").change(function () {
                     var model= jq("#165143").find("select").find(":selected").val();
-                    if (model === "165142") {
+                    if (model === "165142" || model === "165141") {
                         enable_fields("cddp_category");
+                        enable_fields("next_facility_visit_date");
                     }else if (model === "165141"){
                         hideContainer("#cddp_category");
                         jq("#refill_point_select_id").attr("disabled", false);
@@ -123,6 +125,7 @@
                         jq("#refill_point_select_id  option").prop("selected", false);
                         jq("#cddp_category  option").prop("selected", false);
                         disable_fields("cddp_category");
+                        disable_fields("next_facility_visit_date");
                     }
                 });
 
@@ -3168,7 +3171,7 @@
                                                              labelText="DSD Group Code"/>
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <obs id="next facility visit date" conceptId="166560"
+                                                        <obs id="next_facility_visit_date" conceptId="166560"
                                                              allowFutureDates="true"
                                                              labelText="Facility Return Date"/>
                                                     </div>
@@ -4478,7 +4481,7 @@
                                                  labelText="DSD Group Code"/>
                                         </div>
                                         <div class="col-md-3">
-                                            <obs id="next facility visit date" conceptId="166560"
+                                            <obs id="next_facility_visit_date" conceptId="166560"
                                                  allowFutureDates="true"
                                                  labelText="Facility Return Date"/>
                                         </div>
