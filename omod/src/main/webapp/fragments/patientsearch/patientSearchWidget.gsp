@@ -305,8 +305,11 @@ body {
                 transferPatientIn = true;
                 jq().toastmessage('showSuccessToast', "Patient Created Successfully");
             }).error(function (data, status, err) {
+                jq.each(JSON.parse(data.responseText).issue, function (index, element) {
+                    jq().toastmessage('showErrorToast', element.diagnostics);
+                });
                 jq("#loading-model").modal("hide");
-                jq().toastmessage('showErrorToast', err);
+
             });
         });
     });
@@ -717,13 +720,9 @@ body {
                     <div>
                         <strong>Facility Name:</strong><span id="facilityName"></span>
                     </div>
-                </div>
+                    <div id="patient_text">
 
-                <div style="margin-top: 10px">
-                    <span>Include Encounters</span><span>&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox"
-                                                                                        id="transfer-encounters"
-                                                                                        name="transfer-encounter"
-                                                                                        value="true"></span>
+                    </div>
                 </div>
             </div>
 
