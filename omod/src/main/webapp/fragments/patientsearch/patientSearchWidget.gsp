@@ -65,6 +65,9 @@ body {
     border-radius: 50px;
     width: 30%
 }
+#patientId{
+    width: 100%;
+}
 
 </style>
 <script type="text/javascript">
@@ -667,62 +670,16 @@ body {
         <div class="collapse" id="collapseExample">
             <div class="card card-body" id="search-client-registry">
                 <div class="row">
-                    <div class="col-3">
-                        <input type="text" id="sur-name" placeholder="First Name/Surname" autocomplete="off"/>
+
+                    <div class="col-8">
+                        <input type="text" id="patientId" placeholder="Patient Unique Identifier" value="" autocomplete="off"/>
                     </div>
 
-                    <div class="col-3">
-                        <input type="text" id="given-name" placeholder="Given Name" autocomplete="off"/>
-                    </div>
-
-                    <div class="col-3">
-                        <input type="text" id="middle-name" placeholder="Middle Name" autocomplete="off"/>
-                    </div>
-
-                    <div class="col-3">
-                        <input type="text" id="patientId" placeholder="Patient Id" value="" autocomplete="off"/>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-                        <select id="search-gender">
-                            <option value="">Select Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                        </select>
-                    </div>
-
-                    <div class="col-3">
-                        <input type="date" id="birthdate" placeholder="Date Of Birth" autocomplete="off"/>
-                    </div>
-
-                    <div class="col-3">
-                        <input type="text" id="age-years" placeholder="Age~Years" autocomplete="off"/>
-                    </div>
-
-                    <div class="col-3">
-                        <input type="text" id="telecom" placeholder="Phone Number" autocomplete="off"/>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-3">
-                        <input type="text" id="address-country" placeholder="Country" autocomplete="off"/>
-                    </div>
-
-                    <div class="col-3">
-                        <input type="text" id="address-sub-county" placeholder="Sub Country" autocomplete="off"/>
-                    </div>
-
-                    <div class="col-3">
-                        <input type="text" id="address-village" placeholder="Village" autocomplete="off"/>
-                    </div>
-
-                    <div class="col-3">
+                    <div class="col-4">
                         <input type="submit" value="Search" class="submit" id="advanced-search" autocomplete="off"/>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
