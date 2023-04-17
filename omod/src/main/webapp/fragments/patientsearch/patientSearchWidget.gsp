@@ -282,6 +282,7 @@ body {
                 patientTransferInData = data;
                 displayFhirData(data);
             } else {
+                jq().toastmessage('showNoticeToast', "No Record found");
                 jq("#loading-model").modal("hide");
             }
         }).error(function (data, status, err) {
