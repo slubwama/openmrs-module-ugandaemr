@@ -267,7 +267,6 @@ body {
     function searchOnLineFhirServer(identifier, searchConfigs, searchParams) {
         var query = "?" + searchParams;
         query = query.replace("%s", searchParams);
-        jq("#loading-model").modal("show");
         var url = searchConfigs.url + query
         jQuery.ajax({
             url: url,
@@ -282,8 +281,8 @@ body {
                 patientTransferInData = data;
                 displayFhirData(data);
             } else {
+                jq("#loading-model").modal('hide');
                 jq().toastmessage('showNoticeToast', "No Record found");
-                jq("#loading-model").modal("hide");
             }
         }).error(function (data, status, err) {
             jq("#loading-model").modal("hide");
@@ -447,12 +446,10 @@ body {
 
             if (patientId !== "" && uic === "") {
                 patientSearchWidget.searchByIdentifiers(jq("#patientId").val());
-            }
-
+            }else{
             patientSearchWidget.searchByIdentifiers(uic);
-
-            patientSearchWidget.getCountAfterSearch();
-
+            }
+            
             if (patientSearchWidget.getCountAfterSearch() === 0 && patientId !== "") {
                 searchOnLineFhirServer(patientId, searchConfigs, searchParams);
             } else if (patientSearchWidget.getCountAfterSearch() === 0 && patientId === "" && uic !== "") {
@@ -735,7 +732,7 @@ body {
     </div>
 </div>
 ${ui.includeFragment("ugandaemr", "checkIn")}
-<div class="modal fade" id="loading-model" tabindex="-1" role="dialog"
+<div class="modal fade hide" id="loading-model" tabindex="-1" role="dialog"
      aria-labelledby="loadingModelLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
