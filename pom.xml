@@ -120,12 +120,12 @@
 		<uilibraryVersion>2.0.6</uilibraryVersion>
 		<xformsVersion>4.3.12</xformsVersion>
 		<patientqueueingVersion>1.2.0</patientqueueingVersion>
-		<ugandaemrSyncVersion>1.1.9-SNAPSHOT</ugandaemrSyncVersion>
-		<ugandaemrfingerprintVersion>1.0.11</ugandaemrfingerprintVersion>
+		<ugandaemrSyncVersion>1.1.9</ugandaemrSyncVersion>
+		<ugandaemrfingerprintVersion>1.1.0</ugandaemrfingerprintVersion>
 		<cohortModuleVersion>2.2.1</cohortModuleVersion>
-		<stockmanagementVersion>1.0.1-SNAPSHOT</stockmanagementVersion>
+		<stockmanagementVersion>1.0.1</stockmanagementVersion>
 		<!-- core configuration library -->
-		<ugandaemrReportsVersion>2.0.36-SNAPSHOT</ugandaemrReportsVersion>
+		<ugandaemrReportsVersion>2.0.37</ugandaemrReportsVersion>
 
 
 	</properties>
