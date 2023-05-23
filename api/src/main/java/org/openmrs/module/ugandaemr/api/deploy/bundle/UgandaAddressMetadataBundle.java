@@ -20,7 +20,7 @@ public class UgandaAddressMetadataBundle extends AddressMetadataBundle {
         l.add(new AddressComponent(AddressField.COUNTRY, "Country", 40, "Uganda", true));
         l.add(new AddressComponent(AddressField.COUNTY_DISTRICT, "District", 40, null, true));
         l.add(new AddressComponent(AddressField.STATE_PROVINCE, "County", 40, null, true));
-        l.add(new AddressComponent(AddressField.ADDRESS_3, "Subcounty", 60, null, true));
+        l.add(new AddressComponent(AddressField.ADDRESS_3, "SubCounty", 60, null, true));
         l.add(new AddressComponent(AddressField.ADDRESS_4, "Parish", 60, null, true));
         l.add(new AddressComponent(AddressField.ADDRESS_5, "Village", 60, null, false));
 
