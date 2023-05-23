@@ -17,6 +17,7 @@ public class UgandaAddressMetadataBundle extends AddressMetadataBundle {
     @Override
     public List<AddressComponent> getAddressComponents() {
         List<AddressComponent> l = new ArrayList<AddressComponent>();
+        
         l.add(new AddressComponent(AddressField.COUNTRY, "Country", 40, "Uganda", true));
         l.add(new AddressComponent(AddressField.COUNTY_DISTRICT, "District", 40, null, true));
         l.add(new AddressComponent(AddressField.STATE_PROVINCE, "County", 40, null, true));
