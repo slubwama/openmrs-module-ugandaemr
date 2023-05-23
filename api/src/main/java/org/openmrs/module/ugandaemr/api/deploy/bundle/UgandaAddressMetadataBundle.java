@@ -17,12 +17,12 @@ public class UgandaAddressMetadataBundle extends AddressMetadataBundle {
     @Override
     public List<AddressComponent> getAddressComponents() {
         List<AddressComponent> l = new ArrayList<AddressComponent>();
-        l.add(new AddressComponent(AddressField.COUNTRY, "ugandaemr.address.country", 40, "Uganda", true));
-        l.add(new AddressComponent(AddressField.COUNTY_DISTRICT, "ugandaemr.address.district", 40, null, true));
-        l.add(new AddressComponent(AddressField.STATE_PROVINCE, "ugandaemr.address.county", 40, null, true));
-        l.add(new AddressComponent(AddressField.ADDRESS_3, "ugandaemr.address.subcounty", 60, null, true));
-        l.add(new AddressComponent(AddressField.ADDRESS_4, "ugandaemr.address.parish", 60, null, true));
-        l.add(new AddressComponent(AddressField.ADDRESS_5, "ugandaemr.address.village", 60, null, false));
+        l.add(new AddressComponent(AddressField.COUNTRY, "Country", 40, "Uganda", true));
+        l.add(new AddressComponent(AddressField.COUNTY_DISTRICT, "District", 40, null, true));
+        l.add(new AddressComponent(AddressField.STATE_PROVINCE, "County", 40, null, true));
+        l.add(new AddressComponent(AddressField.ADDRESS_3, "Subcounty", 60, null, true));
+        l.add(new AddressComponent(AddressField.ADDRESS_4, "Parish", 60, null, true));
+        l.add(new AddressComponent(AddressField.ADDRESS_5, "Village", 60, null, false));
 
         return l;
     }
