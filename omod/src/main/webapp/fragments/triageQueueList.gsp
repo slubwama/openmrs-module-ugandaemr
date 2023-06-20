@@ -63,7 +63,7 @@
             triageSearchFilter: jq("#patient-triage-search").val().trim().toLowerCase()
         }, function (response) {
             if (response) {
-                var responseData = JSON.parse(response.replace("patientTriageQueueList=", "\"patientTriageQueueList\":").trim());
+                var responseData = JSON.parse(JSON.stringify(response));
                 displayTriageData(responseData);
             } else if (!response) {
                 jq("#triage-queue-list-table").append(${ ui.message("coreapps.none ") });
@@ -87,7 +87,7 @@
         var dataToDisplay = [];
 
         if (response.patientTriageQueueList.length > 0) {
-            dataToDisplay = response.patientTriageQueueList.sort(function (a, b) {
+            dataToDisplay = JSON.parse(response.patientTriageQueueList).sort(function (a, b) {
                 return a.patientQueueId - b.patientQueueId;
             });
         }
@@ -260,7 +260,8 @@
     </div>
 </div>
 
-${ui.includeFragment("ugandaemr", "pickPatientFromQueue", [provider: currentProvider, currentLocation: currentLocation])}
+${
+        ui.includeFragment("ugandaemr", "pickPatientFromQueue", [provider: currentProvider, currentLocation: currentLocation])}
 
 <% } %>
 

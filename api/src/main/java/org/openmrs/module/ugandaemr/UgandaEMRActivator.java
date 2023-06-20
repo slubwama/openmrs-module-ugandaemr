@@ -133,6 +133,7 @@ public class UgandaEMRActivator extends org.openmrs.module.BaseModuleActivator {
             dataImporter.importData("metadata/Custom_Concepts.xml");
             dataImporter.importData("metadata/Drug_Concepts.xml");
             dataImporter.importData("metadata/CIEL_Concepts.xml");
+            dataImporter.importData("metadata/Concept_Mbarara.xml");
             log.info("Custom Concepts imported");
 
             log.info("Start import of person attributes");
@@ -269,7 +270,7 @@ public class UgandaEMRActivator extends org.openmrs.module.BaseModuleActivator {
         // The primary identifier type now uses metadata mapping instead of a global property
         MetadataMappingService metadataMappingService = Context.getService(MetadataMappingService.class);
         MetadataTermMapping primaryIdentifierTypeMapping = metadataMappingService.getMetadataTermMapping(EmrApiConstants.EMR_METADATA_SOURCE_NAME, EmrApiConstants.PRIMARY_IDENTIFIER_TYPE);
-        PatientIdentifierType openmrsIdType = Context.getPatientService().getPatientIdentifierTypeByUuid(PatientIdentifierTypes.OPENMRS_ID.uuid());
+        PatientIdentifierType openmrsIdType = Context.getPatientService().getPatientIdentifierTypeByUuid(PatientIdentifierTypes.NATIONAL_ID.uuid());
 
         //overwrite if not set yet
         if (!openmrsIdType.getUuid().equals(primaryIdentifierTypeMapping.getMetadataUuid())) {
@@ -282,13 +283,6 @@ public class UgandaEMRActivator extends org.openmrs.module.BaseModuleActivator {
         if (Context.getAdministrationService().getGlobalProperty("ugandaemr.showARTPatientNumberIdentifier").equals("true")) {
             log.info("Adding ART patient number to extra identifier types property");
             ART_Patient_Number_Identifier = "," + PatientIdentifierTypes.ART_PATIENT_NUMBER.uuid();
-        }
-
-        String NATIONAL_ID_PATIENT_Identifier = "";
-        // check if the patient's National ID is to be displayed then add it here
-        if (Context.getAdministrationService().getGlobalProperty("ugandaemr.showNationalIDPatientIdentifier").equals("true")) {
-            log.info("Adding patient National ID to extra identifier types property");
-            NATIONAL_ID_PATIENT_Identifier = "," + PatientIdentifierTypes.NATIONAL_ID.uuid();
         }
 
         String Research_Patient_Identifier = "";
@@ -306,7 +300,7 @@ public class UgandaEMRActivator extends org.openmrs.module.BaseModuleActivator {
         }
 
         // set the HIV care number and EID number as additional identifiers that can be searched for
-        properties.add(new GlobalProperty(EmrApiConstants.GP_EXTRA_PATIENT_IDENTIFIER_TYPES, PatientIdentifierTypes.HIV_CARE_NUMBER.uuid() + "," + PatientIdentifierTypes.EXPOSED_INFANT_NUMBER.uuid() + "," + PatientIdentifierTypes.IPD_NUMBER.uuid() + "," + PatientIdentifierTypes.ANC_NUMBER.uuid() + "," + PatientIdentifierTypes.PNC_NUMBER.uuid() + "," + ART_Patient_Number_Identifier + Research_Patient_Identifier + Refugee_Identifier + NATIONAL_ID_PATIENT_Identifier));
+        properties.add(new GlobalProperty(EmrApiConstants.GP_EXTRA_PATIENT_IDENTIFIER_TYPES, PatientIdentifierTypes.HIV_CARE_NUMBER.uuid() + "," + PatientIdentifierTypes.EXPOSED_INFANT_NUMBER.uuid() + "," + PatientIdentifierTypes.IPD_NUMBER.uuid() + "," + PatientIdentifierTypes.ANC_NUMBER.uuid() + "," + PatientIdentifierTypes.PNC_NUMBER.uuid() + "," + ART_Patient_Number_Identifier + Research_Patient_Identifier + Refugee_Identifier));
 
         // set the name of the application
         properties.add(new GlobalProperty("application.name", "UgandaEMR - Uganda eHealth Solution"));

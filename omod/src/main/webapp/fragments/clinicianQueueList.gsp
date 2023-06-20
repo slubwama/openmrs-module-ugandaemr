@@ -24,12 +24,13 @@
 </style>
 <script>
     if (jQuery) {
+
         setInterval(function () {
             console.log("Checking IF Reloading works");
             getPatientQueue();
         }, 1*60000);
-        jq(document).ready(function () {
 
+        jq(document).ready(function () {
             jq(document).on('sessionLocationChanged', function () {
                 window.location.reload();
             });
@@ -40,9 +41,11 @@
                 var modal = jq(this)
                 modal.find("#patient_id").val(patientId);
             });
+
             setLocationsToSelect();
 
-            getPatientQueue();
+            getPatientQueue()
+
             jq("#patient-search").change(function () {
                 if (jq("#patient-search").val().length >= 3) {
                     getPatientQueue();
@@ -79,7 +82,7 @@
             searchfilter: jq("#patient-search").val().trim().toLowerCase()
         }, function (response) {
             if (response) {
-                var responseData = JSON.parse(response.replace("patientClinicianQueueList=", "\"patientClinicianQueueList\":").trim());
+                var responseData = response;
                 displayClinicianData(responseData);
             } else if (!response) {
                 jq("#clinician-queue-list-table").append(${ ui.message("coreapps.none ") });
@@ -122,7 +125,7 @@
         var dataToDisplay = [];
 
         if (response.patientClinicianQueueList.length > 0) {
-            dataToDisplay = response.patientClinicianQueueList.sort(function (a, b) {
+            dataToDisplay = JSON.parse(response.patientClinicianQueueList).sort(function (a, b) {
                 return a.patientQueueId - b.patientQueueId;
             });
         }

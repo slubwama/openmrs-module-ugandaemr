@@ -628,6 +628,103 @@ VALUES
 			('SMS Non Suppressed ViralLoad ','2022-03-23',1,'f538f903-0258-4151-a4f6-f8ceb8046017',(SELECT cohort_type_id from cohort_type where uuid='889aa250-7113-4ba7-ab8c-ca062e004696'));
 		</sql>
 	</changeSet>
+
+
+	<changeSet author="slubwama" id="order-obs-202303081017-1">
+		<createTable tableName="order_obs">
+			<column autoIncrement="true" name="order_obs_id" type="INT">
+				<constraints primaryKey="true" unique="true"/>
+			</column>
+			<column name="order_id" type="INT"/>
+			<column name="obs_id" type="INT"/>
+			<column name="encounter_id" type="INT"/>
+			<column name="date_created" type="datetime"/>
+			<column name="changed_by" type="INT"/>
+			<column name="date_changed" type="datetime"/>
+			<column name="voided" type="TINYINT(3)"/>
+			<column name="date_voided" type="datetime"/>
+			<column name="voided_by" type="INT"/>
+			<column name="void_reason" type="VARCHAR(255)"/>
+			<column name="creator" type="INT"/>
+			<column name="uuid" type="VARCHAR(38)"/>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="slubwama" id="order_obs_202303081017-2">
+		<createIndex indexName="order_obs_encounter_id_index" tableName="order_obs">
+			<column name="encounter_id"/>
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="slubwama" id="order_obs_202303081017-3">
+		<addForeignKeyConstraint baseColumnNames="encounter_id" baseTableName="order_obs" constraintName="order_obs_encounter_id_index" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="encounter_id" referencedTableName="encounter"/>
+	</changeSet>
+
+	<changeSet author="slubwama" id="order_obs_202303081017-4">
+		<createIndex indexName="order_obs_orders_order_id_fk" tableName="order_obs">
+			<column name="order_id"/>
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="slubwama" id="order_obs_202303081017-5">
+		<addForeignKeyConstraint baseColumnNames="order_id" baseTableName="order_obs" constraintName="order_obs_orders_order_id_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="order_id" referencedTableName="orders"/>
+	</changeSet>
+
+	<changeSet author="slubwama" id="order_obs_202303081017-6">
+		<createIndex indexName="order_obs_obs_obs_id_fk" tableName="order_obs">
+			<column name="obs_id"/>
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="slubwama" id="order_obs_202303081017-7">
+		<addForeignKeyConstraint baseColumnNames="obs_id" baseTableName="order_obs" constraintName="order_obs_obs_obs_id_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="obs_id" referencedTableName="obs"/>
+	</changeSet>
+
+	<changeSet author="slubwama" id="order_obs_202303081017-8">
+		<addUniqueConstraint columnNames="obs_id,order_id" constraintName="order_obs_order_id_obs_id_uindex" tableName="order_obs"/>
+	</changeSet>
+
+	<changeSet  author="slubwama" id="ugandaemr-2023-03-08-1712">
+		<comment>add test orders with results into the order_obs table</comment>
+		<sql>
+			replace into order_obs (encounter_id, order_id, obs_id, date_created, creator, uuid) (select encounter_id, order_id, obs_id, date_created, creator, uuid() from obs where order_id is not null);
+		</sql>
+	</changeSet>
+
+	<changeSet id="ugandaemr-20230127-2345" author="daphinenalule">
+		<comment>
+			Insert General CDDP Cohort type for CDDP Group
+		</comment>
+		<sql>
+			REPLACE INTO cohort_type(name,date_created,creator,uuid)VALUES
+			('General CDDP Cohort Type','2023-01-27',1,'da964ff0-648e-440b-a219-d2aeba3670d0');
+		</sql>
+	</changeSet>
+
+	<changeSet id="20230404-1001" author="iakileng">
+		<preConditions onFail="MARK_RAN">
+			<tableExists tableName="obs"/>
+		</preConditions>
+		<comment> Updating family member's hiv unknown status concept id in obs table </comment>
+		<sql> UPDATE obs SET value_coded = 90001 where value_coded = 165165 and concept_id = 165275; </sql>
+	</changeSet>
+	<changeSet id="ugandaemr-20230413-1122" author="semujju">
+		<comment>
+			Change htmlformentry_html_form table to UTF-8 encoding
+		</comment>
+		<sql>
+			ALTER TABLE htmlformentry_html_form CONVERT TO CHARACTER SET UTF8;
+		</sql>
+	</changeSet>
+	<changeSet id="ugandaemr-20230425-1730" author="dbaluku">
+		<comment>
+			next gen reports uuids for exchange
+		</comment>
+		<sql>
+			UPDATE global_property SET property_value = '214fb8ef-6219-43f3-b20b-023261c0dec6,8dafdc32-97b7-4f49-828e-475cd4f09669,65fec0844-1970-43c5-bf77-b296415daa34,e7102e5c-b90d-4a4a-b763-20518eadbae5' WHERE property = 'ugandaemrsync.sendNextGenReports.server.reportuuids';
+			UPDATE global_property SET property_value = '27f4804f-ec6f-466e-b4ea-21f9ca584880,072b526a-4140-4c43-9f5c-6d1fa74d7c42,0e3bdfde-3ee0-4f94-b105-bff844feba30,a2d6170e-1930-4f21-920c-6106e39058e8,ac1b2145-54aa-4ed8-9590-db7c47fe51e4' WHERE property = 'ugandaemrsync.sendHMISReports.server.reportuuids';
+		</sql>
+	</changeSet>
 </databaseChangeLog>
 
 
