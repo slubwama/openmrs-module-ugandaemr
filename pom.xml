@@ -104,7 +104,7 @@
 		<metadatasharingVersion>1.8.0</metadatasharingVersion>
 		<openconceptlabVersion>1.2.9</openconceptlabVersion>
 		<openwebappsVersion>1.13.0</openwebappsVersion>
-		<patientFlagsVersion>3.0.4</patientFlagsVersion>
+		<patientFlagsVersion>3.0.6-SNAPSHOT</patientFlagsVersion>
 		<providermanagementVersion>2.13.0</providermanagementVersion>
 		<referenceapplicationVersion>2.13.0</referenceapplicationVersion>
 		<referencemetadataVersion>2.12.0</referencemetadataVersion>
