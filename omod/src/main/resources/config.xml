@@ -292,6 +292,7 @@
         <description>The number of months for tests backlog to display in the lab worklist and referred tests</description>
     </globalProperty>
 
+
     <globalProperty>
         <property>ugandaemr.labReferenceListBackLogDaysToDisplay</property>
         <defaultValue>1</defaultValue>
