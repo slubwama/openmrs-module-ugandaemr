@@ -51,6 +51,7 @@ public class PharmacyQueueListFragmentController {
         pageModel.put("currentProvider", uiSessionContext.getCurrentProvider());
         pageModel.put("healthCenterName", Context.getAdministrationService().getGlobalProperty(UgandaEMRConstants.GP_HEALTH_CENTER_NAME));
         pageModel.put("enablePatientQueueSelection", Context.getAdministrationService().getGlobalProperty("ugandaemr.enablePatientQueueSelection"));
+        pageModel.put("enableStockManagement", Boolean.parseBoolean(Context.getAdministrationService().getGlobalProperty("ugandaemr.enableStockManagement")));
     }
 
 
@@ -65,7 +66,23 @@ public class PharmacyQueueListFragmentController {
             patientQueueList = patientQueueingService.getPatientQueueListBySearchParams(null, OpenmrsUtil.firstSecondOfDay(new Date()), OpenmrsUtil.getLastMomentOfDay(new Date()), uiSessionContext.getSessionLocation(), null, null);
         }
         if (!patientQueueList.isEmpty()) {
-            simpleObject.put("patientPharmacyQueueList", objectMapper.writeValueAsString(Context.getService(UgandaEMRService.class).mapPatientQueueToMapperWithDrugOrders(patientQueueList)));
+            simpleObject.put("patientPharmacyQueueList", objectMapper.writeValueAsString(Context.getService(UgandaEMRService.class).mapPatientQueueToMapperWithDrugOrders(patientQueueList,false)));
+        } else {
+            simpleObject.put("patientPharmacyQueueList", "");
+        }
+
+        return simpleObject;
+    }
+
+    public SimpleObject getPharmacyMapper(@RequestParam(value = "queue_id", required = false) Integer queue, UiSessionContext uiSessionContext) throws IOException, ParseException {
+        PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
+        ObjectMapper objectMapper = new ObjectMapper();
+        SimpleObject simpleObject = new SimpleObject();
+        List<PatientQueue> patientQueueList = new ArrayList<>();
+        patientQueueList.add(patientQueueingService.getPatientQueueById(queue));
+
+        if (patientQueueList.size()>0) {
+            simpleObject.put("patientPharmacyQueueList", objectMapper.writeValueAsString(Context.getService(UgandaEMRService.class).mapPatientQueueToMapperWithDrugOrders(patientQueueList,true)));
         } else {
             simpleObject.put("patientPharmacyQueueList", "");
         }

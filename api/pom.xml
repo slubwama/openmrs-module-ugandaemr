@@ -163,6 +163,10 @@
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>patientflags-api</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>patientflags-api-metadata</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.openmrs.module</groupId>

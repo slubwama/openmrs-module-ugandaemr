@@ -313,5 +313,22 @@ public class PatientIdentifierTypes {
             return "877169c4-92c6-4cc9-bf45-1ab95faea242";
         }
     };
-	
+
+    public static PatientIdentifierTypeDescriptor PATIENT_ORGANIZATION_ID = new PatientIdentifierTypeDescriptor() {
+
+        @Override
+        public String name() {
+            return "POIN";
+        }
+
+        @Override
+        public String description() {
+            return "Patient Organization Identification Number (POIN) the number that identifies a patient at a facility";
+        }
+
+        public String uuid() {
+            return "5ddcb840-e1d3-11ed-b5ea-0242ac120002";
+        }
+    };
+
 }

@@ -66,7 +66,7 @@
 	</modules>
 
 	<properties>
-		<openMRSVersion>2.5.5</openMRSVersion>
+		<openMRSVersion>2.5.8</openMRSVersion>
 		<openmrsTestutilsVersion>1.3</openmrsTestutilsVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<webservices.restModuleVersion>2.39.0</webservices.restModuleVersion>
@@ -78,7 +78,7 @@
 		<addresshierarchyVersion>2.14.2</addresshierarchyVersion>
 		<allergyuiVersion>1.8.4</allergyuiVersion>
 		<appframeworkVersion>2.17.0</appframeworkVersion>
-		<appuiVersion>1.14.0</appuiVersion>
+		<appuiVersion>1.16.0</appuiVersion>
 		<appointmentschedulingVersion>1.16.0</appointmentschedulingVersion>
 		<appointmentschedulinguiVersion>1.12.0</appointmentschedulinguiVersion>
 		<calculationVersion>1.3.0</calculationVersion>
@@ -89,7 +89,7 @@
 		<dataintegrityVersion>4.4.4</dataintegrityVersion>
 		<emrapiVersion>1.32.0</emrapiVersion>
 		<eventVersion>2.10.0</eventVersion>
-		<fhir2Version>1.9.0</fhir2Version>
+		<fhir2Version>1.2.2</fhir2Version>
 		<formentryappVersion>1.4.2</formentryappVersion>
 		<formfilterVersion>1.3.0</formfilterVersion>
 		<htmlformentryuiVersion>2.0.0</htmlformentryuiVersion>
@@ -104,9 +104,9 @@
 		<metadatasharingVersion>1.8.0</metadatasharingVersion>
 		<openconceptlabVersion>1.2.9</openconceptlabVersion>
 		<openwebappsVersion>1.13.0</openwebappsVersion>
-		<patientFlagsVersion>3.0.4-SNAPSHOT</patientFlagsVersion>
+		<patientFlagsVersion>3.0.6-SNAPSHOT</patientFlagsVersion>
 		<providermanagementVersion>2.13.0</providermanagementVersion>
-		<referenceapplicationVersion>2.12.2</referenceapplicationVersion>
+		<referenceapplicationVersion>2.13.0</referenceapplicationVersion>
 		<referencemetadataVersion>2.12.0</referencemetadataVersion>
 		<registrationappVersion>1.24.0</registrationappVersion>
 		<registrationcoreVersion>1.11.0</registrationcoreVersion>
@@ -119,7 +119,7 @@
 		<uiframeworkVersion>3.22.0</uiframeworkVersion>
 		<uilibraryVersion>2.0.7</uilibraryVersion>
 		<xformsVersion>4.3.12</xformsVersion>
-		<patientqueueingVersion>1.2.0</patientqueueingVersion>
+		<patientqueueingVersion>1.3.0-SNAPSHOT</patientqueueingVersion>
 		<ugandaemrSyncVersion>1.1.11-SNAPSHOT</ugandaemrSyncVersion>
 		<ugandaemrfingerprintVersion>1.1.0</ugandaemrfingerprintVersion>
 		<cohortModuleVersion>2.2.1</cohortModuleVersion>
@@ -364,6 +364,13 @@
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
 				<artifactId>patientflags-api</artifactId>
+				<version>${patientFlagsVersion}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>patientflags-api-metadata</artifactId>
 				<version>${patientFlagsVersion}</version>
 				<scope>provided</scope>
 			</dependency>
