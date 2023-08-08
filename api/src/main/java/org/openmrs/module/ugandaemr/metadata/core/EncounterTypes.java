@@ -419,5 +419,35 @@ public class EncounterTypes {
             return "cbf01392-ca29-11e9-a32f-2a2ae2dbcce4";
         }
     };
+    public static EncounterTypeDescriptor INTER_FACILITY_LINKAGE_ENCOUNTER = new EncounterTypeDescriptor() {
+        @Override
+        public String name() {
+            return "Facility Linkage Encounter";
+        }
 
+        @Override
+        public String description() {
+            return "Facility Linkage Encounter";
+        }
+
+        public String uuid() {
+            return "786c576b-b70f-4235-93ea-fbce1a3f38c4";
+        }
+    };
+
+    public static EncounterTypeDescriptor MOBILITY_SCREENING = new EncounterTypeDescriptor() {
+        @Override
+        public String name() {
+            return "Mobility Screening  Encounter";
+        }
+
+        @Override
+        public String description() {
+            return "Mobility Screening Encounter";
+        }
+
+        public String uuid() {
+            return "b57e1835-4ee2-47fa-9569-c700c39c169a";
+        }
+    };
 }
