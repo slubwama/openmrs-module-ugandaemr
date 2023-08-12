@@ -600,12 +600,17 @@ VALUES
 			('CCLAD Cohort Type','2021-08-23',1,'5b7136fa-d207-4229-94a8-da6661ae00bf');
 		</sql>
 	</changeSet>
-	<changeSet id="ugandaemr-19-10-2-2021" author="odorajonathan">
+	<changeSet id="ugandaemr-11-08-2023" author="odorajonathan">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="1">
+				SELECT COUNT(*) from location WHERE uuid = '8f96e239-8586-4ec6-9375-04c6e19628ae';
+			</sqlCheck>
+		</preConditions>
 		<comment>
 			Retire SMC Clinic
 		</comment>
 		<sql>
-			UPDATE location SET retired = 1 WHERE location_id = 4;
+			UPDATE location SET retired = 1 WHERE uuid = '8f96e239-8586-4ec6-9375-04c6e19628ae';
      </sql>
 	</changeSet>
 	<changeSet id="ugandaemr-01032022-1401" author="dbaluku">
