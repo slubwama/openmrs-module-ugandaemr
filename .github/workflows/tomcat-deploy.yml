@@ -29,4 +29,4 @@ jobs:
     - name: Build with Maven
       run: mvn clean install -DskipTests
     - name: Deploy to Tomcat
-      run: curl -v -u secret_TOMCAT_USERNAME:secret_TOMCAT_PASSWORD -T '/home/runner/work/openmrs-module-ugandaemr/omod/target/docker/web/openmrs.war' 'https://ugandaemr-backend.mets.or.ug/manager/text/deploy?path=openmrs'
+      run: curl -v -u secret_TOMCAT_USERNAME:secret_TOMCAT_PASSWORD -T '/home/runner/work/openmrs-module-ugandaemr/openmrs-module-ugandaemr/omod/target/docker/web/openmrs.war' 'https://ugandaemr-backend.mets.or.ug/manager/text/deploy?path=openmrs'
