@@ -248,6 +248,7 @@ body {
                 patientDataFromRDS: JSON.stringify(patientTransferInData[0])
             }
             , function (response) {
+                    console.log("IT works")
                 location.href = '/openmrs/htmlformentryui/htmlform/editHtmlFormWithStandardUi.page?patientId='+response.patientCaseInvesitigationEncounter.patientId+'&encounterId='+response.patientCaseInvesitigationEncounter.encounterId;
             });
         });
