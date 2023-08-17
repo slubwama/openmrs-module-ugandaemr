@@ -217,8 +217,7 @@
             date: (new Date()).toString()
         }, function (response) {
             if (response) {
-                var responseData = JSON.parse(response.replace("ordersList=", "\"ordersList\":").trim());
-                displayLabResult(responseData)
+                displayLabResult(response)
             }
         });
     }
@@ -398,8 +397,7 @@
             orderId: orderId
         }, function (response) {
             if (response) {
-                var responseData = response.replace("{defaultSampleId=\"", "").replace("\"}", "").trim();
-                jq("#sample_id").val(responseData);
+                jq("#sample_id").val(response);
             }
         });
     }

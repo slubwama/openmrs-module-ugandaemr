@@ -7,10 +7,7 @@
         jq.get('${ ui.actionLink("ugandaemr","displayResultListOnEncounter","getOrderWithResultForEncounter") }', {
             encounterId: ${encounterId}
         }, function (response) {
-            if (response.trim()!=="{}") {
-                var responseData = JSON.parse(response.replace("ordersList=", "\"ordersList\":").trim());
-                displayLabResult(responseData)
-            }
+            displayLabResult(response)
         });
     }
 
@@ -70,9 +67,8 @@
             patientId: patientId,
             testId: testId
         }, function (response) {
-            if (response) {
-                var responseData = JSON.parse(response.replace("data=", "\"data\":").trim());
-                organize(responseData.data);
+            if (response) {;
+                organize(response.data);
             } else if (!response) {
             }
         });

@@ -52,7 +52,7 @@
             testId: testId
         }, function (response) {
             if (response) {
-                var responseData = JSON.parse(response.replace("data=", "\"data\":").trim());
+                var responseData = response;
                 organize(responseData.data);
             } else if (!response) {
             }
