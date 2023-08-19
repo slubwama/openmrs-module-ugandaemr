@@ -69,7 +69,7 @@
 		<openMRSVersion>2.5.8</openMRSVersion>
 		<openmrsTestutilsVersion>1.3</openmrsTestutilsVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<webservices.restModuleVersion>2.39.0</webservices.restModuleVersion>
+		<webservices.restModuleVersion>2.40.0</webservices.restModuleVersion>
 
 		<!-- Modules Bundled for Uganda distribution  -->
 		<!-- TODO: Arrange the dependencies and variables in alphabetical order -->
@@ -126,6 +126,7 @@
 		<stockmanagementVersion>1.0.1</stockmanagementVersion>
 		<spaModuleVersion>1.0.8</spaModuleVersion>
 		<queueModuleVersion>1.0.0-SNAPSHOT</queueModuleVersion>
+		<o3formsVersion>2.2.0-SNAPSHOT</o3formsVersion>
 		<spa.version>latest</spa.version>
 
 		<!-- core configuration library -->
@@ -503,6 +504,16 @@
 				<version>${spaModuleVersion}</version>
 				<type>provided</type>
 			</dependency>
+
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>o3forms</artifactId>
+				<version>${o3formsVersion}</version>
+				<scope>provided</scope>
+			</dependency>
+
+
+
 		</dependencies>
 	</dependencyManagement>
 
