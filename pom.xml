@@ -79,7 +79,7 @@
 		<allergyuiVersion>1.8.4</allergyuiVersion>
 		<appframeworkVersion>2.17.0</appframeworkVersion>
 		<appuiVersion>1.16.0</appuiVersion>
-		<appointmentschedulingVersion>1.16.0</appointmentschedulingVersion>
+		<!--<appointmentschedulingVersion>1.16.0</appointmentschedulingVersion>-->
 		<appointmentschedulinguiVersion>1.12.0</appointmentschedulinguiVersion>
 		<bahmniappointmentVersion>1.6.0</bahmniappointmentVersion>
 		<bedmanagementVersion>5.14.0-SNAPSHOT</bedmanagementVersion>
@@ -131,10 +131,10 @@
 		<spaModuleVersion>1.0.8</spaModuleVersion>
 		<queueModuleVersion>1.0.0-SNAPSHOT</queueModuleVersion>
 		<o3formsVersion>2.2.0-SNAPSHOT</o3formsVersion>
-		<spa.version>latest</spa.version>
+		<spaVersion>5.1.0</spaVersion>
 
 		<!-- core configuration library -->
-		<ugandaemrReportsVersion>2.0.37</ugandaemrReportsVersion>
+		<ugandaemrReportsVersion>2.0.38-SNAPSHOT</ugandaemrReportsVersion>
 	</properties>
 
 	<dependencyManagement>
@@ -222,12 +222,12 @@
 				<version>${addresshierarchyVersion}</version>
 				<scope>provided</scope>
 			</dependency>
-			<dependency>
+			<!--<dependency>
 				<groupId>org.openmrs.module</groupId>
 				<artifactId>appointmentscheduling</artifactId>
 				<version>1.8.0</version>
 				<scope>provided</scope>
-			</dependency>
+			</dependency>-->
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
 				<artifactId>appframework-api</artifactId>
