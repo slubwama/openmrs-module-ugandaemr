@@ -8,8 +8,7 @@
             encounterId: ${encounterId}
         }, function (response) {
             if (response.trim()!=="{}") {
-                var responseData = JSON.parse(response.replace("ordersList=", "\"ordersList\":").trim());
-                displayLabResult(responseData)
+                displayLabResult(response)
             }
         });
     }
@@ -71,8 +70,7 @@
             testId: testId
         }, function (response) {
             if (response) {
-                var responseData = JSON.parse(response.replace("data=", "\"data\":").trim());
-                organize(responseData.data);
+                organize(response.data);
             } else if (!response) {
             }
         });
