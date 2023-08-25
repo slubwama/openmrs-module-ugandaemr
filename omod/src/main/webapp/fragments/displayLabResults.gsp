@@ -28,8 +28,7 @@
             patientId: ${patientId}
         }, function (response) {
             if (response.trim() !== "{}") {
-                var responseData = JSON.parse(response.replace("ordersList=", "\"ordersList\":").trim());
-                displayLabResult(responseData)
+                displayLabResult(response)
             }
         });
     }
@@ -94,8 +93,7 @@
             async: false
         }, function (response) {
             if (response) {
-                var responseData = JSON.parse(response.replace("data=", "\"data\":").trim());
-                organize(responseData.data);
+                organize(response);
             } else if (!response) {
             }
         });
