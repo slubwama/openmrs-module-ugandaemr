@@ -133,7 +133,6 @@
 		<o3formsVersion>2.2.0-SNAPSHOT</o3formsVersion>
 		<orderTemplatesVersion>1.0.3-SNAPSHOT</orderTemplatesVersion>
 		<attachmentsVersion>2.7.0</attachmentsVersion>
-		<spaVersion>4.5.0</spaVersion>
 
 		<!-- core configuration library -->
 		<ugandaemrReportsVersion>2.0.38-SNAPSHOT</ugandaemrReportsVersion>
