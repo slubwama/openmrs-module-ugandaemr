@@ -2847,6 +2847,11 @@
     <concept_numeric  concept_id="166990"    allow_decimal="0"/>
     <concept_numeric  concept_id="168690"    allow_decimal="0"/>
 
+    <concept_numeric  concept_id="5085"  hi_absolute="250"  hi_critical="180"  hi_normal="140"   low_absolute="0"  low_critical="85"  low_normal="100"  units="mmHg"  allow_decimal="0"/>
+    <concept_numeric  concept_id="5086"  hi_absolute="150"  hi_critical="120"  hi_normal="90"    low_absolute="0"  low_critical="40"  low_normal="55"  units="mmHg"  allow_decimal="0"/>
+    <concept_numeric  concept_id="5087"  hi_absolute="230"  hi_critical="130"  hi_normal="100"   low_absolute="0"  low_critical="49"  low_normal="55"  units="beats/min"  allow_decimal="0"/>
+    <concept_numeric  concept_id="5092"  hi_absolute="100"  low_absolute="0"   low_critical="90" low_normal="95"   units="%"  allow_decimal="0"/>
+    <concept_numeric  concept_id="5242"  hi_absolute="999"  hi_critical="26"   hi_normal="18"    low_absolute="0"  low_critical="8"  low_normal="12" allow_decimal="0"/>
 
     <!--CONCEPT DESCRIPTION-->
     <!--ART-->

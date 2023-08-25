@@ -92,20 +92,20 @@
 		<emrapiVersion>1.32.0</emrapiVersion>
 		<eventVersion>2.10.0</eventVersion>
 		<openmrsAtomfeedVersion>2.6.1</openmrsAtomfeedVersion>
-		<fhir2Version>1.9.0</fhir2Version>
+		<fhir2Version>1.10.0</fhir2Version>
 		<formentryappVersion>1.4.2</formentryappVersion>
 		<formfilterVersion>1.3.0</formfilterVersion>
 		<htmlformentryuiVersion>2.0.0</htmlformentryuiVersion>
 		<htmlformentryVersion>4.4.0</htmlformentryVersion>
 		<htmlwidgetsVersion>1.10.0</htmlwidgetsVersion>
-		<idgenVersion>4.7.0</idgenVersion>
+		<idgenVersion>4.10.0</idgenVersion>
 		<jacksonVersion>1.8.3</jacksonVersion>
 		<junitParamsVersion>1.0.4</junitParamsVersion>
-		<legacyuiVersion>1.8.4</legacyuiVersion>
+		<legacyuiVersion>1.15.0</legacyuiVersion>
 		<metadatadeployVersion>1.13.0</metadatadeployVersion>
 		<metadatamappingVersion>1.5.0</metadatamappingVersion>
 		<metadatasharingVersion>1.8.0</metadatasharingVersion>
-		<openconceptlabVersion>1.2.9</openconceptlabVersion>
+		<openconceptlabModuleVersion>2.2.0-SNAPSHOT</openconceptlabModuleVersion>
 		<openwebappsVersion>1.13.0</openwebappsVersion>
 		<patientFlagsVersion>3.0.6-SNAPSHOT</patientFlagsVersion>
 		<providermanagementVersion>2.13.0</providermanagementVersion>
@@ -131,7 +131,9 @@
 		<spaModuleVersion>1.0.8</spaModuleVersion>
 		<queueModuleVersion>1.0.0-SNAPSHOT</queueModuleVersion>
 		<o3formsVersion>2.2.0-SNAPSHOT</o3formsVersion>
-		<spaVersion>5.1.0</spaVersion>
+		<orderTemplatesVersion>1.0.3-SNAPSHOT</orderTemplatesVersion>
+		<attachmentsVersion>2.7.0</attachmentsVersion>
+		<spaVersion>4.5.0</spaVersion>
 
 		<!-- core configuration library -->
 		<ugandaemrReportsVersion>2.0.38-SNAPSHOT</ugandaemrReportsVersion>
@@ -147,7 +149,7 @@
 				<groupId>org.other.library</groupId>
 				<artifactId>library-name</artifactId>
 				<version>library.version</version>
-				<scope>compile</scope>
+				<scope>compile</7scope>
 			</dependency>
 			-->
 
@@ -483,6 +485,7 @@
 				<version>${webservices.restModuleVersion}</version>
 				<scope>provided</scope>
 			</dependency>
+
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
 				<artifactId>webservices.rest-omod-common</artifactId>
@@ -516,7 +519,26 @@
 				<scope>provided</scope>
 			</dependency>
 
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>openconceptlab</artifactId>
+				<version>${openconceptlabModuleVersion}</version>
+				<scope>provided</scope>
+			</dependency>
 
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>ordertemplates</artifactId>
+				<version>${orderTemplatesVersion}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>attachments</artifactId>
+				<version>${attachmentsVersion}</version>
+				<scope>provided</scope>
+			</dependency>
 
 		</dependencies>
 	</dependencyManagement>
