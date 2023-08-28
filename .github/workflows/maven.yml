@@ -29,5 +29,5 @@ jobs:
     - name: Build with Maven
       run: mvn clean install -DskipTests
     - name: Deploy to Tomcat
-      run: sshpass -p secret_TOMCAT_PASSWORD  scp '/home/runner/work/openmrs-module-ugandaemr/openmrs-module-ugandaemr/omod/target/docker/web/openmrs.war' secret_TOMCAT_USERNAME@TOMCAT_PATH/webapps/.
+      run: sshpass -p secret_TOMCAT_PASSWORD  scp '/home/runner/work/openmrs-module-ugandaemr/openmrs-module-ugandaemr/omod/target/docker/web/openmrs.war' secret_TOMCAT_USERNAME@secret_TOMCAT_PATH/webapps/.
       
