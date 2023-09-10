@@ -31,6 +31,7 @@ jobs:
           host: ${{ secrets.TOMCAT_HOST }}
           username: ${{ secrets.TOMCAT_USERNAME }}
           password: ${{ secrets.TOMCAT_PASSWORD }}
+          port: ${{ secrets.TOMCAT_PORT }}
           source: "/home/runner/work/openmrs-module-ugandaemr/openmrs-module-ugandaemr/omod/target/docker/web/openmrs.war"
           target: /opt/tomcat/webapps/.
 
