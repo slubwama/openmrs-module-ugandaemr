@@ -28,9 +28,9 @@ jobs:
       - name: Deploy to Tomcat
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: secret_TOMCAT_HOST
-          username: secret_TOMCAT_USERNAME
-          password: secret_TOMCAT_PATH
+          host: ${{ secrets.TOMCAT_HOST }}
+          username: ${{ secrets.TOMCAT_USERNAME }}
+          password: ${{ secrets.TOMCAT_PASSWORD }}
           source: "/home/runner/work/openmrs-module-ugandaemr/openmrs-module-ugandaemr/omod/target/docker/web/openmrs.war"
           target: /opt/tomcat/webapps/.
 
