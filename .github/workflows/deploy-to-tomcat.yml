@@ -28,7 +28,7 @@ jobs:
       - name: Deploy to Tomcat
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: secret_TOMCAT_PORT
+          host: secret_TOMCAT_HOST
           username: secret_TOMCAT_USERNAME
           password: secret_TOMCAT_PATH
           port: secret_TOMCAT_PORT
