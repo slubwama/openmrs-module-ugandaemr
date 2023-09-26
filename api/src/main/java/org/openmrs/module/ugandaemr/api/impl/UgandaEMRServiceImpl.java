@@ -1250,8 +1250,8 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         Set<Order> orders = new HashSet<>();
         Encounter encounter = session.getEncounter();
         CareSetting careSetting = Context.getOrderService().getCareSettingByName(CARE_SETTING_OPD);
-
-        Set<Obs> obsList = encounter.getObs().stream().filter(obs -> !obs.getConcept().getDatatype().getName().equals("Boolean") && obs.getValueCoded() != null && (obs.getValueCoded().getConceptClass().getName().equals("LabSet") || obs.getValueCoded().getConceptClass().getName().equals("Test"))).collect(Collectors.toSet());
+        Concept reasonForNextAppointment = Context.getConceptService().getConceptByUuid(CONCEPT_REASON_FOR_NEXT_APPOINTMENT);
+        Set<Obs> obsList = encounter.getObs().stream().filter(obs -> !obs.getConcept().getDatatype().getName().equals("Boolean") && obs.getValueCoded() != null && ((obs.getValueCoded().getConceptClass().getName().equals("LabSet") || obs.getValueCoded().getConceptClass().getName().equals("Test"))) && !obs.getConcept().equals(reasonForNextAppointment)).collect(Collectors.toSet());
 
         for (Obs obs : obsList) {
             if (!orderExists(obs.getValueCoded(), obs.getEncounter())) {
@@ -1473,7 +1473,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
      * @param patient the patient whose current visit will be retrived.
      * @return Visit the active visit for a patient.
      */
-     private Visit getPatientCurrentVisit(Patient patient) {
+    private Visit getPatientCurrentVisit(Patient patient) {
         List<Visit> visitList = Context.getVisitService().getActiveVisitsByPatient(patient);
         for (Visit visit : visitList) {
             if (visit.getStartDatetime().after(OpenmrsUtil.firstSecondOfDay(new Date())) && visit.getStartDatetime().before(OpenmrsUtil.getLastMomentOfDay(new Date()))) {
@@ -1599,8 +1599,8 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
             if (drugOrderMapper.getQuantity() != null && drugOrderMapper.getQuantity() > 0 && (drugOrderMapper.getMaxDispenseValue() == null || drugOrderMapper.getMaxDispenseValue().equals(""))) {
                 errors.add("Max Dispensing Value is null for Drug " + drugOrderMapper.getConceptName());
             } else if (drugOrderMapper.getMaxDispenseValue() != null && drugOrderMapper.getQuantity() != null && drugOrderMapper.getMaxDispenseValue() < drugOrderMapper.getQuantity()) {
-                errors.add("The quantity dispensed is greater than max dispensing Value: "+drugOrderMapper.getMaxDispenseValue() + " for drug " + drugOrderMapper.getConceptName());
-            }else if(drugOrderMapper.getQuantity() != null && drugOrderMapper.getQuantity() < 0 ){
+                errors.add("The quantity dispensed is greater than max dispensing Value: " + drugOrderMapper.getMaxDispenseValue() + " for drug " + drugOrderMapper.getConceptName());
+            } else if (drugOrderMapper.getQuantity() != null && drugOrderMapper.getQuantity() < 0) {
                 errors.add("Negative Dispensing Value is not allowed for Drug " + drugOrderMapper.getConceptName());
             }
 
