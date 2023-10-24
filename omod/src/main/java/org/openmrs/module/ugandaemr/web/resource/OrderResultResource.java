@@ -96,6 +96,7 @@ public class OrderResultResource extends DelegatingCrudResource<OrderResult> {
     @Override
     public DelegatingResourceDescription getCreatableProperties() throws ResourceDoesNotSupportOperationException {
         DelegatingResourceDescription description = new DelegatingResourceDescription();
+        description.addProperty("uuid");
         description.addProperty("order");
         description.addProperty("result");
         return description;
