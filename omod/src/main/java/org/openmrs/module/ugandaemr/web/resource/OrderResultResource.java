@@ -62,12 +62,14 @@ public class OrderResultResource extends DelegatingCrudResource<OrderResult> {
     public DelegatingResourceDescription getRepresentationDescription(Representation rep) {
         if (rep instanceof DefaultRepresentation) {
             DelegatingResourceDescription description = new DelegatingResourceDescription();
+            description.addProperty("uuid");
             description.addProperty("order", Representation.REF);
             description.addProperty("result", Representation.REF);
             description.addSelfLink();
             return description;
         } else if (rep instanceof FullRepresentation) {
             DelegatingResourceDescription description = new DelegatingResourceDescription();
+            description.addProperty("uuid");
             description.addProperty("order", Representation.REF);
             description.addProperty("result", Representation.REF);
             description.addSelfLink();
@@ -75,6 +77,7 @@ public class OrderResultResource extends DelegatingCrudResource<OrderResult> {
             return description;
         } else if (rep instanceof RefRepresentation) {
             DelegatingResourceDescription description = new DelegatingResourceDescription();
+            description.addProperty("uuid");
             description.addProperty("order", Representation.REF);
             description.addProperty("result", Representation.REF);
             description.addSelfLink();
