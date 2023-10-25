@@ -676,7 +676,8 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         Set<TestResultModel> trms = new HashSet<>();
         if (test.getEncounter() != null) {
             Encounter encounter = test.getEncounter();
-            for (Obs obs : encounter.getAllObs()) {
+            List<Obs> listOfObs = encounter.getAllObs().stream().filter(obs -> obs.getOrder()!=null && obs.getOrder().equals(test)).collect(Collectors.toList());
+            for (Obs obs : listOfObs) {
                 if (obs.getOrder() != null) {
                     if (obs.hasGroupMembers()) {
                         for (Obs groupMemberObs : obs.getGroupMembers()) {
