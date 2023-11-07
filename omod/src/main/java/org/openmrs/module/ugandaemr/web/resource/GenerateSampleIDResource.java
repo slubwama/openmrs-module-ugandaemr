@@ -93,7 +93,7 @@ public class GenerateSampleIDResource extends DelegatingCrudResource<SampleId> {
 
         UgandaEMRService ugandaEMRService = Context.getService(UgandaEMRService.class);
         ObjectMapper objectMapper = new ObjectMapper();
-        Order order = Context.getOrderService().getOrderByOrderNumber(orderNumber);
+        Order order = Context.getOrderService().getOrderByUuid(orderNumber);
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String date = sdf.format(new Date());
         String letter = order.getConcept().getConceptId().toString();
