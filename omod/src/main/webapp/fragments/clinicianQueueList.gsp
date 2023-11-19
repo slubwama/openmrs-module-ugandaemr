@@ -104,6 +104,17 @@
         jq("#location_id").append(content);
     }
 
+    function identifierToDisplay(identifiers){
+        var identifierToDisplay="";
+        jq.each(identifiers, function (index, element) {
+            if(element.identifierLocationUuid==="${currentLocation.uuid}"){
+                identifierToDisplay+=element.identifierTypeName+" : "+element.identifier+" <br/> "
+            }
+        });
+
+        return identifierToDisplay
+    }
+
     function displayClinicianData(response) {
         jq("#clinician-queue-list-table").html("No Patient In  Pending List");
         jq("#clinician-completed-list-table").html("No Patient In Completed List");
@@ -151,6 +162,7 @@
                 } else {
                     dataRowTable += "<td></td>";
                 }
+                dataRowTable += "<td>" + identifierToDisplay(patientQueueListElement.patientIdentifier) + "</td>";
                 dataRowTable += "<td>" + patientQueueListElement.patientNames + "</td>";
                 dataRowTable += "<td>" + patientQueueListElement.gender + "</td>";
                 dataRowTable += "<td>" + patientQueueListElement.age + "</td>";

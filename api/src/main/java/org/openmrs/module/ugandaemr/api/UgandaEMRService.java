@@ -20,6 +20,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.htmlformentry.FormEntrySession;
 import org.openmrs.module.ugandaemr.PublicHoliday;
 import org.openmrs.module.ugandaemr.api.lab.OrderObs;
+import org.openmrs.module.ugandaemr.api.queuemapper.PatientQueueVisitMapper;
 import org.springframework.transaction.annotation.Transactional;
 import org.openmrs.api.OpenmrsService;
 import org.openmrs.module.htmlformentry.FormEntrySession;
@@ -388,5 +389,38 @@ public interface UgandaEMRService extends OpenmrsService {
      */
     @Transactional(readOnly = true)
     public OrderObs getOrderObsByObs(Obs obs);
+
+
+    /**
+     * Gets all OrderObs
+     * @return List<OrderObs
+     */
+    @Transactional(readOnly = true)
+    public List<OrderObs> getAllOrderObs();
+
+    /**
+     * Get OrderObs List By search Obs
+     * @param orderObsId The obs to search in the list
+     * @return OrderObs A list of orderObs that meet the parameters
+     */
+    @Transactional(readOnly = true)
+    public OrderObs getOrderObsById(Integer orderObsId);
+
+    /**
+     * Get OrderObs List By search Obs
+     * @param uuid The obs to search in the list
+     * @return OrderObs A list of orderObs that meet the parameters
+     */
+    @Transactional(readOnly = true)
+    public OrderObs getOrderObsByUuid(String uuid);
+
+
+    /**
+     * Get OrderObs List By search Obs
+     * @param order The obs to search in the list
+     * @return OrderObs A list of orderObs that meet the parameters
+     */
+    @Transactional(readOnly = true)
+    public OrderObs getOrderObsByOrder(Order order);
 
 }

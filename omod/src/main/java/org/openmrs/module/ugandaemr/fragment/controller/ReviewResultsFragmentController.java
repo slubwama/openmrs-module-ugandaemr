@@ -2,6 +2,7 @@ package org.openmrs.module.ugandaemr.fragment.controller;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.openmrs.Order;
+import org.openmrs.api.OrderService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.ugandaemr.api.UgandaEMRService;
@@ -20,7 +21,7 @@ import java.util.Set;
 /**
  * Created by Francis on 2/3/2016.
  */
-public class PrintResultsFragmentController {
+public class ReviewResultsFragmentController {
 
 	public void controller(UiSessionContext sessionContext, FragmentModel model) {
 
