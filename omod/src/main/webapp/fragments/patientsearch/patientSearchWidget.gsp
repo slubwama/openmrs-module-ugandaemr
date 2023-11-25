@@ -73,6 +73,7 @@ body {
 h5 {
     color: #FFF;
 }
+
 .btn-secondary {
     color: #5b0505;
     background-color: #4f0c0c;
@@ -417,10 +418,11 @@ h5 {
                 }
             });
         }
-
-        patientResource.address.forEach(function (address, index) {
-            patientResource.address[index].id = uuidv4();
-        });
+        if (patientResource.address) {
+            patientResource.address.forEach(function (address, index) {
+                patientResource.address[index].id = uuidv4();
+            });
+        }
 
         patientResource.name.forEach(function (name, index) {
             patientResource.name[index].id = uuidv4();
