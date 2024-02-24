@@ -412,14 +412,24 @@ h5 {
 
         if (patientResource.hasOwnProperty("identifier")) {
             jq.each(patientResource.identifier, function (index, element) {
-                if (element.type && element.type.coding[0].code === "f0c16a6d-dc5f-4118-a803-616d0075d282" || element.type.coding[0].code === "e1731641-30ab-102d-86b0-7a5022ba4115" || element.type.coding[0].code === "e5e9a994-12e2-42c3-9c02-5abdc0fe40e8") {
-                    identifiersToKeep.push(element)
+                var keepIdentifier = false;
+                if (element.hasOwnProperty("type") && element.type.hasOwnProperty("coding")) {
+                    element.type.coding.forEach(function (codingItem, index) {
+                        if ((codingItem.code === "f0c16a6d-dc5f-4118-a803-616d0075d282" || codingItem.code === "e1731641-30ab-102d-86b0-7a5022ba4115" || codingItem.code === "e5e9a994-12e2-42c3-9c02-5abdc0fe40e8")) {
+                            keepIdentifier = true;
+                        }
+                    });
+                }
+
+                if (keepIdentifier) {
+                    identifiersToKeep.push(element);
                 }
             });
+
             patientResource.identifier.splice(0, patientResource.identifier.length);
             patientResource.identifier = identifiersToKeep;
-        }else {
-            patientResource['identifier']=identifiersToKeep;
+        } else {
+            patientResource['identifier'] = identifiersToKeep;
         }
 
         if (patientResource.address) {
@@ -512,39 +522,50 @@ h5 {
 
         response.entry.forEach(function (entity, index) {
                 var patient = entity.resource;
-                var trElement = document.createElement("tr");
-                var tdPatientName = document.createElement("td");
-                tdPatientName.innerHTML = patient.name[0].family + " " + patient.name[0].given[0];
-                var tdPatientDOB = document.createElement("td");
-                tdPatientDOB.innerHTML = formatDate(new Date(patient.birthDate))
-                var tdPatientGender = document.createElement("td");
-                tdPatientGender.innerHTML = patient.gender;
-                var tdPatientTelecom = document.createElement("td");
-                var tdPatientAction = document.createElement("td");
-                if (patient.hasOwnProperty("telecom")) {
-                    patient.telecom.forEach(function (telecom, index) {
-                        tdPatientTelecom.innerHTML = tdPatientTelecom.innerHTML + " " + telecom.value
+                var resourceIsGoldenRecord = false;
+
+                if (patient.hasOwnProperty("meta") && patient.meta.hasOwnProperty("tag")) {
+                    patient.meta.tag.forEach(function (tag, index) {
+                        if (tag.code === "GOLDEN_RECORD") {
+                            resourceIsGoldenRecord = true;
+                        }
                     });
                 }
+                if (!resourceIsGoldenRecord) {
+                    var trElement = document.createElement("tr");
+                    var tdPatientName = document.createElement("td");
+                    tdPatientName.innerHTML = patient.name[0].family + " " + patient.name[0].given[0];
+                    var tdPatientDOB = document.createElement("td");
+                    tdPatientDOB.innerHTML = formatDate(new Date(patient.birthDate))
+                    var tdPatientGender = document.createElement("td");
+                    tdPatientGender.innerHTML = patient.gender;
+                    var tdPatientTelecom = document.createElement("td");
+                    var tdPatientAction = document.createElement("td");
+                    if (patient.hasOwnProperty("telecom")) {
+                        patient.telecom.forEach(function (telecom, index) {
+                            tdPatientTelecom.innerHTML = tdPatientTelecom.innerHTML + " " + telecom.value
+                        });
+                    }
 
-                var transferInButton = document.createElement("button");
+                    var transferInButton = document.createElement("button");
 
 
-                transferInButton.innerHTML = " Register "
+                    transferInButton.innerHTML = " Register "
 
-                transferInButton.setAttribute("id", "transfer-" + index);
-                transferInButton.setAttribute("class", "icon-random confirm");
-                transferInButton.setAttribute("onclick", "transferPatientIn(" + index + ")");
-                transferInButton.setAttribute("onclick", "transferPatientIn(" + index + ")");
+                    transferInButton.setAttribute("id", "transfer-" + index);
+                    transferInButton.setAttribute("class", "icon-random confirm");
+                    transferInButton.setAttribute("onclick", "transferPatientIn(" + index + ")");
+                    transferInButton.setAttribute("onclick", "transferPatientIn(" + index + ")");
 
-                tdPatientAction.append(transferInButton);
+                    tdPatientAction.append(transferInButton);
 
-                trElement.append(tdPatientName);
-                trElement.append(tdPatientDOB);
-                trElement.append(tdPatientGender);
-                trElement.append(tdPatientTelecom);
-                trElement.append(tdPatientAction);
-                tableDiv.append(trElement);
+                    trElement.append(tdPatientName);
+                    trElement.append(tdPatientDOB);
+                    trElement.append(tdPatientGender);
+                    trElement.append(tdPatientTelecom);
+                    trElement.append(tdPatientAction);
+                    tableDiv.append(trElement);
+                }
             }
         )
         ;
@@ -636,11 +657,11 @@ h5 {
     jq(document).ready(function () {
         jq('#fshr').hide();
         jq('#nhcr').hide();
-       var searchSource = getEnabledSearchableProfiles();
+        var searchSource = getEnabledSearchableProfiles();
 
         setSearchSource(searchSource);
 
-        if (searchSource.length>0) {
+        if (searchSource.length > 0) {
             jq('#fshr').show();
         }
 
@@ -930,7 +951,8 @@ h5 {
             </div>
 
             <div id="fshr" class="col-5">
-                <a data-toggle="collapse" style="width: 10px;" href="#collapseAdvancedSearch" role="button" aria-expanded="false"
+                <a data-toggle="collapse" style="width: 10px;" href="#collapseAdvancedSearch" role="button"
+                   aria-expanded="false"
                    aria-controls="collapseExample">
                     Advanced Search
                 </a>
