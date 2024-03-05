@@ -546,4 +546,20 @@ public class EncounterTypes {
         }
     };
 
+    public static EncounterTypeDescriptor REGISTRATION = new EncounterTypeDescriptor() {
+        @Override
+        public String name() {
+            return "Registration";
+        }
+
+        @Override
+        public String description() {
+            return "Encounter type for extra fields on registration";
+        }
+
+        public String uuid() {
+            return "1458b726-4a62-4444-be97-bb3e08c73745";
+        }
+    };
+
 }
