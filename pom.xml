@@ -124,14 +124,13 @@
 		<uiframeworkVersion>3.22.0</uiframeworkVersion>
 		<uilibraryVersion>2.0.7</uilibraryVersion>
 		<xformsVersion>4.3.12</xformsVersion>
-		<patientqueueingVersion>1.3.0-SNAPSHOT</patientqueueingVersion>
+		<patientqueueingVersion>1.3.0</patientqueueingVersion>
 		<ugandaemrSyncVersion>1.1.11-SNAPSHOT</ugandaemrSyncVersion>
 		<openmrsOwaVersion>1.14.0</openmrsOwaVersion>
 		<ugandaemrfingerprintVersion>1.1.0</ugandaemrfingerprintVersion>
 		<cohortModuleVersion>3.4.0</cohortModuleVersion>
-		<stockmanagementVersion>1.0.2-SNAPSHOT</stockmanagementVersion>
+		<stockmanagementVersion>1.3.0</stockmanagementVersion>
 		<spaModuleVersion>1.0.10-SNAPSHOT</spaModuleVersion>
-		<queueModuleVersion>1.0.0-SNAPSHOT</queueModuleVersion>
 		<o3formsVersion>2.2.0-SNAPSHOT</o3formsVersion>
 		<orderTemplatesVersion>1.0.3-SNAPSHOT</orderTemplatesVersion>
 		<attachmentsVersion>3.0.0</attachmentsVersion>
