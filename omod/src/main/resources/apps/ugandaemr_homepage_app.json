@@ -313,7 +313,7 @@
         "extensionPointId": "systemAdministration.apps",
         "type": "link",
         "label": "Manage Provider Attributes",
-        "url": "ugandaemr/ManageProvider.page",
+        "url": "ugandaemr/manageProvider.page",
         "icon": "fas fa-users-cog",
         "requiredPrivilege": "App: coreapps.systemAdministration"
       }
