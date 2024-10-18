@@ -1,52 +1,68 @@
 {
-  "name": "HIV Enrolment Form",
+  "name": "HMIS ACP HIV 003: HIV CARE/ART CARD - Summary Form",
   "version": "4.0.0",
   "description": "Summary entry form for patients enrolled for ART",
-  "encounterType": "8d5b27bc-c2cc-11de-8d13-0010c6dffd0f",
   "encounter": "ART Card - Summary",
-  "uuid": "fa318404-2ab9-4135-9361-0a56d85c58e7",
+  "encounterType": "8d5b27bc-c2cc-11de-8d13-0010c6dffd0f",
+  "uuid": "52653a60-8300-4c13-be4d-4b746da06fee",
   "processor": "EncounterFormProcessor",
   "published": true,
   "retired": false,
+  "meta": {
+    "programs": {
+      "uuid": "18c6d4aa-0a36-11e7-8dbb-507b9dc4c741",
+      "isEnrollment": true,
+      "discontinuationDateQuestionId": ""
+    }
+  },
   "pages": [
     {
       "label": "HIV Enrolment Form",
       "sections": [
+
         {
           "label": "CARE ENTRY",
           "isExpanded": "true",
           "questions": [
             {
               "label": "Enrollment into HIV Care Transfer in from",
-              "type": "encounterDatetime",
-              "required": true,
-              "id": "hiv-care-transfer-in-from",
+              "type": "obs",
+              "required": "false",
+              "id": "hivCareTransferInFrom",
               "questionOptions": {
                 "rendering": "date",
                 "concept": "31c5c7aa-4948-473e-890b-67fe2fbbd71a",
                 "conceptMappings": [],
                 "answers": []
               },
-              "validators": []
+              "validators": [
+                {
+                  "type": "date",
+                  "allowFutureDates": "true"
+                }
+              ]
             },
             {
               "label": "Date verification HIV test",
-              "type": "encounterDatetime",
-              "required": false,
-              "id": "hiv-test-date",
+              "type": "obs",
+              "id": "hivTestDate",
               "questionOptions": {
                 "rendering": "date",
                 "concept": "cbbc0bfc-a7e2-11ed-afa1-0242ac120002",
                 "conceptMappings": [],
                 "answers": []
               },
-              "validators": []
+              "validators": [
+                {
+                  "type": "date",
+                  "allowFutureDates": "true"
+                }
+              ]
             },
             {
               "label": "Test type",
               "type": "obs",
-              "required": false,
-              "id": "test-type",
+              "id": "testType",
               "questionOptions": {
                 "rendering": "select",
                 "concept": "ddcd8aad-9085-4a88-a411-f19521be4785",
@@ -67,8 +83,7 @@
             {
               "label": "Where",
               "type": "obs",
-              "required": false,
-              "id": "txt-where",
+              "id": "txtWhere",
               "questionOptions": {
                 "rendering": "text",
                 "concept": "89d3ee61-7c74-4537-b199-4026bd6a3f67",
@@ -80,8 +95,8 @@
             {
               "label": "Care Entry Point",
               "type": "obs",
-              "required": true,
-              "id": "care-entry-point",
+              "required": "true",
+              "id": "careEntryPoint",
               "questionOptions": {
                 "rendering": "select",
                 "concept": "dcdfe3ce-30ab-102d-86b0-7a5022ba4115",
@@ -174,76 +189,6 @@
                 ]
               },
               "validators": []
-            },
-            {
-              "label": "Special Categories",
-              "type": "obs",
-              "required": false,
-              "id": "special-categories",
-              "questionOptions": {
-                "rendering": "select",
-                "concept": "927563c5-cb91-4536-b23c-563a72d3f829",
-                "conceptMappings": [],
-                "answers": [
-                  {
-                    "concept": "165132AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                    "label": "AGYW"
-                  },
-                  {
-                    "concept": "9e5ac0a8-6041-4feb-8c07-fe522ef5f9ab",
-                    "label": "Breast feeding"
-                  },
-                  {
-                    "concept": "160666AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                    "label": "Current drug user"
-                  },
-                  {
-                    "concept": "162558AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                    "label": "Disability"
-                  },
-                  {
-                    "concept": "159674AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                    "label": "Fisherman"
-                  },
-                  {
-                    "concept": "2ab8849a-8f4a-49f4-9e8b-cd84f40162cf",
-                    "label": "General ART Client"
-                  },
-                  {
-                    "concept": "162277AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                    "label": "In prison"
-                  },
-                  {
-                    "concept": "162198AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                    "label": "Long distance truck driver"
-                  },
-                  {
-                    "concept": "165126AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                    "label": "Migrant Worker"
-                  },
-                  {
-                    "concept": "93d7b669-c6d7-45dd-a727-cb438e3992e1",
-                    "label": "Non IDU"
-                  },
-                  {
-                    "concept": "dcda5179-30ab-102d-86b0-7a5022ba4115",
-                    "label": "PREGNANT"
-                  },
-                  {
-                    "concept": "165127AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                    "label": "Refugee Camp"
-                  },
-                  {
-                    "concept": "165125AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                    "label": "Uniformed Officer"
-                  },
-                  {
-                    "concept": "dcd68a88-30ab-102d-86b0-7a5022ba4115",
-                    "label": "OTHER SPECIFY"
-                  }
-                ]
-              },
-              "validators": []
             }
           ]
         },
@@ -252,23 +197,39 @@
           "isExpanded": "true",
           "questions": [
             {
+              "type": "patientIdentifier",
+              "label": "Pt Clinic #",
+              "questionInfo": "",
+              "id": "arrNumber",
+              "default": "",
+              "required": "true",
+              "questionOptions": {
+                "rendering": "text",
+                "identifierType": "e1731641-30ab-102d-86b0-7a5022ba4115"
+              }
+            },
+            {
               "label": "At Start ART",
               "type": "obs",
-              "required": false,
-              "id": "art-start-date",
+              "required": "true",
+              "id": "artStartDate",
               "questionOptions": {
                 "rendering": "date",
                 "concept": "ab505422-26d9-41f1-a079-c3d222000440",
                 "conceptMappings": [],
                 "answers": []
               },
-              "validators": []
+              "validators": [
+                {
+                  "type": "date",
+                  "allowFutureDates": "true"
+                }
+              ]
             },
             {
               "label": "Start ART 1st Line Initial Regimen",
               "type": "obs",
-              "required": false,
-              "id": "initial-regimen",
+              "id": "initialRegimen",
               "questionOptions": {
                 "rendering": "select",
                 "concept": "c3332e8d-2548-4ad6-931d-6855692694a3",
@@ -387,8 +348,8 @@
             {
               "label": "WHO Clinical Stage",
               "type": "obs",
-              "required": true,
-              "id": "who-clinical-stage",
+              "required": "true",
+              "id": "whoClinicalStage",
               "questionOptions": {
                 "rendering": "select",
                 "concept": "39243cef-b375-44b1-9e79-cbf21bd10878",
@@ -417,7 +378,6 @@
             {
               "label": "CD4",
               "type": "obs",
-              "required": false,
               "id": "cd4",
               "questionOptions": {
                 "rendering": "number",
@@ -430,7 +390,6 @@
             {
               "label": "Preg",
               "type": "obs",
-              "required": false,
               "id": "preg",
               "questionOptions": {
                 "rendering": "select",
@@ -454,7 +413,6 @@
             {
               "label": "Lactating",
               "type": "obs",
-              "required": false,
               "id": "lac",
               "questionOptions": {
                 "rendering": "select",
@@ -485,7 +443,6 @@
             {
               "label": "Prior ARV/ART",
               "type": "obs",
-              "required": false,
               "id": "encART",
               "questionOptions": {
                 "rendering": "select",
@@ -543,8 +500,7 @@
             {
               "label": "Duration in Months",
               "type": "obs",
-              "required": false,
-              "id": "duration-in-months",
+              "id": "durationInMonths",
               "questionOptions": {
                 "rendering": "number",
                 "concept": "0b5fa454-0757-4f6d-b376-fefd60ae42ba",
@@ -595,8 +551,7 @@
             {
               "label": "Duration in Months",
               "type": "obs",
-              "required": false,
-              "id": "duration-in-months",
+              "id": "durationInMonths",
               "questionOptions": {
                 "rendering": "number",
                 "concept": "d11d4ad1-4aa2-4f90-8f2c-83f52155f0fc",
@@ -607,20 +562,45 @@
               "hide": {
                 "hideWhenExpression": "isEmpty(prepChecked) || !arrayContains(['dcd695dc-30ab-102d-86b0-7a5022ba4115'], prepChecked)"
               }
+            },
+            {
+              "label": "Approach",
+              "type": "programState",
+              "id": "dsdmApproach",
+              "value": "4eae684a-ee1f-4f62-87f3-e3e58c91f417",
+              "questionOptions": {
+                "concept": "73312fee-c321-11e8-a355-529269fb1459",
+                "answers": [
+                  {
+                    "value": "4eae684a-ee1f-4f62-87f3-e3e58c91f417",
+                    "label": "FBIM - Facility Based Individual Management"
+                  },
+                  {
+                    "value": "6b4906b1-388c-4984-974a-81e6f86f7737",
+                    "label": "FBG - Facility Based Group"
+                  },
+                  {
+                    "value": "5e122a20-3e23-4e65-bb1b-9f1324f97396",
+                    "label": "FTDR - Fast-Track Drug Refills"
+                  },
+                  {
+                    "value": "0ca3db87-567f-4159-acc0-0ec14d0b8036",
+                    "label": "CCLAD - Community Client-Led ART Delivery"
+                  },
+                  {
+                    "value": "7e2acb9c-25e9-4b8f-b012-8436051d5c32",
+                    "label": "CDDP - Community Drug Distribution Point"
+                  }
+                ],
+                "rendering": "select",
+                "programUuid": "18c6d4aa-0a36-11e7-8dbb-507b9dc4c741",
+                "workflowUuid": "b8d44412-9d8a-422f-8952-7fe15997f8b6"
+              }
             }
           ]
         }
       ]
     }
   ],
-  "referencedForms": [],
-  "postSubmissionActions": [
-    {
-      "actionId": "ProgramEnrollmentSubmissionAction",
-      "config": {
-        "enrollmentDate": "hiv-care-transfer-in-from",
-        "programUuid": "18c6d4aa-0a36-11e7-8dbb-507b9dc4c741"
-      }
-    }
-  ]
+  "referencedForms": []
 }

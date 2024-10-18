@@ -2,7 +2,7 @@
           formDescription="Summary entry form for patients enrolled for ART"
           formEncounterType="8d5b27bc-c2cc-11de-8d13-0010c6dffd0f"
           formUuid="52653a60-8300-4c13-be4d-4b746da06fee"
-          formVersion="3.0"
+          formVersion="4.0.0"
           formAddMetadata="yes"
           formUILocation="patientDashboard.visitActions"
           formOrder="1"
@@ -943,6 +943,7 @@
                                                         <i class=" icon-calendar small right-inner-addon-row"></i>
                                                         <encounterDate default="today"
                                                                        disallowMultipleEncountersOnDate="block"/>
+                                                        <enrollInProgram programId="1" stateIds="4eae684a-ee1f-4f62-87f3-e3e58c91f417,ab6d1f1d-fcf6-4255-8b6f-2bf8959ad8f2"/>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -1807,7 +1808,6 @@
                         </div>
                     </div>
                 </div>
-                <postSubmissionAction class="org.openmrs.module.ugandaemr.htmlformentry.ARTEnrollmentSubmissionAction"/>
             </div>
         </div>
     </div>

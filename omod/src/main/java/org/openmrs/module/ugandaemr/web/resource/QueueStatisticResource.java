@@ -29,8 +29,7 @@ import org.openmrs.util.OpenmrsUtil;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-@Resource(name = RestConstants.VERSION_1 + "/queuestatistics", supportedClass = PatientQueueStatistic.class, supportedOpenmrsVersions = {
-        "1.9.*", "1.10.*", "1.11.*", "1.12.*", "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*", "2.5.*"})
+@Resource(name = RestConstants.VERSION_1 + "/queuestatistics", supportedClass = PatientQueueStatistic.class, supportedOpenmrsVersions = {"1.9.* - 9.*"})
 public class QueueStatisticResource extends DelegatingCrudResource<PatientQueueStatistic> {
 
     @Override
@@ -103,6 +102,7 @@ public class QueueStatisticResource extends DelegatingCrudResource<PatientQueueS
         String locationParam = context.getParameter("parentLocation");
         Date fromDate = null;
         Date toDate = null;
+        Boolean onlyInQueueRooms = null;
         if (context.getParameter("fromDate") != null) {
             fromDate = OpenmrsUtil.firstSecondOfDay(getDateFromString( context.getParameter("fromDate"), "yyyy-MM-dd"));
         }
@@ -111,10 +111,16 @@ public class QueueStatisticResource extends DelegatingCrudResource<PatientQueueS
             toDate = OpenmrsUtil.getLastMomentOfDay(getDateFromString(context.getParameter("toDate"), "yyyy-MM-dd"));
         }
 
+        if (context.getParameter("onlyInQueueRooms") != null) {
+            onlyInQueueRooms = Boolean.parseBoolean(context.getParameter("onlyInQueueRooms"));
+        }else {
+            onlyInQueueRooms=false;
+        }
+
         Location location = Context.getLocationService().getLocationByUuid(locationParam);
 
         List<PatientQueueStatistic> statistics = new ArrayList<>();
-        List<PatientQueue> patientQueues = patientQueueingService.getPatientQueueByParentLocation(location, null,fromDate, toDate, true);
+        List<PatientQueue> patientQueues = patientQueueingService.getPatientQueueByParentLocation(location, null,fromDate, toDate, onlyInQueueRooms);
 
         for (LocationTag locationTag : getServiceAreaTags()) {
 
@@ -127,7 +133,7 @@ public class QueueStatisticResource extends DelegatingCrudResource<PatientQueueS
             patientQueueStatistic.setLocationTag(locationTag);
             if (patientQueues != null) {
                 patientQueues.forEach(queue -> {
-                    if (queue.getQueueRoom().getTags().contains(locationTag)) {
+                    if (queue.getQueueRoom().getTags().contains(locationTag) || queue.getLocationTo().getTags().contains(locationTag)) {
                         if (queue.getStatus().equals(PatientQueue.Status.PENDING)) {
                             patientQueueStatistic.setPending(patientQueueStatistic.getPending() + 1);
                         } else if (queue.getStatus().equals(PatientQueue.Status.PICKED)) {

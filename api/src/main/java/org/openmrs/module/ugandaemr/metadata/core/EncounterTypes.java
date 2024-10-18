@@ -546,4 +546,68 @@ public class EncounterTypes {
         }
     };
 
+    public static EncounterTypeDescriptor REGISTRATION = new EncounterTypeDescriptor() {
+        @Override
+        public String name() {
+            return "Registration";
+        }
+
+        @Override
+        public String description() {
+            return "Encounter type for extra fields on registration";
+        }
+
+        public String uuid() {
+            return "1458b726-4a62-4444-be97-bb3e08c73745";
+        }
+    };
+
+
+    public static EncounterTypeDescriptor MEDICATION_ORDER = new EncounterTypeDescriptor() {
+        @Override
+        public String name() {
+            return "Medication Order";
+        }
+
+        @Override
+        public String description() {
+            return "The encounter for ordering drugs for patient";
+        }
+
+        public String uuid() {
+            return "dbe038cd-cad5-439d-a761-a6d6d680219c";
+        }
+    };
+
+    public static EncounterTypeDescriptor TB_SCREENING_ENCOUNTER = new EncounterTypeDescriptor() {
+        @Override
+        public String name() {
+            return "TB Screening";
+        }
+
+        @Override
+        public String description() {
+            return "Encounter type for screening TB patient";
+        }
+
+        public String uuid() {
+            return "08478ad9-ccc1-4cbe-9e55-473447984158";
+        }
+    };
+
+    public static EncounterTypeDescriptor MONKEY_POX_SCREENING_ENCOUNTER = new EncounterTypeDescriptor() {
+        @Override
+        public String name() {
+            return "Monkey Pox Screening";
+        }
+
+        @Override
+        public String description() {
+            return "Encounter type for screening MPOX patient";
+        }
+
+        public String uuid() {
+            return "09478ad9-ccc1-4cbe-9e55-473447984158";
+        }
+    };
 }

@@ -336,7 +336,7 @@
     <concept_description concept_description_id="17590" concept_id="163149" description="A list of HMIS 105 outpatient diagnosis" locale="en" creator="1" date_created="2017-03-31 04:08:26.0" uuid="2a7216b4-00f0-463d-88c7-ab000d4f2181"/>
     <concept_description concept_description_id="18305" concept_id="164433" description="Kind of malaria test done" locale="en" creator="1" date_created="2017-04-04 13:41:49.0" uuid="4bab498d-f8df-4611-a381-85950c5e819d"/>
     <concept_description concept_description_id="18306" concept_id="164434" description="Results from the malaria test done" locale="en" creator="1" date_created="2017-04-04 13:45:03.0" uuid="fdb08917-34a7-4363-bc35-9c52e0a791ac"/>
-    <concept_description concept_description_id="18307" concept_id="164435" description="Is patient linked to the TB clinic or treatment after diagnosed with TB." locale="en" creator="1" date_created="2017-04-04 13:55:09.0" uuid="cfbfa7fe-2650-4fe4-878c-9b9a1fbc9328"/>
+    <concept_description concept_description_id="18307" concept_id="175384" description="Is patient linked to the TB clinic or treatment after diagnosed with TB." locale="en" creator="1" date_created="2017-04-04 13:55:09.0" uuid="cfbfa7fe-2650-4fe4-878c-9b9a1fbc9328"/>
     <concept_description concept_description_id="18308" concept_id="164436" description="The referral number given to a patient when first referred to current facility" locale="en" creator="1" date_created="2017-04-04 14:01:50.0" uuid="4673c8d8-d796-4e5a-bc2b-df959098503a"/>
     <concept_description concept_description_id="18312" concept_id="164924" description="does patient need palliative care." locale="en" creator="1" date_created="2017-05-15 09:22:40.0" uuid="8b9c234d-0a7c-4c26-82f8-e42098abe861"/>
     <concept_description concept_description_id="3789" concept_id="113705" description="Tumors or cancer of the MOUTH." locale="en" creator="1" date_created="2007-10-18 04:28:24.0" uuid="3789FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF"/>
@@ -659,17 +659,5 @@
 
     <concept_description  concept_description_id="18739"  concept_id="168695"  description="Entry point for cancer patients"    locale="en"  creator="1"  date_created="2023-04-04 16:57:28"   uuid="fc24eb63-d463-4bf1-a4c3-22e31e3bfbd2"/>
     <concept_description  concept_description_id="18740"  concept_id="168697"  description="Is patient Currently Menstruating"  locale="en"  creator="1"  date_created="2023-04-04 17:00:41"   uuid="13e56678-0ba8-4b60-86e6-a3dfa47c4489"/>
-
-    <!--merge-->
-    <concept_description  concept_description_id="18744"  concept_id="169014"  description="Verification HIV Test"  locale="en"  creator="1"  date_created="2024-01-09 08:05:26"  uuid="0c0e933b-6697-4210-8fb8-6610b87d87dc"/>
-    <concept_description  concept_description_id="18745"  concept_id="169015"  description="Verification HIV Test Results"  locale="en"  creator="1"  date_created="2024-01-16 12:26:42"   uuid="0ae40258-21e6-49f9-8d4d-63c66d2d096d"/>
-
-    <!-- Reference Lab -->
-    <concept_description  concept_description_id="18746"  concept_id="169016"  description="UVRI"  locale="en"  creator="1"  date_created="2024-01-23 08:27:18"  uuid="4748c9f4-7239-4e55-82db-345c84b61fa0"/>
-    <concept_description  concept_description_id="18747"  concept_id="169017"  description="CPHL/UNHLS"  locale="en"  creator="1"  date_created="2024-01-23 08:28:21"  uuid="5f317b35-13d7-49d3-a5ea-94bc8b914823"/>
-    <concept_description  concept_description_id="18748"  concept_id="169018"  description="HUB"  locale="en"  creator="1"  date_created="2024-01-23 08:30:00"  uuid="9757f523-62ad-4ce8-93ab-0bb59eb6be87"/>
-    <concept_description  concept_description_id="18749"  concept_id="169019"  description="Other Reference lab"  locale="en"  creator="1"  date_created="2024-01-23 08:31:38"  uuid="51ddf0f5-f75b-41a6-9a1d-4e5ef9aae0c8"/>
-    <concept_description  concept_description_id="18750"  concept_id="169020"  description="Reference Laboratory"  locale="en"  creator="1"  date_created="2024-01-23 08:33:38"  uuid="c17b5d3b-c7f6-465f-96dd-4f298bc59892"/>
-
 
 </dataset>

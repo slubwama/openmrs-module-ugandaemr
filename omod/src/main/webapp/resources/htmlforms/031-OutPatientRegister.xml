@@ -2,7 +2,7 @@
           formDescription="HMIS 031 Outpatient (OPD) Form"
           formEncounterType="ee4780f5-b5eb-423b-932f-00b5879df5ab"
           formUuid="8c2f8378-51c7-4407-85a0-cb2832accfcf"
-          formVersion="1.0"
+          formVersion="4.0.0"
           formAddMetadata="yes"
           formUILocation="patientDashboard.visitActions"
           formOrder="7"
@@ -152,6 +152,48 @@
                     valid = false;
                 }
 
+                var noOfErrorsInPrescription=0;
+                jq(".multi-drug").each(function () {
+                    var id= this.id.replace("-toggleContainer","")
+                    var element= jq("#"+id+"-toggleContainer");
+                    var qty_unit=jq(element).find("#qty_unit_" + id+" select").find(":selected").val()
+                    var duration_unit=jq(element).find("#duration_unit_" + id+" select").find(":selected").val()
+                    var drug=jq(element).find("#"+id+"-drug input").val();
+                    var qty=jq(element).find("#quantity_" + id).find("input").val()
+                    var strength=jq(element).find("#drug_strength_" + id).find("input").val()
+                    var duration=jq(element).find("#duration_"+id+" input").val();
+
+                    if(drug!==null &amp;&amp; drug!==""){
+                        if(qty_unit===null || qty_unit===""){
+                            getField('qty_unit_'+id+".error").html('Qty unit is required').show();
+                            noOfErrorsInPrescription+=1
+                        }
+                        if(duration_unit===null|| duration_unit===""){
+                            getField('duration_unit_'+id+".error").html('duration  unit is required').show();
+                            noOfErrorsInPrescription+=1
+                        }
+                        if(qty===null || qty===""){
+                            jq('#quantity_' + id).find(".error").html('quantity  is required').show();
+                            noOfErrorsInPrescription+=1
+                        }
+
+                        if(duration===null || duration===""){
+                            jq('#duration_' + id).find(".error").html('duration  is required').show();
+                            noOfErrorsInPrescription+=1
+                        }
+
+                        if(strength===null || strength===""){
+                            jq('#drug_strength_' + id).find(".error").html('strength  is required').show();
+                            jq().toastmessage('showErrorToast', "strength for drug "+drug+" is required");
+                            noOfErrorsInPrescription+=1
+                        }
+                    }
+                });
+
+                if(noOfErrorsInPrescription>0){
+                    jq().toastmessage('showErrorToast', "There are "+noOfErrorsInPrescription+" errors under medication that need to be resolved");
+                    valid=false;
+                }
 
                 if (valid) {
                     $errorMessageSpan.hide();
@@ -170,11 +212,24 @@
             $allRows.hide();
             jq('#1-removeEntry').remove();
             jq('#10-addEntry').remove();
+            jq('#1-toggleDiagnosisContainer').show();
+
+            jq('#11-removeEntry').remove();
+            jq('#20-addEntry').remove();
+            jq('#11-toggleDiagnosisContainer').show();
+        });
+
+        jq(document).ready(function () {
+            $allRows = jq(this).find('.multi-drug');
+            $allRows.hide();
+            jq('#1-removeEntry').remove();
+            jq('#10-addEntry').remove();
             jq('#1-toggleContainer').show();
 
             jq('#11-removeEntry').remove();
             jq('#20-addEntry').remove();
             jq('#11-toggleContainer').show();
+
         });
 
         jQuery(document).ready(function (jq) {
@@ -244,6 +299,7 @@
             }
             });
 
+
                 jq(document).ready(function () {
                 $allRows = jq(this).find('.multi-drug');
                 $allRows.hide();
@@ -254,13 +310,13 @@
                 jq('#20-addEntry').remove();
                 jq('#11-toggleContainer').show();
                 for (let x = 0; x&lt;= 10; x++) {
-                if (jq(this).find('#other-meds-trigger-' + x).find("input[type$='text']").val()!='') {
-                jq(this).find('#' + x + '-toggleContainer').show();
-                jq(this).find('#' + x + '-addEntry').hide();
+                if (jq(this).find('#' +x+ '-drug').find("input[type$='text']").val()!='') {
+                jq(this).find('#' +x+ '-toggleContainer').show();
+                jq(this).find('#' +x+ '-addEntry').hide();
             }
                 else {
                 x-=1;
-                jq(this).find('#' + x + '-addEntry').show();
+                jq(this).find('#' +x+ '-addEntry').show();
                 break;
             }
             }
@@ -272,13 +328,13 @@
                 $allRows.hide();
                 jq('#1-removeEntry').remove();
                 jq('#10-addEntry').remove();
-                jq('#1-toggleContainer').show();
+                jq('#1-toggleDiagnosisContainer').show();
                 jq('#11-removeEntry').remove();
                 jq('#20-addEntry').remove();
-                jq('#11-toggleContainer').show();
+                jq('#11-toggleDiagnosisContainer').show();
                 for (let x = 0; x&lt;= 10; x++) {
                 if (jq(this).find('#' +x+ '-problem-trigger').find("input[type$='text']").val()!='') {
-                jq(this).find('#' +x+ '-toggleContainer').show();
+                jq(this).find('#' +x+ '-toggleDiagnosisContainer').show();
                 jq(this).find('#' +x+ '-addEntry').hide();
             }
                 else {
@@ -362,8 +418,6 @@
 
 
         var enableStockManagement = <lookup expression="fn.globalProperty('ugandaemr.enableStockManagement')"/>;
-
-
         jq(document).ready(function () {
 
             currentLocationUUID = getLocationByName(jq("#location_id").find("select").find(":selected").text())
@@ -474,7 +528,6 @@
             }
 
         });
-
         function getDrugByConcept(concept, drug_strength_id) {
             if (enableStockManagement) {
                 jq("#" + drug_strength_id + "").find("select").empty();
@@ -497,7 +550,6 @@
                 }
             }
         }
-
         function getLocationByName(locationName) {
             var locationUUID
             jq.ajax({
@@ -511,8 +563,6 @@
             });
             return locationUUID
         }
-
-
         function getEncountersByEncounterTypeUUID(patientUUID, encounterTypeUUID) {
             var serverResponse = [];
             jq.ajax({
@@ -530,7 +580,7 @@
 
     <div class="ai-page-frame">
         <div class="headers" style="text-align: center;">
-            <h3 style="background: #c0c0c0; padding: 10px; color: #1f2121;">HMIS 031 Outpatient (OPD) FORM</h3>
+            <h3>HMIS 002 Outpatient (OPD) Form</h3>
         </div>
         <div class="card">
             <div class="card-header">
@@ -686,7 +736,7 @@
                                     <repeat>
                                         <template>
                                             <obsgroup groupingConceptId="159947">
-                                                <div class="row visit-diagnosis" id="{id}-toggleContainer">
+                                                <div class="row visit-diagnosis" id="{id}-toggleDiagnosisContainer">
                                                     <div class="col-md-3">
                                                         <obs id="{id}-problem-trigger" labelText="Diagnosis" conceptId="1284" answerClasses="Diagnosis" style="autocomplete" class="fullwidth diagnosis-problem"/>
                                                         <obs class="hidden" id="{id}-problem-other" conceptId="161602" labelText="Specify Diagnosis"/>
@@ -745,7 +795,7 @@
                         <div class="card-body">
                             <div class="card-body">
                                 <div class="row investigations">
-                                    <repeat with="['165418','CrAg'],['165417','RPR'],['165416','TB LAM'],['165413','GeneXpert'],['165415','Microscopy'],['1019','CBC'],['657','Cd4'],['165412','VL'],['1643','Malaria RDT'],['302','URINALYSIS'],['166522','LFT'],['166529','RFT'],['953','LIVER FUNCTION TESTS'],['1010','LIPID Panel'],['1026','DIFFERENTIAL'],['5473','SERUM ELECTROLYTES'],['99145','BASELINE CD4 PERCENTAGE'],['159645','CSF Examination'],['159981','TB Culture Construct'],['161152','Prothrombin Time (with INR)'],['161199','Cytology'],['161422','HBG With Electrophoresis'],['161424','RBC Morphology Test'],['161425','Sedimentation Test'],['161426','Malarial Parasites Smear'],['161428','Microfilaria Test'],['161429','Hemoglobin Only'],['161430','Routine Blood Panel'],['161431','Sickling Test Only'],['161432','Absolute Eosinophil Count Test'],['161434','Bleeding Time Test'],['161436','Clotting Time Test'],['161437','Anemia Panel'],['161446','Routine Urine'],['161451','Stool Analysis'],['161458','Vaginal Swab'],['161461','Ziehl-Neelsen Stain Test'],['161463','Skin Fungal Test'],['161464','Skin Mycobacterial Test'],['161468','Semen Analysis Test'],['161473','Blood Grouping Test'],['1325','Hepatitis C Serological Test'],['161475','Hepatitis B Serological Test'],['161476','Syphilis serological Panel'],['161477','Typhoid serological Test'],['161478','Anti-Streptolysin O Test'],['161479','Rheumatoid Factor Test'],['161480','HIV Serological Test'],['161483','Serum Chemistry Panel'],['161486','Culture Panel'],['161487','Diabetes Panel'],['161488','Renal Function Panel'],['161491','FSH Panel'],['161492','Leutinizing Hormone Panel'],['161493','Alpha Fetoprotein Test'],['161495','ANA'],['161496','Bone Marrow Test'],['161497','Cancer Marker Panel'],['161498','CPK Measurement'],['161499','Coombs Test'],['161501','C-reactive Protein Test'],['161506','Thyroid Panel'],['161508','Ceruloplasmin Test'],['161509','HCG'],['161510','Carcinoembryonic Antigen'],['161512','Serum Iron Profile'],['161514','G6PD'],['161515','Lipase Test'],['161517','Prolactin Test'],['161518','Cardiac Enzyme Test'],['161520','PSA Test'],['161532','TORCH Panel'],['161533','TORCHS Panel'],['162630','Basic Metabolic Panel'],['163436','Coagulation Profile'],['163602','Arterial Blood Gas Panel'],['163625','Toxoplasma Panel'],['163628','VTC Panel'],['163631','Tuberculin skin test Panel'],['163652','Urethral fluid examination Panel'],['163679','Bacterial culture Panel'],['163697','Urine microscopy Panel'],['163700','CBC (auto)'],['163701','CBC With Manual Differential'],['163702','Clotting Panel'],['163708','GTT  (75g)'],['165419','Malaria Test'],['165824','HIVDR'],['166284','Covid test type'],['166405','Blood gas done'],['166429','ALT/SGOT'],['167178','PPG'],['163342','HIV p24 antigen'],['163610','HIV drug-resistance'],['163722','Rapid test for HIV'],['167441','HIV PCR, DBS']">
+                                    <repeat with="['165418','CrAg'],['165417','RPR'],['165416','TB LAM'],['165413','GeneXpert'],['165415','Microscopy'],['1019','CBC'],['657','Cd4'],['165412','VL'],['1643','Malaria RDT'],['302','URINALYSIS'],['166522','LFT'],['166529','RFT'],['953','LIVER FUNCTION TESTS'],['1010','LIPID Panel'],['1026','DIFFERENTIAL'],['5473','SERUM ELECTROLYTES'],['99145','BASELINE CD4 PERCENTAGE'],['159645','CSF Examination'],['159981','TB Culture Construct'],['161152','Prothrombin Time (with INR)'],['161199','Cytology'],['161422','HBG With Electrophoresis'],['161424','RBC Morphology Test'],['161425','Sedimentation Test'],['161426','Malarial Parasites Smear'],['161428','Microfilaria Test'],['161429','Hemoglobin Only'],['161430','Routine Blood Panel'],['161431','Sickling Test Only'],['161432','Absolute Eosinophil Count Test'],['161434','Bleeding Time Test'],['161436','Clotting Time Test'],['161437','Anemia Panel'],['161446','Routine Urine'],['161451','Stool Analysis'],['161458','Vaginal Swab'],['161461','Ziehl-Neelsen Stain Test'],['161463','Skin Fungal Test'],['161464','Skin Mycobacterial Test'],['161468','Semen Analysis Test'],['161473','Blood Grouping Test'],['1325','Hepatitis C Serological Test'],['161475','Hepatitis B Serological Test'],['161476','Syphilis serological Panel'],['161477','Typhoid serological Test'],['161478','Anti-Streptolysin O Test'],['161479','Rheumatoid Factor Test'],['161480','HIV Serological Test'],['161483','Serum Chemistry Panel'],['161486','Culture Panel'],['161487','Diabetes Panel'],['161488','Renal Function Panel'],['161491','FSH Panel'],['161492','Leutinizing Hormone Panel'],['161493','Alpha Fetoprotein Test'],['161495','ANA'],['161496','Bone Marrow Test'],['161497','Cancer Marker Panel'],['161498','CPK Measurement'],['161499','Coombs Test'],['161501','C-reactive Protein Test'],['161506','Thyroid Panel'],['161508','Ceruloplasmin Test'],['168064','HCG'],['161510','Carcinoembryonic Antigen'],['161512','Serum Iron Profile'],['161514','G6PD'],['161515','Lipase Test'],['161517','Prolactin Test'],['161518','Cardiac Enzyme Test'],['161520','PSA Test'],['161532','TORCH Panel'],['161533','TORCHS Panel'],['162630','Basic Metabolic Panel'],['163436','Coagulation Profile'],['163602','Arterial Blood Gas Panel'],['163625','Toxoplasma Panel'],['163628','VTC Panel'],['163631','Tuberculin skin test Panel'],['163652','Urethral fluid examination Panel'],['163679','Bacterial culture Panel'],['163697','Urine microscopy Panel'],['163700','CBC (auto)'],['163701','CBC With Manual Differential'],['163702','Clotting Panel'],['163708','GTT  (75g)'],['165419','Malaria Test'],['165824','HIVDR'],['166284','Covid test type'],['166405','Blood gas done'],['166429','ALT/SGOT'],['167178','PPG'],['163342','HIV p24 antigen'],['163610','HIV drug-resistance'],['163722','Rapid test for HIV'],['167441','HIV PCR, DBS']">
                                         <div class="col-3">
                                             <obs id="{0}" conceptId="1271"
                                                  answerConceptId="{0}"
@@ -771,68 +821,73 @@
                         <repeat>
                             <template>
                                 <obsgroup groupingConceptId="160741">
-                                    <div class="card multi-drug" id="{id}-toggleContainer">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <label>Drug</label>
-                                                <obs id="other-meds-trigger-{id}"
-                                                     conceptId="1282"
-                                                     answerClasses="Drug" style="autocomplete"
-                                                     class="drug-other"/>
-                                            </div>
-                                            <div class="col-md-3 drug_strength hidden"
-                                                 id="drug_strength_select_{id}">
-                                                <label>Strength | Stock Qty</label>
-                                                <select class="form-control"
-                                                        name="drug_strength_select_{id}"
-                                                        onselect="this">
-                                                    <option value="">Select Strength</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-3 drug_strength hidden"
-                                                 id="drug_strength_{id}">
-                                                <label>Strength</label>
-                                                <obs id="drug_strength_{id}"
-                                                     class="drug-strength" conceptId="1444" />
-                                            </div>
-                                            <div class="col-md-3 hidden">
-                                                <obs id="drug_stock_item_{id}"
-                                                     conceptId="166969"
-                                                     labelText="Stock Item Id"/>
-                                                <obs id="drug_dispensing_location_{id}"
-                                                     conceptId="166968"
-                                                     labelText="dispensing Location ID"/>
-                                                <obs id="drug_{id}" conceptId="166970"
-                                                     labelText="Drug ID"/>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label>Quantity</label>
-                                                <obs id="other-meds-quantity" conceptId="160856"/>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label>Quantity Unit</label>
-                                                <obs conceptId="165791" answerConceptSetIds="162402,162384"/>
-                                            </div>
-                                            <div class="col-md-3 duration">
-                                                <label>Duration</label>
-                                                <obs conceptId="159368"/>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label>Duration Unit</label>
-                                                <obs conceptId="1732" />
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="add-entry add-remove-style">
-                                                    <a href="#" id="{id}-addEntry"
-                                                       class="addEntry add-more-link "><i class="icon-plus-sign"/> Add</a>
-                                                    <a href="#"
-                                                       class="removeEntry remove-more-link"
-                                                       id="{id}-removeEntry"><i class="icon-minus"/> Remove</a>
-                                                </div>
-                                            </div>
+                                    <div class="row multi-drug" id="{id}-toggleContainer">
+                                        <div class="col-md-3">
+                                            <obs id="{id}-drug"
+                                                 labelText="Drug" conceptId="1282"
+                                                 answerClasses="Drug" style="autocomplete"
+                                                 class="fullwidth drug-other"/>
+                                        </div>
+                                        <div class="col-md-3 drug_strength hidden"
+                                             id="drug_strength_select_{id}">
+                                            <label>Strength | Stock Qty</label>
+                                            <select class="form-control"
+                                                    name="drug_strength_select_{id}"
+                                                    onselect="this">
+                                                <option value="">Select Strength</option>
+                                            </select>
                                         </div>
 
-
+                                        <div class="col-md-3 drug_strength hidden" id="drug_strength_{id}">
+                                            <obs class="drug-strength" conceptId="1444"
+                                                 labelText="Strength"/>
+                                        </div>
+                                        <div class="hidden">
+                                            <obs id="drug_stock_item_{id}"
+                                                 conceptId="166969"
+                                                 labelText="Stock Item Id"/>
+                                            <obs id="drug_dispensing_location_{id}"
+                                                 conceptId="166968"
+                                                 labelText="dispensing Location ID"/>
+                                            <obs id="drug_{id}" conceptId="166970"
+                                                 labelText="Drug ID"/>
+                                        </div>
+                                        <div class="col-md-3" id="quantity_{id}">
+                                            <obs id="other-meds-quantity"
+                                                 labelText="Quantity" conceptId="160856"/>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <obs labelText="Qty unit" conceptId="165791"
+                                                 id="qty_unit_{id}"
+                                                 answerConceptSetIds="162402,162384"/>
+                                        </div>
+                                        <div class="col-md-3 duration">
+                                            <label>Duration</label>
+                                            <obs id="duration_{id}" conceptId="159368"/>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <obs conceptId="1732" id="duration_unit_{id}"
+                                                 labelText="Duration unit"/>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <obs conceptId="160855"
+                                                 labelText="Frequency" answerConceptIds="160862,162251,162250,1099"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <obs conceptId="175387"
+                                                 labelText="Dose Instruction"  rows="2" cols="90"/>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="add-entry">
+                                                <a href="#" id="{id}-addEntry"
+                                                   class="addEntry add-more-link"><i
+                                                        class="icon-plus-sign"></i></a>
+                                                <a href="#"
+                                                   class="removeEntry remove-more-link"
+                                                   id="{id}-removeEntry"><i
+                                                        class="icon-minus"></i></a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </obsgroup>
                             </template>

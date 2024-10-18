@@ -90,21 +90,40 @@
         jq("#tabs").tabs();
     })
     if (jQuery) {
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var searchInput = document.getElementById('patient-lab-search');
+            searchInput.addEventListener('keyup', function() {
+                var tableId=jq("#myTabContent").find(".active")[0].id;
+                var dataTable = document.getElementById(''+tableId+'').getElementsByTagName('tbody')[0];
+                var filter = searchInput.value.toLowerCase();
+                var rows = dataTable.getElementsByTagName('tr');
+
+                for (var i = 0; i < rows.length; i++) {
+                    var cells = rows[i].getElementsByTagName('td');
+                    var rowText = '';
+                    for (var j = 0; j < cells.length; j++) {
+                        rowText += cells[j].textContent.toLowerCase();
+                    }
+
+                    if (rowText.indexOf(filter) > -1) {
+                        rows[i].style.display = '';
+                    } else {
+                        rows[i].style.display = 'none';
+                    }
+                }
+            });
+        });
+
         jq(document).ready(function () {
             jq(document).on('sessionLocationChanged', function () {
                 window.location.reload();
             });
             jq("#clinician-list").hide();
             getPatientLabQueue();
-            getOrders();
+            getOrders(null);
             getResults();
             setSpecimenSource();
-
-            jq("#patient-lab-search").change(function () {
-                if (jq("#patient-lab-search").val().length >= 3) {
-                    getPatientLabQueue();
-                }
-            });
 
             jq("#submit-schedule").click(function () {
                 if (jq("#refer_test").is("checked") && jq("#reference_lab").val() === "") {
@@ -123,7 +142,7 @@
                 }
 
                 jq.get('${ ui.actionLink("scheduleTest") }', {
-                    orderNumber: jq("#order_id").val(),
+                    orderId: jq("#order_id").val(),
                     sampleId: jq("#sample_id").val(),
                     referTest: jq("#refer_test").val(),
                     referenceLab: jq("#reference_lab").val(),
@@ -185,8 +204,37 @@
                 jq("#result-search").show();
             });
 
+            jq("#lab-work-list-tab").click(function () {
+                jq("#result-search").show();
+            });
+
+            jq("#referred-tests-tab").click(function () {
+                jq("#result-search").show();
+            });
+
+            jq("#lab-results-approved-tab").click(function () {
+                jq("#result-search").show();
+            });
+
             jq("#search-results").click(function () {
-                getResults(jq("#asOfDate").val());
+                var useGetOrders = false;
+                var useGetResults = false;
+                jq(".active").each(function () {
+                    var selectedTab = jq(this).attr("id");
+                    if (selectedTab === "lab-work-list" || selectedTab === "referred-tests") {
+                        useGetOrders = true
+                        useGetResults = false;
+                    } else if (selectedTab === "lab-results" || selectedTab === "lab-results-approved") {
+                        useGetResults = true;
+                        useGetOrders = false;
+                    }
+                });
+
+                if (useGetOrders) {
+                    getOrders(jq("#asOfDate").val());
+                } else if (useGetResults) {
+                    getResults(jq("#asOfDate").val());
+                }
             });
 
             jq('#reject-order-dialog').on('show.bs.modal', function (event) {
@@ -206,12 +254,12 @@
             })
         });
 
-        function scheduleBulkOrders(queueId) {
+        function scheduleBulkOrders(queueId,unprocessed) {
             var selectedOrders = []
             jq("#schedule-lab-orders-bulk" + queueId).find("input[type=checkbox]:checked").each(function () {
                 selectedOrders.push(getOrderByOrderUuid(jq(this).val()));
             });
-            getEditScheduleBulkTempLate(selectedOrders)
+            getEditScheduleBulkTempLate(selectedOrders,unprocessed)
         }
 
         function getOrderByOrderUuid(uuid) {
@@ -238,7 +286,7 @@
         }
 
         function reloadWorkList() {
-            getOrders();
+            getOrders(null);
         }
 
         function reloadResults() {
@@ -270,13 +318,16 @@
         });
     }
 
-    // Gets Orders of List of WorkList and Refered Tests
-    function getOrders() {
-
+    // Gets Orders of List of WorkList and Referred Tests
+    function getOrders(fromDate) {
+       var  dataToReturn="custom:(uuid,orderNumber,accessionNumber,patient:(display,birthdate,gender,identifiers),concept,action,careSetting,previousOrder,dateActivated,scheduledDate,dateStopped,autoExpireDate,encounter,orderer,orderReason,orderReasonNonCoded,orderType,urgency,instructions,commentToFulfiller,display,fulfillerStatus,fulfillerComment,specimenSource,laterality,clinicalHistory,frequency)"
         var date = "${labWorkListBackLogDaysToDisplay}";
+        if (fromDate != null) {
+            date = fromDate
+        }
         jq.ajax({
             type: "GET",
-            url: '/' + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/order?orderTypes=52a447d3-a64a-11e3-9aeb-50e549534c5e&&careSetting=6f0c9a92-6f24-11e3-af88-005056821db0&activatedOnOrAfterDate=" + date + "&isStopped=false&fulfillerStatus=IN_PROGRESS&v=full",
+            url: '/' + OPENMRS_CONTEXT_PATH + "/ws/rest/v1/order?orderTypes=52a447d3-a64a-11e3-9aeb-50e549534c5e&&careSetting=6f0c9a92-6f24-11e3-af88-005056821db0&activatedOnOrAfterDate=" + date + "&isStopped=false&fulfillerStatus=IN_PROGRESS&v="+dataToReturn,
             dataType: "json",
             contentType: "application/json;",
             async: false,
@@ -352,7 +403,12 @@
     function identifierToDisplay(identifiers) {
         var identifierToDisplay = "";
         jq.each(identifiers, function (index, element) {
-            identifierToDisplay += element.identifierTypeName + " : " + element.identifier + " <br/> "
+            if(element.hasOwnProperty("identifierType")){
+                identifierToDisplay += element.identifierType.display + " : " + element.identifier + " <br/> "
+            }else  if (element.hasOwnProperty("identifierTypeName")){
+                identifierToDisplay += element.identifierTypeName + " : " + element.identifier + " <br/> "
+            }
+
         });
 
         return identifierToDisplay
@@ -361,7 +417,7 @@
     function displayLabData(response) {
         var content = "";
         var pendingCounter = 0;
-        content = "<table><thead><tr><th>VISIT ID</th><th>PATIENT NO.</th><th>NAMES</th><th>AGE</th><th>ORDER FROM</th><th>WAITING TIME</th><th>TEST(S) ORDERED</th></tr></thead><tbody>";
+        content = "<table id=\"test-ordered\"><thead><tr><th>VISIT ID</th><th>PATIENT NO.</th><th>NAMES</th><th>AGE</th><th>ORDER FROM</th><th>WAITING TIME</th><th>TEST(S) ORDERED</th></tr></thead><tbody>";
 
 
         var dataToDisplay = [];
@@ -416,7 +472,7 @@
     function displayLabOrderData(labQueueList, queueId, removeProccesedOrders) {
         var header = "<div id='schedule-lab-orders-bulk" + queueId + "'" + "><table><thead></thead><tbody>";
         var footer = "</tbody></table>" +
-            "<br/><button onclick='scheduleBulkOrders(" + queueId + ")' class='confirm'>Schedule Selected</button>";
+            "<br/><button onclick='scheduleBulkOrders(" + queueId + ","+noOfTests(labQueueList)+")' class='confirm'>Schedule Selected</button>";
         var orderedTestsRows = "";
         var urlToPatientDashBoard = '${ui.pageLink("coreapps","clinicianfacing/patient",[patientId: "patientIdElement"])}'.replace("patientIdElement", labQueueList.patientId);
 
@@ -427,7 +483,7 @@
                 orderedTestsRows += "<td><input type='checkbox' name='test-to-accession' value='" + element.orderUuid + "'/></td>";
                 orderedTestsRows += "<td>" + element.conceptName + "</td>";
                 orderedTestsRows += "<td>";
-                orderedTestsRows += "<a  data-toggle=\"modal\" data-target=\"#add-order-to-lab-worklist-dialog\" data-order-number=\"orderNumber\" data-order-id=\"orderId\" data-unprocessed-orders=\"unProcessedOrders\" data-patientqueueid=\"patientQueueId\"><i style=\"font-size: 25px;\" class=\"icon-share\" title=\"Check In\"></i></a>".replace("orderNumber", element.orderNumber).replace("orderId", element.orderId).replace("unProcessedOrders", noOfTests(labQueueList)).replace("patientQueueId", labQueueList.patientQueueId);
+                orderedTestsRows += "<a  data-toggle=\"modal\" data-target=\"#add-order-to-lab-worklist-dialog\" data-order-number=\"orderNumber\" data-order-id=\"orderId\" data-orderuuid=\"patientorderuuid\" data-unprocessed-orders=\"unProcessedOrders\" data-patientqueueid=\"patientQueueId\"><i style=\"font-size: 25px;\" class=\"icon-share\" title=\"Check In\"></i></a>".replace("orderNumber", element.orderNumber).replace("orderId", element.orderId).replace("patientorderuuid", element.orderUuid).replace("unProcessedOrders", noOfTests(labQueueList)).replace("patientQueueId", labQueueList.patientQueueId);
                 orderedTestsRows += "<a  data-toggle=\"modal\" data-target=\"#reject-order-dialog\" data-order-number=\"orderNumber\" data-order-id=\"orderId\" data-unprocessed-orders=\"unProcessedOrders\" data-patientqueueid=\"patientQueueId\"><i style=\"font-size: 25px;\" class=\" icon-remove-sign\" title=\"Reject Order\"></i></a>".replace("orderNumber", element.orderNumber).replace("orderId", element.orderUuid).replace("unProcessedOrders", noOfTests(labQueueList)).replace("patientQueueId", labQueueList.patientQueueId);
                 orderedTestsRows += "</td>";
                 orderedTestsRows += "</tr>";
@@ -456,7 +512,7 @@
         var referedTests = "";
         var workListTests = "";
 
-        var tableHeader = "<table><thead><tr><th>SAMPLE ID</th><th>PATIENT NAME</th><th>DATE</th><th>TEST</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody>";
+        var tableHeader = "<table id=\"worklist-reffered-list\"><thead><tr><th>SAMPLE ID</th><th>PATIENT NAME</th><th>DATE</th><th>TEST</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody>";
 
         var tableFooter = "</tbody></table>";
         var refferedCounter = 0;
@@ -518,7 +574,7 @@
 
     function displayLabOrderApproachA(labOrder) {
 
-        var displayDivHeader = "<table> <thead> <tr><th></th> <th>Patient</th><th>Orders</th> </tr> </thead> <tbody>";
+        var displayDivHeader = "<table id=\"worklist-referred-a\"> <thead> <tr><th></th><th>No.</th><th>Patient</th><th>DOB</th><th>Gender</th><th>Orders</th> </tr> </thead> <tbody>";
         var displayDivFooter = "</tbody></table>"
         var displayWorkListDiv = "";
         var displayReferralListDiv = "";
@@ -532,18 +588,22 @@
             var trOpenTag = "<tr data-toggle=\"collapse\" data-target=\"#order" + index + "\" class=\"accordion-toggle\">";
             var tdOpenTag = "<td><i class=\" + icon-eye-open + \"/></td>";
             var tdPatientNames = "<td>" + patientencounter.patient.display + "</td>";
+            var tdPatientIdentifier = "<td>" + identifierToDisplay(patientencounter.patient.identifiers) + "</td>";
+            var tdPatientDob = "<td>" + formatDateFromString(patientencounter.patient.birthdate) + "</td>";
+            var tdPatientGender = "<td>" + patientencounter.patient.gender + "</td>";
             var tdOrderSummary = "<td>" + patientencounter.orders.length + "</td>";
             var trCloseTag = "</tr>";
             var trCollapsedOpenTag = "<tr> <td colspan=\"12\" class=\"hiddenRow\"><div class=\"accordian-body collapse\" id=\"order" + index + "\">";
             var trCollapsedCloseTag = "</div></td>"
 
-            var tableHeader = "<table><thead><tr><th>SAMPLE ID</th><th>DATE</th><th>TEST</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody>";
+            var tableHeader = "<table id=\"worklist-referred-ab\"><thead><tr><th>SAMPLE ID</th><th>DATE</th><th>TEST</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody>";
             var tableFooter = "</tbody></table>";
 
             jq.each(patientencounter.orders, function (index, element) {
                 if(element.fulfillerStatus==="EXCEPTION" || element.dateStopped!==null){
                     return;
                 }
+                var orderedTestsRows = "";
                 var orderedTestsRows = "";
                 var instructions = element.instructions;
                 var fulfillerComment = element.fulfillerComment;
@@ -581,11 +641,11 @@
                 }
             });
             if (workListTests.length > 0) {
-                displayWorkListDiv += trOpenTag + tdOpenTag + tdPatientNames + tdOrderSummary + trCloseTag + trCollapsedOpenTag + tableHeader + workListTests + trCollapsedCloseTag + tableFooter
+                displayWorkListDiv += trOpenTag + tdOpenTag + tdPatientIdentifier+ tdPatientNames + tdPatientDob+ tdPatientGender+ tdOrderSummary + trCloseTag + trCollapsedOpenTag + tableHeader + workListTests + trCollapsedCloseTag + tableFooter
             }
 
             if (referedTests.length > 0) {
-                displayReferralListDiv += trOpenTag + tdOpenTag + tdPatientNames + tdOrderSummary + trCloseTag + trCollapsedOpenTag + tableHeader + referedTests + trCollapsedCloseTag + tableFooter
+                displayReferralListDiv += trOpenTag + tdOpenTag +tdPatientIdentifier+ tdPatientNames + tdPatientDob+ tdPatientGender+ tdOrderSummary + trCloseTag + trCollapsedOpenTag + tableHeader + referedTests + trCollapsedCloseTag + tableFooter
             }
 
         })
@@ -628,22 +688,13 @@
     }
 
     // Generates Sample ID for the Sample ID Field on the scheduleTestDialogue
-    function generateSampleId(orderId) {
-        jq.get('${ ui.actionLink("generateSampleID") }', {
-            orderId: orderId
-        }, function (response) {
-            if (response) {
-                jq("#sample_id").val(response);
-            }
-        });
-    }
-
     function generateLabNumber(orderUuid) {
         jq.get('${ ui.actionLink("generateLabNumber") }', {
             orderUuid: orderUuid
         }, function (response) {
             if (response) {
                 jq(".accession-number").val(JSON.parse(response.defaultSampleId));
+                jq("#sample_id").val(JSON.parse(response.defaultSampleId));
             }
         });
     }
@@ -798,7 +849,7 @@ ${ui.includeFragment("ugandaemr", "lab/displayResultList")}
     </div>
     ${ui.includeFragment("ugandaemr", "pickPatientFromQueue", [provider: currentProvider, currentLocation: currentLocation])}
 </div>
-${ui.includeFragment("ugandaemr", "reviewResults")}
+${ui.includeFragment("ugandaemr", "reviewResults",[currentLocation: currentLocation])}
 ${ui.includeFragment("ugandaemr", "lab/rejectTestDialogue")}
 ${ui.includeFragment("ugandaemr", "lab/resultForm")}
 ${ui.includeFragment("ugandaemr", "printResults")}

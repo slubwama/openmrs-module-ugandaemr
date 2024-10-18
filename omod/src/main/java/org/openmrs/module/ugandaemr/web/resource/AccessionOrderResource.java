@@ -1,9 +1,5 @@
 package org.openmrs.module.ugandaemr.web.resource;
 
-import org.json.JSONObject;
-import org.openmrs.Encounter;
-import org.openmrs.Order;
-import org.openmrs.Patient;
 import org.openmrs.TestOrder;
 import org.openmrs.api.OrderService;
 import org.openmrs.api.context.Context;
@@ -30,8 +26,7 @@ import org.openmrs.module.webservices.validation.ValidateUtil;
 import java.util.Arrays;
 import java.util.List;
 
-@Resource(name = RestConstants.VERSION_1 + "/accessionorder", supportedClass = AccessionOrder.class, supportedOpenmrsVersions = {
-        "1.9.*", "1.10.*", "1.11.*", "1.12.*", "2.0.*", "2.1.*", "2.2.*", "2.3.*", "2.4.*", "2.5.*"})
+@Resource(name = RestConstants.VERSION_1 + "/accessionorder", supportedClass = AccessionOrder.class, supportedOpenmrsVersions = {"1.9.* - 9.*"})
 public class AccessionOrderResource extends DelegatingCrudResource<AccessionOrder> {
 
     @Override
@@ -52,47 +47,29 @@ public class AccessionOrderResource extends DelegatingCrudResource<AccessionOrde
     @Override
     public Object update(String uuid, SimpleObject propertiesToUpdate, RequestContext context) throws ResponseException {
         OrderService orderService = Context.getOrderService();
+        UgandaEMRService ugandaEMRService = Context.getService(UgandaEMRService.class);
         PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
-        Order order = orderService.getOrderByUuid(uuid);
+        if (propertiesToUpdate.get("sampleId") != null || propertiesToUpdate.get("sampleId") != "null" || propertiesToUpdate.get("sampleId") != "") {
+            TestOrder testOrder = ugandaEMRService.accessionLabTest(uuid, propertiesToUpdate.get("sampleId").toString(), propertiesToUpdate.get("specimenSourceId").toString(), propertiesToUpdate.get("referenceLab").toString());
 
-        TestOrder testOrder = new TestOrder();
-        testOrder.setAccessionNumber(propertiesToUpdate.get("sampleId").toString());
-        if (propertiesToUpdate.get("referenceLab") != null) {
-            testOrder.setInstructions("REFER TO " + propertiesToUpdate.get("referenceLab").toString());
+            if (propertiesToUpdate.get("unProcessedOrders").toString().equals(1)) {
+                patientQueueingService.completePatientQueue(patientQueueingService.getPatientQueueByUuid(propertiesToUpdate.get("patientQueueId").toString()));
+            }
+
+            AccessionOrder delegate = new AccessionOrder();
+
+            delegate.setOrder(testOrder);
+
+            ValidateUtil.validate(delegate);
+            SimpleObject ret = (SimpleObject) ConversionUtil.convertToRepresentation(testOrder, context.getRepresentation());
+            // add the 'type' discriminator if we support subclasses
+            if (hasTypesDefined()) {
+                ret.add(RestConstants.PROPERTY_FOR_TYPE, getTypeName(delegate));
+            }
+            return ret;
+        }else {
+            throw new ResourceDoesNotSupportOperationException("The accession number or the barcode or the sample id is required");
         }
-        testOrder.setConcept(order.getConcept());
-        testOrder.setEncounter(order.getEncounter());
-        testOrder.setOrderer(order.getOrderer());
-        testOrder.setPatient(order.getPatient());
-        testOrder.setUrgency(Order.Urgency.STAT);
-        testOrder.setCareSetting(order.getCareSetting());
-        testOrder.setOrderType(order.getOrderType());
-        testOrder.setPreviousOrder(order);
-        testOrder.setAction(Order.Action.REVISE);
-        testOrder.setFulfillerStatus(Order.FulfillerStatus.IN_PROGRESS);
-        testOrder.setSpecimenSource(Context.getConceptService().getConcept(propertiesToUpdate.get("specimenSourceId").toString()));
-        orderService.saveOrder(testOrder, null);
-
-        if (order.isActive()) {
-            orderService.voidOrder(order, "Revised with new order: " + testOrder.getOrderNumber());
-        }
-
-        if (propertiesToUpdate.get("unProcessedOrders").toString().equals(1)) {
-            patientQueueingService.completePatientQueue(patientQueueingService.getPatientQueueByUuid(propertiesToUpdate.get("patientQueueId").toString()));
-        }
-
-        AccessionOrder delegate = new AccessionOrder();
-
-        delegate.setOrder(testOrder);
-
-        ValidateUtil.validate(delegate);
-        SimpleObject ret = (SimpleObject) ConversionUtil.convertToRepresentation(testOrder, context.getRepresentation());
-        // add the 'type' discriminator if we support subclasses
-        if (hasTypesDefined()) {
-            ret.add(RestConstants.PROPERTY_FOR_TYPE, getTypeName(delegate));
-        }
-
-        return ret;
     }
 
     @Override

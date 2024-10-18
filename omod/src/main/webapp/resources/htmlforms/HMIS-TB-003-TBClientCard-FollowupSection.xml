@@ -3,7 +3,7 @@
     formDescription="TB Encounter" 
     formEncounterType="455bad1f-5e97-4ee9-9558-ff1df8808732" 
     formUuid="0248cd00-bc53-11ea-b3de-0242ac130004" 
-    formVersion="3.1.0"
+    formVersion="4.0.0"
     formAddMetadata="yes" 
     formUILocation="patientDashboard.visitActions" 
     formOrder="2" 
@@ -34,7 +34,7 @@
                     }
                 });
 
-                var currentTBProgram = getCurrentTBProgramOrBlockEncounter(patientUUID, visitDate, serverResponse, tbInfectionTypeUUID, messageNotInTbProgram, messageWrongTBInfection);
+                <!--var currentTBProgram = getCurrentTBProgramOrBlockEncounter(patientUUID, visitDate, serverResponse, tbInfectionTypeUUID, messageNotInTbProgram, messageWrongTBInfection);-->
 
                 //Block multiple encounter entries on the same date
                 blockEncounterOnSameDateEncounter(jq("#encounterDate").find("input[type=hidden]"),"block");
@@ -1013,8 +1013,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <label>Counselling</label>
-                                                <obs id="99294" conceptId="99294" answerConceptIds="90003,90004" 
-                                                         answerLabels="Yes, No" style="radio" class="horizontal"/>
+
                                             </div>
                                             <div class="col-md-4">   
                                                 <label>Pill refill</label>

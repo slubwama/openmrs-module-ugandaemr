@@ -866,8 +866,10 @@ public class Flags {
     public static FlagDescriptor ELIGIBLE_FOR_HIV_PROGRAM = new FlagDescriptor() {
         @Override
         public String criteria() {
-            return "select person_id from obs  where concept_id=175333 and value_coded=703 and person_id not in (select person_id from obs  where concept_id=169015 and value_coded=703 and person_id not in (select cohort_member.patient_id from cohort_member where  obs.uuid='56b082f8-f956-499d-a8c2-d9b32a067e65') and person_id not in\n" +
-                    "             (select patient_id from patient_program inner join program on(patient_program.program_id = program.program_id)));";
+            return "select person_id from obs  where concept_id=163722 and value_coded=703 and\n" +
+                    "        person_id in (select person_id from obs  where concept_id=163722 and value_coded=703) and\n" +
+                    "        person_id not in (select patient_id from cohort_member where  obs.uuid='56b082f8-f956-499d-a8c2-d9b32a067e65') and\n" +
+                    "        person_id not in (select patient_id from patient_program inner join program on(patient_program.program_id = program.program_id));";
         }
 
         @Override
@@ -904,7 +906,7 @@ public class Flags {
     public static FlagDescriptor ELIGIBLE_FOR_TB_PROGRAM = new FlagDescriptor() {
         @Override
         public String criteria() {
-            return "select person_id from obs  where (concept_id=162202 OR concept_id=165291 OR concept_id=165414) and value_coded=703 and person_id not in (select cohort_member.patient_id from cohort_member where  obs.uuid='0aa9ba5f-d44a-4b31-aff1-3a046bd8e5e0') and person_id not in\n" +
+            return "select person_id from obs  where (concept_id=162202 OR concept_id=165291 OR concept_id=165414) and value_coded=703 and person_id not in (select patient_id from cohort_member where  obs.uuid='0aa9ba5f-d44a-4b31-aff1-3a046bd8e5e0') and person_id not in\n" +
                     "             (select patient_id from patient_program inner join program on(patient_program.program_id = program.program_id));";
         }
 
@@ -936,6 +938,55 @@ public class Flags {
         @Override
         public String uuid() {
             return "e36b5fa8-fe48-4c8a-b993-0ca90c462aa2";
+        }
+    };
+
+    public static FlagDescriptor SUSPECTED_MPOX_PATIENT = new FlagDescriptor() {
+        @Override
+        public String criteria() {
+            return "SELECT DISTINCT\n" +
+                    "    p.patient_id,\n" +
+                    "    obs.value_coded,\n" +
+                    "    CASE\n" +
+                    "        WHEN obs.value_coded = 166313 THEN 'Transferred to Isolation Unit'\n" +
+                    "        WHEN obs.value_coded = 168758 THEN 'Referred to Isolation Unit'\n" +
+                    "        ELSE cn.name\n" +
+                    "    END AS value_coded_text,\n" +
+                    "    DATE_FORMAT(obs.date_created,'%d. %b. %Y') AS formatted_date\n" +
+                    "FROM obs\n" +
+                    "INNER JOIN patient p ON p.patient_id = obs.person_id\n" +
+                    "INNER JOIN concept_name cn ON obs.value_coded = cn.concept_id\n" +
+                    "WHERE obs.concept_id = 198959";
+        }
+
+        @Override
+        public String message() {
+            return "MPOX Suspect ${2} on ${3}";
+        }
+
+        @Override
+        public String priority() {
+            return Priorites.RED.uuid();
+        }
+
+        @Override
+        public List<String> tags() {
+            return Arrays.asList(Tags.PATIENT_STATUS.uuid());
+        }
+
+        @Override
+        public String name() {
+            return "Monkey POX Patient";
+        }
+
+        @Override
+        public String description() {
+            return "Monkey POX Patient";
+        }
+
+        @Override
+        public String uuid() {
+            return "8311e3eb-d87d-40f2-a35f-dd60f1782ddd";
         }
     };
 }
