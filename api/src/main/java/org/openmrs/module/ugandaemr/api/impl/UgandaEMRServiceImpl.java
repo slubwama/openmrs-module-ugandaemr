@@ -56,7 +56,6 @@ import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.util.OpenmrsUtil;
 import org.openmrs.module.stockmanagement.api.StockManagementService;
 
-import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -2097,121 +2096,31 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
 
 
     public Map initaliseMetaData(){
-        AdministrationService administrationService = Context.getAdministrationService();
-        AppFrameworkService appFrameworkService = Context.getService(AppFrameworkService.class);
-        MetadataDeployService deployService = Context.getService(MetadataDeployService.class);
-        LocationService locationService = Context.getLocationService();
 
-        String metaDataFilePath=getMetadataPath("metadata");
         Map results=new HashMap<>();
+        AdministrationService administrationService = Context.getAdministrationService();
 
         try {
-            // disable the reference app registration page
-            appFrameworkService.disableApp("referenceapplication.registrationapp.registerPatient");
-            // disable the start visit app since all data is retrospective
-            appFrameworkService.disableExtension("org.openmrs.module.coreapps.createVisit");
-            // the extension to the edit person details
-            appFrameworkService.disableExtension("org.openmrs.module.registrationapp.editPatientDemographics");
-
-            // disable apps on the Clinican facing dashboard added through coreapps 1.12.0
-            appFrameworkService.disableApp("coreapps.mostRecentVitals");
-            appFrameworkService.disableApp("coreapps.diagnoses");
-            appFrameworkService.disableApp("coreapps.latestObsForConceptList");
-            appFrameworkService.disableApp("coreapps.obsAcrossEncounters");
-            appFrameworkService.disableApp("coreapps.obsGraph");
-            appFrameworkService.enableApp("coreapps.visitByEncounterType");
-            appFrameworkService.disableApp("coreapps.dataIntegrityViolations");
-            appFrameworkService.disableApp("fingerprint.findPatient");
-            appFrameworkService.enableApp("ugandaemr.findPatient");
-            appFrameworkService.disableApp("ugandaemr.registrationapp.registerPatient");
-
-            // enable the relationships dashboard widget
-            appFrameworkService.enableApp("coreapps.relationships");
-
-            // Remove the BIRT reports app since it is no longer supported
-            appFrameworkService.disableApp("ugandaemr.referenceapplication.birtReports");
-
-            // Home page apps clean up
-            appFrameworkService.disableApp("referenceapplication.vitals"); // Capture Vitals
-            appFrameworkService.disableApp("coreapps.activeVisits"); // Active Visits
-
-            // form entry app on the home page
-            appFrameworkService.disableApp("xforms.formentry");
-            // disable the default find patient app to provide one which allows searching for patients at the footer of the search for patients page
-            appFrameworkService.disableApp("coreapps.findPatient");
-            // form entry extension in active visits
-            appFrameworkService.disableExtension("xforms.formentry.cfpd");
-
-            // install concepts
             DataImporter dataImporter = Context.getRegisteredComponent("dataImporter", DataImporter.class);
 
-            log.info("Start import of Concepts");
-            importConcepts(dataImporter);
-
-            log.info("Start import of person attributes");
-            // TODO: Replace this with metadata deploy to be consistent with other person attribute types
-            dataImporter.importData(metaDataFilePath+"Person_Attribute_Types.xml");
-            log.info("Person Attributes imported");
-
-            log.info("Start import of UgandaEMR Privileges");
-            dataImporter.importData(metaDataFilePath+"Role_Privilege.xml");
-            log.info("UgandaEMR Privileges Imported");
-
-            log.info("Start import of UgandaEMR Visits");
-            dataImporter.importData(metaDataFilePath+"VisitTypes.xml");
-            log.info("UgandaEMR Visits Imported");
-
-            // install commonly used metadata
-            installCommonMetadata(deployService);
-
-
-            log.info("Start import of UgandaEMR Relationship Types");
-            dataImporter.importData(metaDataFilePath+"RelationshipTypes.xml");
-            log.info("UgandaEMR Relationship Types Imported");
-
-            log.info("Start import of Program related objects");
-            dataImporter.importData(metaDataFilePath+"Programs.xml");
-            log.info(" Program related objects Imported");
-
-            // run the initializers
-            for (Initializer initializer : getInitializers()) {
-                initializer.started();
+            String initialiseMetaDataOnStart=administrationService.getGlobalProperty("ugandaemr.initialiseMetadataOnStart");
+            if(initialiseMetaDataOnStart.equals("true")) {
+                log.info("Start import of Concepts,privillages,personAttribute provider attribute type etc...");
+                importMetaDataFromXMLFiles(dataImporter);
+                log.info("completed import of Concepts,privillages,personAttribute provider attribute type etc...");
+                // run the initialization of forms
+                for (Initializer initializer : initialiseForms()) {
+                    initializer.started();
+                }
             }
 
-            // save defined global properties
-            administrationService.saveGlobalProperties(configureGlobalProperties());
-
-            // update the name of the default health center with that stored in the global property
-            Location healthCenter = locationService.getLocationByUuid("629d78e9-93e5-43b0-ad8a-48313fd99117");
-            healthCenter.setName(administrationService.getGlobalProperty(UgandaEMRConstants.GP_HEALTH_CENTER_NAME));
-            locationService.saveLocation(healthCenter);
-
-            String flagstatus = administrationService.getGlobalProperty("ugandaemr.patientflags.disabledFlags");
-
-            if (flagstatus != null) {
-                flagstatus=("'"+flagstatus.trim().replace(",","','")+"'").replace(",''","").replace("' ","'");
-                administrationService.executeSQL("update patientflags_flag set enabled=0 where name in (" + flagstatus.trim() + ")", false);
-            }
-
-            // cleanup liquibase change logs to enable installation of data integrity module
-            removeOldChangeLocksForDataIntegrityModule();
-
-            // generate OpenMRS ID for patients without the identifier
-            generateOpenMRSIdentifierForPatientsWithout();
-
-            //update concept name for concept id  163017 to ABC-3TC-LPV/r as fully specified
-            administrationService.executeSQL("UPDATE concept_name SET concept_name_type = 'FULLY_SPECIFIED',locale_preferred = 1 WHERE concept_name_id = 134334 and concept_id=163017", false);
-            administrationService.executeSQL("UPDATE concept_name SET locale_preferred = 0,concept_name_type = null WHERE concept_name_id = 134333 and concept_id=163017", false);
-
-            log.info("ugandaemr Module started");
             results.put("status","success");
             results.put("message","completed initialising metadata");
+
             return results;
 
 
         } catch (Exception e) {
-            Module mod = ModuleFactory.getModuleById("ugandaemr");
-            ModuleFactory.stopModule(mod);
             results.put("status","failed");
             results.put("message",e.getMessage());
             return results;
@@ -2234,7 +2143,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
 
 
 
-    private void importConcepts(DataImporter dataImporter){
+    public void importMetaDataFromXMLFiles(DataImporter dataImporter){
         String metaDataFilePath=getMetadataPath("metadata");
         log.info("import  to Concept Table  Starting");
         dataImporter.importData(metaDataFilePath+"concepts_and_drugs/Concept.xml");
@@ -2331,6 +2240,26 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         log.info("Retire Meta data");
         dataImporter.importData(metaDataFilePath+"concepts_and_drugs/retire_meta_data.xml");
         log.info("Retiring of meta data is Successful");
+
+        log.info("Start import of person attributes");
+        dataImporter.importData(metaDataFilePath+"Person_Attribute_Types.xml");
+        log.info("Person Attributes imported");
+
+        log.info("Start import of UgandaEMR Privileges");
+        dataImporter.importData(metaDataFilePath+"Role_Privilege.xml");
+        log.info("UgandaEMR Privileges Imported");
+
+        log.info("Start import of UgandaEMR Visits");
+        dataImporter.importData(metaDataFilePath+"VisitTypes.xml");
+        log.info("UgandaEMR Visits Imported");
+
+        log.info("Start import of UgandaEMR Relationship Types");
+        dataImporter.importData(metaDataFilePath+"RelationshipTypes.xml");
+        log.info("UgandaEMR Relationship Types Imported");
+
+        log.info("Start import of Program related objects");
+        dataImporter.importData(metaDataFilePath+"Programs.xml");
+        log.info(" Program related objects Imported");
     }
 
     /**
@@ -2360,7 +2289,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     /**
      * Generate an OpenMRS ID for patients who do not have one due to a migration from an old OpenMRS ID to a new one which contains a check-digit
      **/
-    private void generateOpenMRSIdentifierForPatientsWithout() {
+    public void generateOpenMRSIdentifierForPatientsWithout() {
         PatientService patientService = Context.getPatientService();
         AdministrationService as = Context.getAdministrationService();
         AlertService alertService = Context.getAlertService();
@@ -2395,102 +2324,25 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
      *
      * @return
      */
-    private List<GlobalProperty> configureGlobalProperties() {
-        List<GlobalProperty> properties = new ArrayList<GlobalProperty>();
+    public void initializePrimaryIdentifierTypeMapping() {
         // The primary identifier type now uses metadata mapping instead of a global property
         MetadataMappingService metadataMappingService = Context.getService(MetadataMappingService.class);
-        MetadataTermMapping primaryIdentifierTypeMapping = metadataMappingService.getMetadataTermMapping(EmrApiConstants.EMR_METADATA_SOURCE_NAME, EmrApiConstants.PRIMARY_IDENTIFIER_TYPE);
-        PatientIdentifierType openmrsIdType = Context.getPatientService().getPatientIdentifierTypeByUuid(PatientIdentifierTypes.NATIONAL_ID.uuid());
+        MetadataTermMapping primaryIdentifierTypeMapping = metadataMappingService.getMetadataTermMapping(
+                EmrApiConstants.EMR_METADATA_SOURCE_NAME,
+                EmrApiConstants.PRIMARY_IDENTIFIER_TYPE
+        );
+        PatientIdentifierType openmrsIdType = Context.getPatientService()
+                .getPatientIdentifierTypeByUuid(PatientIdentifierTypes.NATIONAL_ID.uuid());
 
-        //overwrite if not set yet
+        // Overwrite if not set yet
         if (!openmrsIdType.getUuid().equals(primaryIdentifierTypeMapping.getMetadataUuid())) {
             primaryIdentifierTypeMapping.setMappedObject(openmrsIdType);
             metadataMappingService.saveMetadataTermMapping(primaryIdentifierTypeMapping);
         }
-
-        String ART_Patient_Number_Identifier = "";
-        // check if the ART patient number is to be displayed then add it here
-        if (Context.getAdministrationService().getGlobalProperty("ugandaemr.showARTPatientNumberIdentifier").equals("true")) {
-            log.info("Adding ART patient number to extra identifier types property");
-            ART_Patient_Number_Identifier = "," + PatientIdentifierTypes.ART_PATIENT_NUMBER.uuid();
-        }
-
-        String Research_Patient_Identifier = "";
-        // check if the ART patient number is to be displayed then add it here
-        if (Context.getAdministrationService().getGlobalProperty("ugandaemr.showResearchPatientIdentifier").equals("true")) {
-            log.info("Adding research patient number to extra identifier types property");
-            Research_Patient_Identifier = "," + PatientIdentifierTypes.RESEARCH_PATIENT_ID.uuid();
-        }
-
-        String Refugee_Identifier = "";
-        // check if the ART patient number is to be displayed then add it here
-        if (Context.getAdministrationService().getGlobalProperty("ugandaemr.showRefugeeIdentifier").equals("true")) {
-            log.info("Adding refugee identifier to extra identifier types property");
-            Refugee_Identifier = "," + PatientIdentifierTypes.REFUGEE_IDENTIFICATION_NUMBER.uuid();
-        }
-
-        // set the HIV care number and EID number as additional identifiers that can be searched for
-        properties.add(new GlobalProperty(EmrApiConstants.GP_EXTRA_PATIENT_IDENTIFIER_TYPES, PatientIdentifierTypes.HIV_CARE_NUMBER.uuid() + "," + PatientIdentifierTypes.EXPOSED_INFANT_NUMBER.uuid() + "," + PatientIdentifierTypes.IPD_NUMBER.uuid() + "," + PatientIdentifierTypes.ANC_NUMBER.uuid() + "," + PatientIdentifierTypes.PNC_NUMBER.uuid() + "," + ART_Patient_Number_Identifier + Research_Patient_Identifier + Refugee_Identifier));
-
-        // set the name of the application
-        properties.add(new GlobalProperty("application.name", "UgandaEMR - Uganda eHealth Solution"));
-
-        // Remove the regular expression to validate names
-        properties.add(new GlobalProperty("patient.nameValidationRegex", ""));
-
-        // the search mode for patients to enable searching any part of names rather than the beginning
-        properties.add(new GlobalProperty("patientSearch.matchMode", "ANYWHERE"));
-
-        // enable searching on parts of the patient identifier
-        // the prefix and suffix provide a % round the entered search term with a like
-        properties.add(new GlobalProperty("patient.identifierPrefix", "%"));
-        properties.add(new GlobalProperty("patient.identifierSuffix", "%"));
-
-        // the RegeX and Search patterns should be empty so that the prefix and suffix matching above can work
-        properties.add(new GlobalProperty("patient.identifierRegex", ""));
-        properties.add(new GlobalProperty("patient.identifierSearchPattern", ""));
-        // add telephone number and Marital status to the search widget
-        properties.add(new GlobalProperty("patient.listingAttributeTypes", "Telephone Number,Marital Status"));
-
-        // Form Entry Settings
-        properties.add(new GlobalProperty("FormEntry.enableDashboardTab", "true"));     // show as a tab on the patient dashboard
-        properties.add(new GlobalProperty("FormEntry.FormEntry.enableOnEncounterTab", "true"));
-
-        //HTML Form Entry Settings
-        properties.add(new GlobalProperty("htmlformentry.showDateFormat", "false"));//Disable date format display on form entry
-
-        //Birt Settings
-        properties.add(new GlobalProperty("birt.alwaysUseOpenmrsJdbcProperties", "false"));
-        properties.add(new GlobalProperty("birt.birtHome", OpenmrsUtil.getApplicationDataDirectory() + "birt" + File.separator + "birt-runtime-2_3_2" + File.separator + "ReportEngine"));
-        properties.add(new GlobalProperty("birt.datasetDir", OpenmrsUtil.getApplicationDataDirectory() + "birt" + File.separator + "reports" + File.separator + "datasets"));
-        properties.add(new GlobalProperty("birt.loggingDir", OpenmrsUtil.getApplicationDataDirectory() + "birt" + File.separator + "logs"));
-        properties.add(new GlobalProperty("birt.defaultReportDesignFile", "default.rptdesign"));
-        properties.add(new GlobalProperty("birt.loggingLevel", "OFF"));
-        properties.add(new GlobalProperty("birt.mandatory", "false"));
-        properties.add(new GlobalProperty("birt.outputDir", OpenmrsUtil.getApplicationDataDirectory() + "birt" + File.separator + "reports" + File.separator + "output"));
-        properties.add(new GlobalProperty("birt.reportDir", OpenmrsUtil.getApplicationDataDirectory() + "birt" + File.separator + "reports"));
-        properties.add(new GlobalProperty("birt.reportOutputFile", OpenmrsUtil.getApplicationDataDirectory() + "birt" + File.separator + "reports" + File.separator + "output" + File.separator + "ReportOutput.pdf"));
-        properties.add(new GlobalProperty("birt.reportOutputFormat", "pdf"));
-        properties.add(new GlobalProperty("birt.reportPreviewFile", OpenmrsUtil.getApplicationDataDirectory() + "birt" + File.separator + "reports" + File.separator + "output" + File.separator + "ReportPreview.pdf"));
-
-        // disable the appointmentshedulingui which currently has issues
-        properties.add(new GlobalProperty("appointmentschedulingui.started", "false"));
-
-        // Exclude temporary reporting tables by database backup module
-        properties.add(new GlobalProperty("databasebackup.tablesExcluded", "ugandaemr_105_eid,ugandaemr_106a1a"));
-
-        // the name of the custom registration app
-        properties.add(new GlobalProperty("registrationapp.customRegistrationAppId", "ugandaemr.registrationapp.registerPatient"));
-
-        // enable the register patient button to appear on the search widget
-        properties.add(new GlobalProperty("coreapps.showRegisterPatientOnSearchWidget", "true"));
-
-        // mapping for creating visits without encounters to the default facility visit type
-        properties.add(new GlobalProperty("emrapi.EmrApiVisitAssignmentHandler.encounterTypeToNewVisitTypeMap", "default:7b0f5697-27e3-40c4-8bae-f4049abfb4ed"));
-        return properties;
     }
 
-    private void installCommonMetadata(MetadataDeployService deployService) {
+
+    public void installCommonMetadata(MetadataDeployService deployService) {
         try {
             log.info("Installing standard metadata using the packages.xml file");
             MetadataUtil.setupStandardMetadata(getClass().getClassLoader());
@@ -2516,7 +2368,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         }
     }
 
-    private void removeOldChangeLocksForDataIntegrityModule() {
+    public void removeOldChangeLocksForDataIntegrityModule() {
         String gpVal = Context.getAdministrationService().getGlobalProperty("dataintegrity.database_version");
         // remove data integrity locks for an version below 4
         // some gymnastics to get the major version number from semver like 2.5.3
@@ -2527,7 +2379,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         }
     }
 
-    private List<Initializer> getInitializers() {
+    public List<Initializer> initialiseForms() {
         String jsonFormsPath=getMetadataPath("jsonforms");
         String initaliseJsonForms=Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.initaliseJsonForms");
         String htmlFormsPath=getMetadataPath("htmlforms");
@@ -2542,5 +2394,62 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
             l.add(new HtmlFormsInitializer(UgandaEMRConstants.MODULE_ID,htmlFormsPath));
         }
         return l;
+    }
+
+    public void setHealthFacilityLocation(){
+        LocationService locationService=Context.getLocationService();
+        AdministrationService administrationService=Context.getAdministrationService();
+        Location healthCenter = locationService.getLocationByUuid("629d78e9-93e5-43b0-ad8a-48313fd99117");
+        healthCenter.setName(administrationService.getGlobalProperty(UgandaEMRConstants.GP_HEALTH_CENTER_NAME));
+        locationService.saveLocation(healthCenter);
+    }
+
+    public  void  setFlagStatus(){
+        AdministrationService administrationService=Context.getAdministrationService();
+        String flagstatus = administrationService.getGlobalProperty("ugandaemr.patientflags.disabledFlags");
+
+        if (flagstatus != null) {
+            flagstatus = ("'" + flagstatus.trim().replace(",", "','") + "'").replace(",''", "").replace("' ", "'");
+            administrationService.executeSQL("update patientflags_flag set enabled=0 where name in (" + flagstatus.trim() + ")", false);
+        }
+    }
+
+    public void disableEnableAPPS(){
+        AppFrameworkService appFrameworkService = Context.getService(AppFrameworkService.class);
+        // disable the reference app registration page
+        appFrameworkService.disableApp("referenceapplication.registrationapp.registerPatient");
+        // disable the start visit app since all data is retrospective
+        appFrameworkService.disableExtension("org.openmrs.module.coreapps.createVisit");
+        // the extension to the edit person details
+        appFrameworkService.disableExtension("org.openmrs.module.registrationapp.editPatientDemographics");
+
+        // disable apps on the Clinican facing dashboard added through coreapps 1.12.0
+        appFrameworkService.disableApp("coreapps.mostRecentVitals");
+        appFrameworkService.disableApp("coreapps.diagnoses");
+        appFrameworkService.disableApp("coreapps.latestObsForConceptList");
+        appFrameworkService.disableApp("coreapps.obsAcrossEncounters");
+        appFrameworkService.disableApp("coreapps.obsGraph");
+        appFrameworkService.enableApp("coreapps.visitByEncounterType");
+        appFrameworkService.disableApp("coreapps.dataIntegrityViolations");
+        appFrameworkService.disableApp("fingerprint.findPatient");
+        appFrameworkService.enableApp("ugandaemr.findPatient");
+        appFrameworkService.disableApp("ugandaemr.registrationapp.registerPatient");
+
+        // enable the relationships dashboard widget
+        appFrameworkService.enableApp("coreapps.relationships");
+
+        // Remove the BIRT reports app since it is no longer supported
+        appFrameworkService.disableApp("ugandaemr.referenceapplication.birtReports");
+
+        // Home page apps clean up
+        appFrameworkService.disableApp("referenceapplication.vitals"); // Capture Vitals
+        appFrameworkService.disableApp("coreapps.activeVisits"); // Active Visits
+
+        // form entry app on the home page
+        appFrameworkService.disableApp("xforms.formentry");
+        // disable the default find patient app to provide one which allows searching for patients at the footer of the search for patients page
+        appFrameworkService.disableApp("coreapps.findPatient");
+        // form entry extension in active visits
+        appFrameworkService.disableExtension("xforms.formentry.cfpd");
     }
 }

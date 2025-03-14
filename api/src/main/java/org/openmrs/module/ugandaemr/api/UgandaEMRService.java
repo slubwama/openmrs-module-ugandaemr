@@ -16,8 +16,11 @@ package org.openmrs.module.ugandaemr.api;
 import org.openmrs.*;
 import org.openmrs.api.APIException;
 import org.openmrs.api.OpenmrsService;
+import org.openmrs.module.dataexchange.DataImporter;
 import org.openmrs.module.htmlformentry.FormEntrySession;
+import org.openmrs.module.metadatadeploy.api.MetadataDeployService;
 import org.openmrs.module.ugandaemr.PublicHoliday;
+import org.openmrs.module.ugandaemr.activator.Initializer;
 import org.openmrs.module.ugandaemr.api.lab.OrderObs;
 import org.openmrs.module.ugandaemr.api.queuemapper.PatientQueueVisitMapper;
 import org.springframework.transaction.annotation.Transactional;
@@ -450,4 +453,22 @@ public interface UgandaEMRService extends OpenmrsService {
 
     public Map initaliseMetaData();
 
+
+    public void importMetaDataFromXMLFiles(DataImporter dataImporter);
+
+    public void installCommonMetadata(MetadataDeployService deployService);
+
+    public void removeOldChangeLocksForDataIntegrityModule();
+
+    public void generateOpenMRSIdentifierForPatientsWithout();
+
+    public void initializePrimaryIdentifierTypeMapping();
+
+    public void setHealthFacilityLocation();
+
+    public void setFlagStatus();
+
+    public List<Initializer> initialiseForms();
+
+    public void disableEnableAPPS();
 }
