@@ -128,7 +128,7 @@
 		<openmrsOwaVersion>1.14.0</openmrsOwaVersion>
 		<ugandaemrfingerprintVersion>1.1.0</ugandaemrfingerprintVersion>
 		<cohortModuleVersion>3.4.0</cohortModuleVersion>
-		<stockmanagementVersion>1.4.3</stockmanagementVersion>
+		<stockmanagementVersion>1.4.4</stockmanagementVersion>
 		<spaModuleVersion>2.0.0</spaModuleVersion>
 		<o3formsVersion>2.3.0</o3formsVersion>
 		<orderTemplatesVersion>1.0.3</orderTemplatesVersion>
