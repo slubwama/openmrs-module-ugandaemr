@@ -16,7 +16,6 @@ package org.openmrs.module.ugandaemr.api;
 import org.openmrs.*;
 import org.openmrs.api.APIException;
 import org.openmrs.api.OpenmrsService;
-import org.openmrs.module.dataexchange.DataImporter;
 import org.openmrs.module.htmlformentry.FormEntrySession;
 import org.openmrs.module.metadatadeploy.api.MetadataDeployService;
 import org.openmrs.module.ugandaemr.PublicHoliday;
@@ -451,10 +450,10 @@ public interface UgandaEMRService extends OpenmrsService {
     public TestOrder accessionLabTest(String orderUuid, String accessionNumber, String specimenSourceUuid, String instructions);
 
 
-    public Map initaliseMetaData();
+    public Map initializeMetaData();
 
 
-    public void importMetaDataFromXMLFiles(DataImporter dataImporter);
+    public void importMetaDataFromXMLFiles();
 
     public void installCommonMetadata(MetadataDeployService deployService);
 

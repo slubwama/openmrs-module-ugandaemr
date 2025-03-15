@@ -2095,18 +2095,16 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     }
 
 
-    public Map initaliseMetaData(){
+    public Map initializeMetaData(){
 
         Map results=new HashMap<>();
         AdministrationService administrationService = Context.getAdministrationService();
 
         try {
-            DataImporter dataImporter = Context.getRegisteredComponent("dataImporter", DataImporter.class);
-
             String initialiseMetaDataOnStart=administrationService.getGlobalProperty("ugandaemr.initialiseMetadataOnStart");
             if(initialiseMetaDataOnStart.equals("true")) {
                 log.info("Start import of Concepts,privillages,personAttribute provider attribute type etc...");
-                importMetaDataFromXMLFiles(dataImporter);
+                importMetaDataFromXMLFiles();
                 log.info("completed import of Concepts,privillages,personAttribute provider attribute type etc...");
                 // run the initialization of forms
                 for (Initializer initializer : initialiseForms()) {
@@ -2143,7 +2141,8 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
 
 
 
-    public void importMetaDataFromXMLFiles(DataImporter dataImporter){
+    public void importMetaDataFromXMLFiles(){
+        DataImporter dataImporter = Context.getRegisteredComponent("dataImporter", DataImporter.class);
         String metaDataFilePath=getMetadataPath("metadata");
         log.info("import  to Concept Table  Starting");
         dataImporter.importData(metaDataFilePath+"concepts_and_drugs/Concept.xml");
