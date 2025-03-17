@@ -63,8 +63,11 @@ public class UgandaEMRActivator extends org.openmrs.module.BaseModuleActivator {
             // enable disable apps of in coreapps
             ugandaEMRService.disableEnableAPPS();
 
-            // initialise forms and concepts and other metadata like privileges, personal attribute types
-            ugandaEMRService.initializeMetaData();
+            String initialiseMetaDataOnStart=administrationService.getGlobalProperty("ugandaemr.initialiseMetadataOnStart");
+            if(initialiseMetaDataOnStart.equals("true")) {
+                // initialise forms and concepts and other metadata like privileges, personal attribute types
+                ugandaEMRService.initializeMetaData();
+            }
 
             // initialise primary Identifier
             ugandaEMRService.initializePrimaryIdentifierTypeMapping();

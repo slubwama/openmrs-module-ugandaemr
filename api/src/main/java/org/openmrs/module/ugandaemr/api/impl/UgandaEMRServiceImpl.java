@@ -2102,21 +2102,18 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
 
         try {
             String initialiseMetaDataOnStart=administrationService.getGlobalProperty("ugandaemr.initialiseMetadataOnStart");
-            if(initialiseMetaDataOnStart.equals("true")) {
                 log.info("Start import of Concepts,privillages,personAttribute provider attribute type etc...");
                 importMetaDataFromXMLFiles();
                 log.info("completed import of Concepts,privillages,personAttribute provider attribute type etc...");
                 // run the initialization of forms
                 for (Initializer initializer : initialiseForms()) {
                     initializer.started();
-                }
             }
 
             results.put("status","success");
             results.put("message","completed initialising metadata");
 
             return results;
-
 
         } catch (Exception e) {
             results.put("status","failed");
