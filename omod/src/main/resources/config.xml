@@ -340,6 +340,24 @@
         <description>The encounter type uuidthat supports immunization app</description>
     </globalProperty>
 
+    <globalProperty>
+        <property>ugandaemr.metadata.jsonFormPath</property>
+        <defaultValue>/configuration/metadata</defaultValue>
+        <description>The metadata path of UgandaEMR</description>
+    </globalProperty>
+
+    <globalProperty>
+        <property>ugandaemr.metadata.htmlnFormPath</property>
+        <defaultValue>/configuration/forms/htmlforms</defaultValue>
+        <description>The html forms path of UgandaEMR</description>
+    </globalProperty>
+
+    <globalProperty>
+        <property>ugandaemr.metadata.jsonFormPath</property>
+        <defaultValue>/configuration/forms/jsonforms</defaultValue>
+        <description>The json forms path of UgandaEMR</description>
+    </globalProperty>
+
     <privilege>
         <name>Task: HIV Clinic Access</name>
         <description>Able to access HIV patient clinic information</description>
