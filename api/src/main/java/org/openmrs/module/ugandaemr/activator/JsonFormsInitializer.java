@@ -57,13 +57,15 @@ public class JsonFormsInitializer implements Initializer {
         // Scanning the forms resources folder
         List<String> formPaths = new ArrayList<String>();
         if(!formFilePath.equals("")){
-            fileFormPathLocal=formFilePath;
+            fileFormPathLocal=this.formFilePath;
         }
-        final File formsDir = resourceProvider.getResource(fileFormPathLocal); // The ResourceFactory can't return File instances, hence the ResourceProvider need
-        if (formsDir == null || formsDir.isDirectory() == false) {
+        File formsDir = new File(fileFormPathLocal);
+
+        if (formsDir == null || !formsDir.isDirectory()) {
             log.error("No HTML forms could be retrieved from the provided folder: " + getProviderName() + ":" + fileFormPathLocal);
             return;
         }
+
         for (File file : formsDir.listFiles())
             formPaths.add(fileFormPathLocal + file.getName());
 

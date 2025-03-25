@@ -2382,9 +2382,10 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         List<Initializer> l = new ArrayList<Initializer>();
         l.add(new AppConfigurationInitializer());
         l.add(new JsonFormsInitializer(UgandaEMRConstants.MODULE_ID,jsonFormsPath));
-        l.add(new HtmlFormsInitializer(UgandaEMRConstants.MODULE_ID,htmlFormsPath));
+        l.add(new HtmlFormsInitializer(UgandaEMRConstants.MODULE_ID));
         return l;
     }
+
 
     public void setHealthFacilityLocation(){
         LocationService locationService=Context.getLocationService();

@@ -32,11 +32,9 @@ public class HtmlFormsInitializer implements Initializer {
     protected static final String formsPath = "htmlforms/";
 
     protected String providerName;
-    private String formFilePath;
 
-    public HtmlFormsInitializer(String newProviderName,String newFormFilePath) {
+    public HtmlFormsInitializer(String newProviderName) {
         this.providerName = newProviderName;
-        this.formFilePath = newFormFilePath;
     }
 
     /**
@@ -45,25 +43,18 @@ public class HtmlFormsInitializer implements Initializer {
     public synchronized void started() {
         log.info("Setting HFE forms for " + getProviderName());
 
-         ResourceFactory resourceFactory = ResourceFactory.getInstance();
-         ResourceProvider resourceProvider = resourceFactory.getResourceProviders().get(getProviderName());
-         String fileFormPathLocal=formsPath;
+        final ResourceFactory resourceFactory = ResourceFactory.getInstance();
+        final ResourceProvider resourceProvider = resourceFactory.getResourceProviders().get(getProviderName());
 
         // Scanning the forms resources folder
-         List<String> formPaths = new ArrayList<String>();
-        if(!formFilePath.equals("")){
-            fileFormPathLocal=this.formFilePath;
-        }
-         File formsDir = resourceProvider.getResource(fileFormPathLocal);
-        if(!formFilePath.equals("")){
-            resourceProvider.getResource(fileFormPathLocal);
-        }
+        final List<String> formPaths = new ArrayList<String>();
+        final File formsDir = resourceProvider.getResource(formsPath); // The ResourceFactory can't return File instances, hence the ResourceProvider need
         if (formsDir == null || formsDir.isDirectory() == false) {
-            log.error("No HTML forms could be retrieved from the provided folder: " + getProviderName() + ":" + fileFormPathLocal);
+            log.error("No HTML forms could be retrieved from the provided folder: " + getProviderName() + ":" + formsPath);
             return;
         }
         for (File file : formsDir.listFiles())
-            formPaths.add(fileFormPathLocal + file.getName());    // Adding each file's path to the list
+            formPaths.add(formsPath + file.getName());    // Adding each file's path to the list
 
         // Save form + add its meta data
         final FormManager formManager = Context.getRegisteredComponent("formManager", FormManager.class);
