@@ -438,4 +438,6 @@
     <concept_name  concept_name_id="199383"  concept_id="199370"  name="BILATERAL"                          locale="en"  locale_preferred="1"  creator="1"  date_created="2025-03-24 13:28:32"  concept_name_type="FULLY_SPECIFIED"  voided="0"   uuid="3eb4f9ba-a3fe-4c79-8765-4e1e273e794f"/>
     <concept_name  concept_name_id="199384"  concept_id="199371"  name="Laterality"                         locale="en"  locale_preferred="1"  creator="1"  date_created="2025-03-24 13:29:38"  concept_name_type="FULLY_SPECIFIED"  voided="0"   uuid="bc912fc1-817d-4f3b-96c5-52c060cce590"/>
 
+    <concept_name  concept_name_id="199385"  concept_id="199372"  name="Diagnosed with PTLD"       locale="en"  locale_preferred="1"  creator="1"  date_created="2025-03-26 23:42:26"  concept_name_type="FULLY_SPECIFIED"  voided="0"  uuid="31d06fa5-2383-4f6a-b495-285487d95b02"/>
+    <concept_name  concept_name_id="199386"  concept_id="199373"  name="Date Diagnosed with PTLD"  locale="en"  locale_preferred="1"  creator="1"  date_created="2025-03-26 23:43:18"  concept_name_type="FULLY_SPECIFIED"  voided="0"  uuid="b3ab2874-618e-491d-bcb3-defc1955f797"/>
 </dataset>
