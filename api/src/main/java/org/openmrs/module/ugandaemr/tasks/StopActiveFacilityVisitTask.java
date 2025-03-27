@@ -2,6 +2,7 @@ package org.openmrs.module.ugandaemr.tasks;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.Encounter;
 import org.openmrs.Visit;
 import org.openmrs.api.VisitService;
 import org.openmrs.api.context.Context;
@@ -35,12 +36,22 @@ public class StopActiveFacilityVisitTask extends AbstractTask {
         for (Visit visit : visitList) {
             if (visit.getStopDatetime() == null && visit.getVisitType().getUuid().equals("7b0f5697-27e3-40c4-8bae-f4049abfb4ed") && visit.getStartDatetime().before(OpenmrsUtil.firstSecondOfDay(new Date()))) {
                try {
+                   Date largestEncounterDate = OpenmrsUtil.getLastMomentOfDay(visit.getStartDatetime());
+                   for (Encounter encounter : visit.getEncounters()) {
+                       if (encounter.getEncounterDatetime().after(largestEncounterDate)) {
+                           largestEncounterDate = encounter.getEncounterDatetime();
+                       }
+                   }
+                   if (!visit.getStartDatetime().after(OpenmrsUtil.firstSecondOfDay(new Date()))) {
+                       visitService.endVisit(visit, largestEncounterDate);
+                   }
                    visitService.endVisit(visit, OpenmrsUtil.getLastMomentOfDay(visit.getStartDatetime()));
                }catch (Exception e){
                    log.error(e);
                }
             }
         }
+
 
 
     }
