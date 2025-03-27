@@ -21,6 +21,7 @@ import org.openmrs.module.metadatadeploy.api.MetadataDeployService;
 import org.openmrs.module.ugandaemr.PublicHoliday;
 import org.openmrs.module.ugandaemr.activator.Initializer;
 import org.openmrs.module.ugandaemr.api.lab.OrderObs;
+import org.openmrs.module.ugandaemr.api.queuemapper.CheckInPatient;
 import org.openmrs.module.ugandaemr.api.queuemapper.PatientQueueVisitMapper;
 import org.springframework.transaction.annotation.Transactional;
 import org.openmrs.module.patientqueueing.mapper.PatientQueueMapper;
@@ -449,7 +450,6 @@ public interface UgandaEMRService extends OpenmrsService {
      */
     public TestOrder accessionLabTest(String orderUuid, String accessionNumber, String specimenSourceUuid, String instructions);
 
-
     public Map initializeMetaData();
 
 
@@ -470,4 +470,6 @@ public interface UgandaEMRService extends OpenmrsService {
     public List<Initializer> initialiseForms();
 
     public void disableEnableAPPS();
+
+    public CheckInPatient checkInPatient(Patient patient, Location currentLocation, Location locationTo, Location queueRoom, Provider provider, String visitComment, String patientStatus, String visitTypeUuid);
 }
