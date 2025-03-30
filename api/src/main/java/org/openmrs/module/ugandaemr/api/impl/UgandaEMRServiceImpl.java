@@ -78,15 +78,24 @@ import org.openmrs.order.OrderUtil;
 import org.openmrs.parameter.EncounterSearchCriteria;
 import org.openmrs.parameter.EncounterSearchCriteriaBuilder;
 import org.openmrs.ui.framework.SimpleObject;
+import org.openmrs.ui.framework.resource.ResourceFactory;
+import org.openmrs.ui.framework.resource.ResourceProvider;
 import org.openmrs.util.OpenmrsUtil;
 import org.openmrs.module.stockmanagement.api.StockManagementService;
 
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import static org.openmrs.OrderType.TEST_ORDER_TYPE_UUID;
 import static org.openmrs.module.ugandaemr.UgandaEMRConstants.*;
@@ -2146,25 +2155,35 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         }
     }
 
-    private String  getMetadataPath(String type){
+    private String getMetadataPath(String type) {
         String appDataDir = OpenmrsUtil.getApplicationDataDirectory();
-        String path="";
+        String relativePath = "";
 
-        if(type.equals("jsonforms")){
-            path =Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.jsonFormPath");
-        }else if(type.equals("htmlforms")) {
-            path = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.htmlnFormPath");
-        }else if(type.equals("metadata")) {
-            path = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.path");
+        if ("jsonforms".equals(type)) {
+            relativePath = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.jsonFormPath");
+        } else if ("htmlforms".equals(type)) {
+            relativePath = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.htmlFormPath");
+        } else if ("metadata".equals(type)) {
+            relativePath = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.path");
+        } else if ("configuration".equals(type)) {
+            relativePath = Context.getAdministrationService().getGlobalProperty("ugandaemr.configuration");
         }
-        return appDataDir+path;
+
+        // Ensure the relative path is not null to avoid null concatenation
+        if (relativePath == null || relativePath.isEmpty()) {
+            throw new IllegalArgumentException("No valid path found for type: " + type);
+        }
+
+        // Construct the full path
+        Path fullPath = Paths.get(appDataDir, relativePath);
+        return fullPath.toString();
     }
 
 
 
     public void importMetaDataFromXMLFiles(){
         DataImporter dataImporter = Context.getRegisteredComponent("dataImporter", DataImporter.class);
-        String metaDataFilePath=getMetadataPath("metadata");
+        String metaDataFilePath=getMetadataPath("metadata")+"/";
         log.info("import  to Concept Table  Starting");
         dataImporter.importData(metaDataFilePath+"concepts_and_drugs/Concept.xml");
         log.info("import to Concept Table  Successful");
@@ -2400,7 +2419,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     }
 
     public List<Initializer> initialiseForms() {
-        String jsonFormsPath=getMetadataPath("jsonforms");
+        String jsonFormsPath=getMetadataPath("jsonforms")+"/";
         String htmlFormsPath=getMetadataPath("htmlforms");
 
         List<Initializer> l = new ArrayList<Initializer>();
@@ -2552,4 +2571,158 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
 
         return todayVisit;
     }
+
+
+
+    public void copyFilesToApplicationDataDirectory(String source, String destination) {
+        final ResourceFactory resourceFactory = ResourceFactory.getInstance();
+        final ResourceProvider resourceProvider = resourceFactory.getResourceProviders().get(UgandaEMRConstants.MODULE_ID);
+
+        // Scanning the forms resources folder
+        final File formsDir = resourceProvider.getResource(source);
+        if (formsDir == null || !formsDir.isDirectory()) {
+            log.error("No files could be retrieved from the provided folder: " + UgandaEMRConstants.MODULE_ID + ":" + source);
+            return;
+        }
+
+        copyDirectoryRecursively(formsDir, Paths.get(getMetadataPath(destination)));
+    }
+
+    private void copyDirectoryRecursively(File sourceDir, Path destinationDir) {
+        try {
+            Files.createDirectories(destinationDir); // Ensure destination directory exists
+
+            for (File file : sourceDir.listFiles()) {
+                Path targetPath = destinationDir.resolve(file.getName()); // Maintain directory structure
+
+                if (file.isDirectory()) {
+                    // Recursively copy subdirectories
+                    copyDirectoryRecursively(file, targetPath);
+                } else {
+                    // Copy files
+                    try (InputStream inputStream = new FileInputStream(file)) {
+                        Files.copy(inputStream, targetPath, StandardCopyOption.REPLACE_EXISTING);
+                        log.info("File copied successfully to " + targetPath);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            log.error("Error copying directory: " + e.getMessage());
+        }
+    }
+        public  void downloadFilesFromGitHub() {
+            String repoOwner = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.organization");
+            String repoName = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.reponame");
+            String branch = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.branch");
+            String folderToCopy = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.directory");
+            String destinationRoot = getMetadataPath("configuration");
+
+            try {
+                downloadAndExtractFolder(repoOwner, repoName, branch, folderToCopy, destinationRoot);
+                System.out.println("Folder copied successfully with directory structure preserved!");
+                initializeMetaData();
+            } catch (IOException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
+
+    private void downloadAndExtractFolder(String owner, String repo, String branch, String folder, String destination) throws IOException {
+        String zipUrl = "https://github.com/" + owner + "/" + repo + "/archive/refs/heads/" + branch + ".zip";
+        String zipPath = destination + "/repo.zip";
+        String extractPath = destination + "/extracted/";
+
+        // Download ZIP
+        System.out.println("⬇️ Downloading ZIP from: " + zipUrl);
+        try (InputStream in = new URL(zipUrl).openStream()) {
+            Files.copy(in, Paths.get(zipPath), StandardCopyOption.REPLACE_EXISTING);
+        }
+
+        // Extract ZIP
+        unzip(zipPath, extractPath);
+
+        // Move the required folder
+        String extractedFolder = extractPath + repo + "-" + branch + "/" + folder;
+        Path sourcePath = Paths.get(extractedFolder);
+        Path destinationPath = Paths.get(destination, folder);
+
+        // 🗑️ Ensure the destination is deleted first
+        if (Files.exists(destinationPath)) {
+            System.out.println("🗑️ Deleting existing folder: " + destinationPath);
+            deleteDirectory(destinationPath);
+        }
+
+        Files.createDirectories(destinationPath);
+
+        // Copy files, handling both directories and files properly
+        Files.walk(sourcePath).forEach(source -> {
+            Path dest = destinationPath.resolve(sourcePath.relativize(source));
+            try {
+                if (Files.isDirectory(source)) {
+                    Files.createDirectories(dest); // Ensure directories are created first
+                } else {
+                    Files.copy(source, dest, StandardCopyOption.REPLACE_EXISTING);
+                }
+            } catch (IOException e) {
+                System.err.println("❌ Error copying file: " + source + " -> " + dest + ": " + e.getMessage());
+            }
+        });
+
+        System.out.println("✅ Folder copied to: " + destinationPath);
+
+        // Cleanup temporary files
+        Files.deleteIfExists(Paths.get(zipPath));
+        deleteDirectory(Paths.get(extractPath));
+    }
+
+    private void unzip(String zipFilePath, String destDirectory) throws IOException {
+        File destDir = new File(destDirectory);
+        if (!destDir.exists()) destDir.mkdirs();
+        System.out.println("📂 Extracting ZIP to: " + destDirectory);
+
+        try (ZipInputStream zipIn = new ZipInputStream(new FileInputStream(zipFilePath))) {
+            ZipEntry entry = zipIn.getNextEntry();
+            while (entry != null) {
+                File file = new File(destDirectory, entry.getName());
+
+                if (entry.isDirectory()) {
+                    file.mkdirs();
+                } else {
+                    // Ensure parent directories exist
+                    file.getParentFile().mkdirs();
+
+                    // Overwrite if file already exists
+                    if (file.exists()) {
+                        file.delete(); // Delete existing file before writing new one
+                    }
+
+                    try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file))) {
+                        byte[] bytes = new byte[4096];
+                        int read;
+                        while ((read = zipIn.read(bytes)) != -1) {
+                            bos.write(bytes, 0, read);
+                        }
+                    }
+                }
+
+                zipIn.closeEntry();
+                entry = zipIn.getNextEntry();
+            }
+        }
+    }
+
+
+    private  void deleteDirectory(Path path) throws IOException {
+            if (Files.exists(path)) {
+                Files.walk(path)
+                        .sorted((p1, p2) -> p2.compareTo(p1)) // Delete children first
+                        .forEach(p -> {
+                            try {
+                                Files.delete(p);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+            }
+        }
+
 }

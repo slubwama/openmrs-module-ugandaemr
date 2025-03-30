@@ -73,7 +73,7 @@ public class JsonFormsInitializer implements Initializer {
             try {
                 load(file);
             } catch (Exception e) {
-                log.error(e);
+                log.error("error loading form"+file.getName(),e);
             }
         }
 

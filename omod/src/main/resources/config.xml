@@ -341,13 +341,43 @@
     </globalProperty>
 
     <globalProperty>
+        <property>ugandaemr.metadata.github.organization</property>
+        <defaultValue>METS-Programme</defaultValue>
+        <description>The metadata GitHub organization name</description>
+    </globalProperty>
+
+    <globalProperty>
+        <property>ugandaemr.metadata.github.reponame</property>
+        <defaultValue>ugandaemr-metadata</defaultValue>
+        <description>The metadata GitHub repo name</description>
+    </globalProperty>
+
+    <globalProperty>
+        <property>ugandaemr.metadata.github.branch</property>
+        <defaultValue>main</defaultValue>
+        <description>The metadata GitHub branch name</description>
+    </globalProperty>
+
+    <globalProperty>
+        <property>ugandaemr.metadata.github.directory</property>
+        <defaultValue>configuration</defaultValue>
+        <description>The metadata GitHub directory name</description>
+    </globalProperty>
+
+    <globalProperty>
         <property>ugandaemr.metadata.path</property>
         <defaultValue>/configuration/metadata/</defaultValue>
         <description>The metadata path of UgandaEMR</description>
     </globalProperty>
 
     <globalProperty>
-        <property>ugandaemr.metadata.htmlnFormPath</property>
+        <property>ugandaemr.configuration</property>
+        <defaultValue>/configuration/</defaultValue>
+        <description>The configuration path of UgandaEMR</description>
+    </globalProperty>
+
+    <globalProperty>
+        <property>ugandaemr.metadata.htmlFormPath</property>
         <defaultValue>/configuration/forms/htmlforms/</defaultValue>
         <description>The html forms path of UgandaEMR</description>
     </globalProperty>
