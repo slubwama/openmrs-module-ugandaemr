@@ -2167,6 +2167,8 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
             relativePath = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.path");
         } else if ("configuration".equals(type)) {
             relativePath = Context.getAdministrationService().getGlobalProperty("ugandaemr.configuration");
+        }else if ("frontend".equals(type)) {
+            relativePath = Context.getAdministrationService().getGlobalProperty("ugandaemr.frontend");
         }
 
         // Ensure the relative path is not null to avoid null concatenation
@@ -2616,7 +2618,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
             log.error("Error copying directory: " + e.getMessage());
         }
     }
-        public  void downloadFilesFromGitHub() {
+        public  void downloadFormsAndMetaDataFromGitHub() {
             String repoOwner = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.organization");
             String repoName = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.reponame");
             String branch = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.branch");
@@ -2631,6 +2633,21 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
                 System.out.println("Error: " + e.getMessage());
             }
         }
+
+    public  void downloadFrontendFromGitHub() {
+        String repoOwner = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.organization");
+        String repoName = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.reponame");
+        String branch = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.branch");
+        String folderToCopy = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.frontend.directory");
+        String destinationRoot = getMetadataPath("frontend");
+
+        try {
+            downloadAndExtractFolder(repoOwner, repoName, branch, folderToCopy, destinationRoot);
+            System.out.println("Folder copied successfully with directory structure preserved!");
+        } catch (IOException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 
     private void downloadAndExtractFolder(String owner, String repo, String branch, String folder, String destination) throws IOException {
         String zipUrl = "https://github.com/" + owner + "/" + repo + "/archive/refs/heads/" + branch + ".zip";

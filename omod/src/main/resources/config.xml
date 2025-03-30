@@ -365,6 +365,12 @@
     </globalProperty>
 
     <globalProperty>
+        <property>ugandaemr.metadata.github.frontend.directory</property>
+        <defaultValue>frontend</defaultValue>
+        <description>The frontend GitHub directory name</description>
+    </globalProperty>
+
+    <globalProperty>
         <property>ugandaemr.metadata.path</property>
         <defaultValue>/configuration/metadata/</defaultValue>
         <description>The metadata path of UgandaEMR</description>
@@ -372,8 +378,14 @@
 
     <globalProperty>
         <property>ugandaemr.configuration</property>
-        <defaultValue>/configuration/</defaultValue>
+        <defaultValue>/</defaultValue>
         <description>The configuration path of UgandaEMR</description>
+    </globalProperty>
+
+    <globalProperty>
+        <property>ugandaemr.frontend</property>
+        <defaultValue>/</defaultValue>
+        <description>The frontend path of UgandaEMR</description>
     </globalProperty>
 
     <globalProperty>

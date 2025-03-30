@@ -475,5 +475,11 @@ public interface UgandaEMRService extends OpenmrsService {
 
     public void copyFilesToApplicationDataDirectory(String source, String destination);
 
-    public void downloadFilesFromGitHub();
+    public void downloadFormsAndMetaDataFromGitHub();
+
+    public void downloadFrontendFromGitHub();
+
+
+
+
 }
