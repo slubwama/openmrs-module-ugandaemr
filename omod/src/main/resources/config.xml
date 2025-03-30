@@ -383,6 +383,12 @@
     </globalProperty>
 
     <globalProperty>
+        <property>ugandaemr.metadata.externalhtmlforms.initialize</property>
+        <defaultValue>false</defaultValue>
+        <description>Allow external initialization of HTML Forms</description>
+    </globalProperty>
+
+    <globalProperty>
         <property>ugandaemr.metadata.jsonFormPath</property>
         <defaultValue>/configuration/forms/jsonforms/</defaultValue>
         <description>The json forms path of UgandaEMR</description>

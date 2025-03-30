@@ -2421,11 +2421,17 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     public List<Initializer> initialiseForms() {
         String jsonFormsPath=getMetadataPath("jsonforms")+"/";
         String htmlFormsPath=getMetadataPath("htmlforms");
+        String initialiseExternalHTMLForm=Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.externalhtmlforms.initialize");
 
         List<Initializer> l = new ArrayList<Initializer>();
         l.add(new AppConfigurationInitializer());
         l.add(new JsonFormsInitializer(UgandaEMRConstants.MODULE_ID,jsonFormsPath));
-        l.add(new HtmlFormsInitializer(UgandaEMRConstants.MODULE_ID));
+
+        if(Boolean.parseBoolean(initialiseExternalHTMLForm)) {
+            l.add(new JsonFormsInitializer(UgandaEMRConstants.MODULE_ID,htmlFormsPath));
+        }else{
+            l.add(new HtmlFormsInitializer(UgandaEMRConstants.MODULE_ID));
+        }
         return l;
     }
 
