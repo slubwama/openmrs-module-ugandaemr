@@ -40,7 +40,7 @@ public class StopActiveFacilityVisitTask extends AbstractTask {
                     Date largestEncounterDate = OpenmrsUtil.getLastMomentOfDay(visit.getStartDatetime());
                     for (Encounter encounter : visit.getEncounters()) {
                         if (encounter.getEncounterDatetime().after(largestEncounterDate)) {
-                            largestEncounterDate = encounter.getEncounterDatetime();
+                            largestEncounterDate = OpenmrsUtil.getLastMomentOfDay(encounter.getEncounterDatetime());
                         }
                     }
                     visitService.endVisit(visit, largestEncounterDate);
