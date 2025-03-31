@@ -70,7 +70,6 @@
 		<openmrsTestutilsVersion>1.3</openmrsTestutilsVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<webservices.restModuleVersion>2.47.0</webservices.restModuleVersion>
-		<initializerVersion>2.5.2</initializerVersion>
 
 		<!-- Modules Bundled for Uganda distribution  -->
 		<!-- TODO: Arrange the dependencies and variables in alphabetical order -->
