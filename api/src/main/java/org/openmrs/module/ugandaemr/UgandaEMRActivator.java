@@ -243,9 +243,5 @@ public class UgandaEMRActivator extends org.openmrs.module.BaseModuleActivator {
         dataImporter.importData(metaDataFilePath + "stock_item_packaging_uom.xml");
         dataImporter.importData(metaDataFilePath + "stock_item_uom.xml");
         log.info("stock item  objects Imported");
-
-
-
-
     }
 }
