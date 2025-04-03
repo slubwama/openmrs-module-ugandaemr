@@ -658,6 +658,63 @@
               "hide": {
                 "hideWhenExpression": "dsdmModels != 'c3c9a3cd-e277-49e8-bd31-e8898a3d14f5' || dsdmApproach !== 'dcd68a88-30ab-102d-86b0-7a5022ba4115'"
               }
+            },
+            {
+              "label": "Pharmacy",
+              "type": "obs",
+              "required": false,
+              "id": "pharmacyDatasource",
+              "questionOptions": {
+                "rendering": "ui-select-extended",
+                "concept": "7a22cfcb-a272-4eff-968c-5e9467125a7b",
+                "datasource": {
+                  "name": "dsdm_categorization_datasource",
+                  "config": {
+                    "cohortUuid": "e50fa0af-df36-4a26-853f-feb05244e5ca"
+                  }
+                }
+              },
+              "hide": {
+                "hideWhenExpression": "isEmpty(dsdmModels) || dsdmModels != '9d1a4797-766e-495f-9387-b92462926fad' || dsdmApproach != '566e7e03-4024-4299-b12e-ecaa2820698d'"
+              }
+            },
+            {
+              "label": "General CDDP Group Name",
+              "type": "obs",
+              "required": false,
+              "id": "generalCDDPDatasource",
+              "questionOptions": {
+                "rendering": "ui-select-extended",
+                "concept": "7a22cfcb-a272-4eff-968c-5e9467125a7b",
+                "datasource": {
+                  "name": "dsdm_categorization_datasource",
+                  "config": {
+                    "cohortUuid": "da964ff0-648e-440b-a219-d2aeba3670d0"
+                  }
+                }
+              },
+              "hide": {
+                "hideWhenExpression": "isEmpty(dsdmApproach) || dsdmApproach != '73313728-c321-11e8-a355-529269fb1459' || drugPickupModel != '1b9b83d4-eaca-40da-a7c6-53b8ea3436ad'"
+              }
+            },
+            {
+              "label": "CLDDP Group",
+              "type": "obs",
+              "required": false,
+              "id": "clddpDatasource",
+              "questionOptions": {
+                "rendering": "ui-select-extended",
+                "concept": "7a22cfcb-a272-4eff-968c-5e9467125a7b",
+                "datasource": {
+                  "name": "dsdm_categorization_datasource",
+                  "config": {
+                    "cohortUuid": "5b7136fa-d207-4229-94a8-da6661ae00bf"
+                  }
+                }
+              },
+              "hide": {
+                "hideWhenExpression": "isEmpty(dsdmApproach) || dsdmApproach != '73313728-c321-11e8-a355-529269fb1459' || drugPickupModel != 'd77cc565-5e53-4633-8fc7-956cfc1831d9'"
+              }
             }
           ]
         },
