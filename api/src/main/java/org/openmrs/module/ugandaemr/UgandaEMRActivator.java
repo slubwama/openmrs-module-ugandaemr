@@ -155,10 +155,6 @@ public class UgandaEMRActivator extends org.openmrs.module.BaseModuleActivator {
         log.info("import to Concept Modifications Table  Successful");
 
         log.info("import  of  Drugs  Starting");
-        dataImporter.importData(metaDataFilePath + "concepts_and_drugs/Drug.xml");
-        log.info("import of Drugs  Successful");
-
-        log.info("import  of  Drugs  Starting");
         dataImporter.importData(metaDataFilePath + "appointment.xml");
         log.info("import of Drugs  Successful");
 
@@ -214,6 +210,10 @@ public class UgandaEMRActivator extends org.openmrs.module.BaseModuleActivator {
         dataImporter.importData(metaDataFilePath + "concepts_and_drugs/tools-2024/Concept_Reference.xml");
         log.info("import to Concept_Reference Table  Successful");
 
+        log.info("import  of  Drugs  Starting");
+        dataImporter.importData(metaDataFilePath + "concepts_and_drugs/Drug.xml");
+        log.info("import of Drugs  Successful");
+
         log.info("Retire Meta data");
         dataImporter.importData(metaDataFilePath + "concepts_and_drugs/retire_meta_data.xml");
         log.info("Retiring of meta data is Successful");
@@ -237,5 +237,11 @@ public class UgandaEMRActivator extends org.openmrs.module.BaseModuleActivator {
         log.info("Start import of Program related objects");
         dataImporter.importData(metaDataFilePath + "Programs.xml");
         log.info(" Program related objects Imported");
+
+        log.info("Start import of stock item objects");
+        dataImporter.importData(metaDataFilePath + "stockmanagement/stock_item.xml");
+        dataImporter.importData(metaDataFilePath + "stockmanagement/stock_item_packaging_uom.xml");
+        dataImporter.importData(metaDataFilePath + "stockmanagement/stock_item_uom.xml");
+        log.info("stock item  objects Imported");
     }
 }
