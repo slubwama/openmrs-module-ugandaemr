@@ -694,7 +694,7 @@
                 }
               },
               "hide": {
-                "hideWhenExpression": "isEmpty(dsdmApproach) || dsdmApproach != '73313728-c321-11e8-a355-529269fb1459' || drugPickupModel != '1b9b83d4-eaca-40da-a7c6-53b8ea3436ad'"
+                "hideWhenExpression": "isEmpty(dsdmModels) || dsdmModels != 'c6563d48-5e16-45e5-ab6f-a64214656801' || dsdmApproach != '73313c96-c321-11e8-a355-529269fb1459'"
               }
             },
             {
@@ -713,7 +713,7 @@
                 }
               },
               "hide": {
-                "hideWhenExpression": "isEmpty(dsdmApproach) || dsdmApproach != '73313728-c321-11e8-a355-529269fb1459' || drugPickupModel != 'd77cc565-5e53-4633-8fc7-956cfc1831d9'"
+                "hideWhenExpression": "isEmpty(dsdmModels) || dsdmModels != 'b69dc787-8a34-443a-a054-e2a895a10a58' || dsdmApproach != '0e8c2722-61a5-4658-ab58-4014c991f92a'"
               }
             }
           ]
