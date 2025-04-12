@@ -70,7 +70,7 @@ public class CheckInPatientResource extends DelegatingCrudResource<CheckInPatien
 
         if (propertiesToCreate.get("priority") != null) {
             try {
-                priority = Integer.parseInt(propertiesToCreate.get("priority"));
+                priority = Integer.parseInt(propertiesToCreate.get("priority").toString());
             } catch (Exception exception) {
                 log.error("Unparsable value from field priority",exception);
             }
