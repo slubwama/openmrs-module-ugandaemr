@@ -2541,11 +2541,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
 
         if (patientStatus != null && patientStatus.equals("emergency")) {
-            if(priority==null) {
-                patientQueue.setPriority(0);
-            }else {
-                patientQueue.setPriority(priority);
-            }
+            patientQueue.setPriority(priority == null ? 0 : priority);
             patientQueue.setPriorityComment(patientStatus);
         }
 
