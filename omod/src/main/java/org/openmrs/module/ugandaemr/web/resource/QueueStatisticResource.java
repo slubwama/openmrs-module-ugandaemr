@@ -119,32 +119,35 @@ public class QueueStatisticResource extends DelegatingCrudResource<PatientQueueS
 
         Location location = Context.getLocationService().getLocationByUuid(locationParam);
 
+
         List<PatientQueueStatistic> statistics = new ArrayList<>();
-        List<PatientQueue> patientQueues = patientQueueingService.getPatientQueueByParentLocation(location, null,fromDate, toDate, onlyInQueueRooms);
+        if(location!=null) {
+            List<PatientQueue> patientQueues = patientQueueingService.getPatientQueueByParentLocation(location, null, fromDate, toDate, onlyInQueueRooms);
 
-        for (LocationTag locationTag : getServiceAreaTags()) {
+            for (LocationTag locationTag : getServiceAreaTags()) {
 
-            PatientQueueStatistic patientQueueStatistic = new PatientQueueStatistic();
-            patientQueueStatistic.setLocationTag(locationTag);
-            patientQueueStatistic.setUuid(locationTag.getUuid());
-            patientQueueStatistic.setPending(0);
-            patientQueueStatistic.setServing(0);
-            patientQueueStatistic.setCompleted(0);
-            patientQueueStatistic.setLocationTag(locationTag);
-            if (patientQueues != null) {
-                patientQueues.forEach(queue -> {
-                    if (queue.getQueueRoom().getTags().contains(locationTag) || queue.getLocationTo().getTags().contains(locationTag)) {
-                        if (queue.getStatus().equals(PatientQueue.Status.PENDING)) {
-                            patientQueueStatistic.setPending(patientQueueStatistic.getPending() + 1);
-                        } else if (queue.getStatus().equals(PatientQueue.Status.PICKED)) {
-                            patientQueueStatistic.setServing(patientQueueStatistic.getServing() + 1);
-                        } else if (queue.getStatus().equals(PatientQueue.Status.COMPLETED)) {
-                            patientQueueStatistic.setCompleted(patientQueueStatistic.getCompleted() + 1);
+                PatientQueueStatistic patientQueueStatistic = new PatientQueueStatistic();
+                patientQueueStatistic.setLocationTag(locationTag);
+                patientQueueStatistic.setUuid(locationTag.getUuid());
+                patientQueueStatistic.setPending(0);
+                patientQueueStatistic.setServing(0);
+                patientQueueStatistic.setCompleted(0);
+                patientQueueStatistic.setLocationTag(locationTag);
+                if (patientQueues != null) {
+                    patientQueues.forEach(queue -> {
+                        if (queue.getQueueRoom().getTags().contains(locationTag) || queue.getLocationTo().getTags().contains(locationTag)) {
+                            if (queue.getStatus().equals(PatientQueue.Status.PENDING)) {
+                                patientQueueStatistic.setPending(patientQueueStatistic.getPending() + 1);
+                            } else if (queue.getStatus().equals(PatientQueue.Status.PICKED)) {
+                                patientQueueStatistic.setServing(patientQueueStatistic.getServing() + 1);
+                            } else if (queue.getStatus().equals(PatientQueue.Status.COMPLETED)) {
+                                patientQueueStatistic.setCompleted(patientQueueStatistic.getCompleted() + 1);
+                            }
                         }
-                    }
-                });
+                    });
+                }
+                statistics.add(patientQueueStatistic);
             }
-            statistics.add(patientQueueStatistic);
         }
 
         return new NeedsPaging<PatientQueueStatistic>(statistics, context);
