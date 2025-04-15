@@ -2430,7 +2430,8 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     }
 
 
-    public void installCommonMetadata(MetadataDeployService deployService) {
+    public void installCommonMetadata() {
+        MetadataDeployService deployService=Context.getService(MetadataDeployService.class);
         try {
             log.info("Installing standard metadata using the packages.xml file");
             MetadataUtil.setupStandardMetadata(getClass().getClassLoader());
@@ -2761,13 +2762,13 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
             ObjectMapper mapper = new ObjectMapper();
             return Arrays.asList(mapper.readValue(jsonPath.toFile(), String[].class));
         } else {
-            log.info(String.format("⚠️ Prefix list not found at: %s", (Throwable) jsonPath));
+            log.info(String.format("⚠️ Prefix list not found at: %s",jsonPath));
             return new ArrayList<>();
         }
     }
 
     private boolean shouldDeleteFolder(String folder, Path destinationPath) throws IOException {
-        return "modules".equalsIgnoreCase(folder) && Files.exists(destinationPath);
+        return !"modules".equalsIgnoreCase(folder) && Files.exists(destinationPath);
     }
 
     private void copyFilesWithReplacement(Path sourcePath, Path destinationPath, List<String> omodPrefixes) throws IOException {
