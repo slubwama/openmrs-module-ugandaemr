@@ -2547,14 +2547,15 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         appFrameworkService.disableExtension("xforms.formentry.cfpd");
     }
 
-    public CheckInPatient checkInPatient(Patient patient, Location currentLocation, Location locationTo, Location queueRoom, Provider provider, String visitComment, String patientStatus, String visitTypeUuid) {
+    public CheckInPatient checkInPatient(Patient patient, Location currentLocation, Location locationTo, Location queueRoom, Provider provider, String visitComment, String patientStatus, String visitTypeUuid, Integer priority) {
         PatientQueue patientQueue = new PatientQueue();
         PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
 
         if (patientStatus != null && patientStatus.equals("emergency")) {
-            patientQueue.setPriority(0);
+            patientQueue.setPriority(priority == null ? 0 : priority);
             patientQueue.setPriorityComment(patientStatus);
         }
+
 
         if (visitComment != null) {
             patientQueue.setComment(visitComment);

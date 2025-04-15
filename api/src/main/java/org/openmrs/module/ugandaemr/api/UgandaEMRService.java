@@ -471,7 +471,7 @@ public interface UgandaEMRService extends OpenmrsService {
 
     public void disableEnableAPPS();
 
-    public CheckInPatient checkInPatient(Patient patient, Location currentLocation, Location locationTo, Location queueRoom, Provider provider, String visitComment, String patientStatus, String visitTypeUuid);
+    public CheckInPatient checkInPatient(Patient patient, Location currentLocation, Location locationTo, Location queueRoom, Provider provider, String visitComment, String patientStatus, String visitTypeUuid,Integer priority);
 
     public void copyFilesToApplicationDataDirectory(String source, String destination);
 
