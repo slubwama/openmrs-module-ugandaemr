@@ -455,7 +455,7 @@ public interface UgandaEMRService extends OpenmrsService {
 
     public void importMetaDataFromXMLFiles();
 
-    public void installCommonMetadata(MetadataDeployService deployService);
+    public void installCommonMetadata();
 
     public void removeOldChangeLocksForDataIntegrityModule();
 
@@ -478,6 +478,9 @@ public interface UgandaEMRService extends OpenmrsService {
     public void downloadFormsAndMetaDataFromGitHub();
 
     public void downloadFrontendFromGitHub();
+    public void downloadOmodsFromGitHub();
+
+
 
 
 
