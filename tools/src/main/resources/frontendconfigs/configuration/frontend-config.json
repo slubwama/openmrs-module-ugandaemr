@@ -1281,6 +1281,9 @@
   "@openmrs/esm-patient-search-app": {
     "extensionSlots": {
       "patient-actions-slot": {
+        "remove": [
+          "start-visit-button"
+        ],
         "configure": {
           "start-visit-button": {
             "Display conditions": {
