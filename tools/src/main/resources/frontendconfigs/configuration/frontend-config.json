@@ -1174,14 +1174,10 @@
   "@openmrs/esm-patient-banner-app": {
     "extensionSlots": {
       "patient-actions-slot": {
+        "remove": [
+          "start-visit-button"
+        ],
         "configure": {
-          "start-visit-button": {
-            "Display conditions": {
-              "privileges": [
-                "Start Visit Button"
-              ]
-            }
-          },
           "stop-visit-button": {
             "Display conditions": {
               "privileges": [
@@ -1285,13 +1281,6 @@
           "start-visit-button"
         ],
         "configure": {
-          "start-visit-button": {
-            "Display conditions": {
-              "privileges": [
-                "Start Visit Button"
-              ]
-            }
-          },
           "stop-visit-button": {
             "Display conditions": {
               "privileges": [
