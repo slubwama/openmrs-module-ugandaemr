@@ -1279,6 +1279,20 @@ VALUES
 			<column name="uuid" value="0ea91bba-193a-11f0-9e19-da924fd23489" />
 		</insert>
 	</changeSet>
+
+	<changeSet id="ugandaemr-20250429-0834" author="slubwama">
+		<preConditions onFail="CONTINUE">
+			<sqlCheck expectedResult="2">
+				select count(*) from concept_set where concept_set_id in (165982,99601);
+			</sqlCheck>
+		</preConditions>
+		<comment>
+			change concept Breastfeeding and ACTIVE TB to coded
+		</comment>
+		<sql>
+			update concept set datatype_id=2 where concept_id in  concept_set_id in (165982,99601);
+		</sql>
+	</changeSet>
 </databaseChangeLog>
 
 
