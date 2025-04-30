@@ -798,7 +798,6 @@
     <role_privilege  role="Reception"  privilege="App: datavisualiserui.downloaddata"/>
     <role_privilege  role="Reception"  privilege="Queue Patients"/>
     <role_privilege role="Reception" privilege="Manage Patient Queues"/>
-    <role_privilege role="Reception" privilege="Search Patient"/>
     <role_privilege role="Reception" privilege="View Reception Queuelist"/>
     <role_privilege role="Reception" privilege="View Reception Metrics"/>
     <role_privilege role="Reception" privilege="Add Patient Button"/>
@@ -924,6 +923,8 @@
     <role_privilege role="Organizational: Clinician" privilege="Manage patient attachments"/>
     <role_privilege role="Organizational: Clinician" privilege="Manage Patient Appointments Link"/>
     <role_privilege role="Organizational: Clinician" privilege="Stop Visit Button"/>
+    <role_privilege role="Organizational: Clinician" privilege="Search Patient"/>
+
 
 
 
