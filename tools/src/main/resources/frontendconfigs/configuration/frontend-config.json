@@ -1245,5 +1245,15 @@
         ]
       }
     }
+  },
+  "core": {
+    "Translation overrides": {
+      "en": {
+        "state": "County",
+        "address3": "Sub County",
+        "address4": "Parish",
+        "address5": "Village"
+      }
+    }
   }
 }
