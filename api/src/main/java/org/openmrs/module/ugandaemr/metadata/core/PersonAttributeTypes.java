@@ -212,6 +212,11 @@ public class PersonAttributeTypes {
         }
 
         @Override
+        public Class<?> format() {
+            return Concept.class;
+        }
+
+        @Override
         public String name() {
             return "Education Level";
         }
@@ -224,5 +229,8 @@ public class PersonAttributeTypes {
         public String uuid() {
             return "ec6e8300-38e8-4c95-8e57-27c9cdfba104";
         }
+
+        @Override
+        public boolean searchable() {return true;}
     };
 }
