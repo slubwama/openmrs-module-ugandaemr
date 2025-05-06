@@ -620,137 +620,40 @@
     "fieldDefinitions": [
       {
         "id": "maritalStatus",
-        "type": "obs",
-        "uuid": "dce0c134-30ab-102d-86b0-7a5022ba4115",
+        "type": "person attribute",
+        "uuid": "8d871f2a-c2cc-11de-8d13-0010c6dffd0f",
+        "answerConceptSetUuid" : "dce0c134-30ab-102d-86b0-7a5022ba4115",
         "label": "Marital status",
         "validation": {
           "required": false
-        },
-        "customConceptAnswers": [
-          {
-            "uuid": "dcd70b18-30ab-102d-86b0-7a5022ba4115",
-            "label": "Married"
-          },
-          {
-            "uuid": "dc96cf5e-30ab-102d-86b0-7a5022ba4115",
-            "label": "Never Married"
-          },
-          {
-            "uuid": "dcd743c3-30ab-102d-86b0-7a5022ba4115",
-            "label": "Divorced"
-          },
-          {
-            "uuid": "dcd77876-30ab-102d-86b0-7a5022ba4115",
-            "label": "Widowed"
-          },
-          {
-            "uuid": "dcd74997-30ab-102d-86b0-7a5022ba4115",
-            "label": "Seperated"
-          },
-          {
-            "uuid": "dcd6da16-30ab-102d-86b0-7a5022ba4115",
-            "label": "Single"
-          },
-          {
-            "uuid": "dc96e101-30ab-102d-86b0-7a5022ba4115",
-            "label": "Living With Partner"
-          },
-          {
-            "uuid": "dce180a8-30ab-102d-86b0-7a5022ba4115",
-            "label": "Child"
-          }
-        ]
+        }
       },
       {
         "id": "nationality",
-        "type": "obs",
-        "uuid": "8143023b-e9d9-4c9f-91b8-7c82b5524412",
+        "type": "person attribute",
+        "uuid": "dec484be-1c43-416a-9ad0-18bd9ef28929",
+        "answerConceptSetUuid" : "8143023b-e9d9-4c9f-91b8-7c82b5524412",
         "validation": {
           "required": true
-        },
-        "customConceptAnswers": [
-          {
-            "uuid": "dc47dd51-c509-44fd-ab2f-a2494f0d4726",
-            "label": "National"
-          },
-          {
-            "uuid": "d7193894-2922-432a-9175-dde877090594",
-            "label": "Foreigner"
-          },
-          {
-            "uuid": "165127AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-            "label": "Refugee"
-          }
-        ]
+        }
       },
       {
         "id": "occupation",
-        "type": "obs",
-        "uuid": "1542AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "person attribute",
+        "uuid": "b0868a16-4f8e-43da-abfc-6338c9d8f56a",
         "validation": {
           "required": true
-        },
-        "customConceptAnswers": [
-          {
-            "uuid": "165126AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-            "label": "Migrant Worker"
-          },
-          {
-            "uuid": "159674AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-            "label": "Fisherman"
-          },
-          {
-            "uuid": "159466AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-            "label": "Driver"
-          },
-          {
-            "uuid": "165125AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-            "label": "Uniformed Officer"
-          },
-          {
-            "uuid": "9071436e-e190-49b5-bd5e-451743107dbc",
-            "label": "Healthcare Worker"
-          },
-          {
-            "uuid": "553ff0e2-e659-4800-b047-e6f50cbb96a9",
-            "label": "Surveillance officer/contact tracer"
-          },
-          {
-            "uuid": "dc9b0596-30ab-102d-86b0-7a5022ba4115",
-            "label": "None"
-          },
-          {
-            "uuid": "5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-            "label": "Other"
-          }
-        ]
+        }
       },
       {
         "id": "education",
-        "type": "obs",
-        "uuid": "14af2c6d-a47d-4e94-9b16-5284134def96",
+        "type": "person attribute",
+        "uuid": "ec6e8300-38e8-4c95-8e57-27c9cdfba104",
+        "answerConceptSetUuid":"14af2c6d-a47d-4e94-9b16-5284134def96",
         "label": "Education Level",
         "validation": {
           "required": false
-        },
-        "customConceptAnswers": [
-          {
-            "uuid": "1107AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-            "label": "None"
-          },
-          {
-            "uuid": "952ef643-fe51-4889-816b-8f5444da0004",
-            "label": "Primary School Education"
-          },
-          {
-            "uuid": "39123fc4-b468-4d08-8fac-40684ee791db",
-            "label": "Secondary School Education"
-          },
-          {
-            "uuid": "5c5305c2-3a8c-4d06-8d0e-e339d8659a5f",
-            "label": "Tertiary Education Level"
-          }
-        ]
+        }
       },
       {
         "id": "email",
@@ -781,14 +684,14 @@
       },
       {
         "id": "nextOfKinName",
-        "type": "obs",
-        "uuid": "162729AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "person attribute",
+        "uuid": "e493f4ec-51f1-4a77-8d3c-5791f8cb02cd",
         "label": "Name"
       },
       {
         "id": "nextOfkinPhone",
-        "type": "obs",
-        "uuid": "165052AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "type": "person attribute",
+        "uuid": "553834ef-b3fe-4c79-826a-6d4b6978bcff",
         "label": "Phone Number",
         "validation": {
           "matches": "^0([0-9](?:(?:[0-9][0-9])|(?:0[0-8])|(4[0-1]))[0-9]{6})$"
@@ -817,7 +720,17 @@
           "value": "Female",
           "label": "Female"
         }
-      ]
+      ],
+      "address": {
+        "useAddressHierarchy": {
+          "useAddressHierarchyLabel": {
+            "countyDistrict": "County",
+            "address4": "Ward",
+            "stateProvince": "Sub county"
+          },
+          "searchAddressByLevel": true
+        }
+      }
     },
     "registrationObs": {
       "encounterTypeUuid": "1458b726-4a62-4444-be97-bb3e08c73745"
@@ -1272,6 +1185,7 @@
       "allowModifyingPrescription": false
     },
     "enableStockDispense": true,
+    "validateBatch": false,
     "medicationRequestExpirationPeriodInDays": 1
   },
   "@openmrs/esm-patient-search-app": {
