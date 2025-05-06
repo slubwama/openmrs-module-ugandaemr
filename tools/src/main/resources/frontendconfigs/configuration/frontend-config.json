@@ -648,8 +648,8 @@
       {
         "id": "education",
         "type": "person attribute",
-        "uuid": "14af2c6d-a47d-4e94-9b16-5284134def96",
-        "answerConceptSetUuid":"ec6e8300-38e8-4c95-8e57-27c9cdfba104",
+        "uuid": "ec6e8300-38e8-4c95-8e57-27c9cdfba104",
+        "answerConceptSetUuid":"14af2c6d-a47d-4e94-9b16-5284134def96",
         "label": "Education Level",
         "validation": {
           "required": false
