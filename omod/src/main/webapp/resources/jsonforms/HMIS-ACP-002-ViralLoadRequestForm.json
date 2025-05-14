@@ -614,6 +614,25 @@
               "hide": {
                 "hideWhenExpression": "isEmpty(vlTestOrder)"
               }
+            },
+            {
+              "label": "Date of Sample Collection",
+              "type": "obs",
+              "required": "true",
+              "id": "sampleCollectionDate",
+              "questionOptions": {
+                "rendering": "date",
+                "concept": "0b434cfa-b11c-4d14-aaa2-9aed6ca2da88"
+              },
+              "validators": [
+                {
+                  "type": "date",
+                  "allowFutureDates": "false"
+                }
+              ],
+              "hide": {
+                "hideWhenExpression": "isEmpty(vlTestOrder)"
+              }
             }
           ]
         }
