@@ -2098,7 +2098,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         OrderService orderService = Context.getOrderService();
         Order order = orderService.getOrderByUuid(orderUuid);
         TestOrder testOrder = null;
-        if (!instructions.equals("")) {
+        if (!instructions.equals("") && testOrder.getAccessionNumber()==null) {
             testOrder = new TestOrder();
             testOrder.setAccessionNumber(accessionNumber);
             testOrder.setInstructions("REFER TO " + instructions.toUpperCase());
@@ -2114,9 +2114,11 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
             testOrder.setFulfillerStatus(Order.FulfillerStatus.IN_PROGRESS);
             testOrder.setSpecimenSource(Context.getConceptService().getConceptByUuid(specimenSourceUuid));
             orderService.saveOrder(testOrder, null);
-            orderService.updateOrderFulfillerStatus(order, Order.FulfillerStatus.IN_PROGRESS, "Order Sent to CPHHL");
+            orderService.updateOrderFulfillerStatus(order, Order.FulfillerStatus.IN_PROGRESS, "Order referred to CPHL");
             orderService.voidOrder(order, "REVISED with new order " + testOrder.getOrderNumber());
-        } else {
+        } else if(testOrder.getAccessionNumber()!=null && !accessionNumber.equals(testOrder.getAccessionNumber())) {
+            orderService.updateOrderFulfillerStatus(testOrder,Order.FulfillerStatus.IN_PROGRESS,"Order referred to CPHL",accessionNumber);
+        }else {
             testOrder = (TestOrder) orderService.updateOrderFulfillerStatus(order, Order.FulfillerStatus.IN_PROGRESS, "To be processed", accessionNumber);
             updateSpecimenSourceManually(order, specimenSourceUuid);
         }
