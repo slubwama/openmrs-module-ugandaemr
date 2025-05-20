@@ -2784,7 +2784,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
                     if (fileName.endsWith(".omod")) {
                         for (String prefix : omodPrefixes) {
                             if (fileName.startsWith(prefix)) {
-                                try (DirectoryStream<Path> stream = Files.newDirectoryStream(destinationPath.getParent())) {
+                                try (DirectoryStream<Path> stream = Files.newDirectoryStream(destinationPath)) {
                                     for (Path existingFile : stream) {
                                         String existingName = existingFile.getFileName().toString();
                                         if (existingName.startsWith(prefix) && existingName.endsWith(".omod")) {
