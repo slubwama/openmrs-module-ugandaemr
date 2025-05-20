@@ -2101,6 +2101,13 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         if (order == null) {
             return null;
         }
+        String fullfillerComment="";
+
+        if(StringUtils.isNotBlank(instructions) && instructions.equalsIgnoreCase("CPHL")){
+            fullfillerComment="Order referred to CPHL";
+        }else {
+            fullfillerComment="To be processed";
+        }
 
         // Case 1: Order has no accession number and instructions provided — create a revised TestOrder
         if (StringUtils.isNotBlank(instructions) && order.getAccessionNumber() == null) {
@@ -2120,7 +2127,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
             testOrder.setSpecimenSource(Context.getConceptService().getConceptByUuid(specimenSourceUuid));
 
             orderService.saveOrder(testOrder, null);
-            orderService.updateOrderFulfillerStatus(order, Order.FulfillerStatus.IN_PROGRESS, "Order referred to CPHL");
+            orderService.updateOrderFulfillerStatus(order, Order.FulfillerStatus.IN_PROGRESS, fullfillerComment);
             orderService.voidOrder(order, "REVISED with new order " + testOrder.getOrderNumber());
 
             return testOrder;
@@ -2128,12 +2135,12 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
 
         // Case 2: Order already has a different accession number — update status of the new testOrder
         if (order.getAccessionNumber() != null && !accessionNumber.equals(order.getAccessionNumber())) {
-            orderService.updateOrderFulfillerStatus(order, Order.FulfillerStatus.IN_PROGRESS, "Order referred to CPHL", accessionNumber);
+            orderService.updateOrderFulfillerStatus(order, Order.FulfillerStatus.IN_PROGRESS, fullfillerComment, accessionNumber);
             return null;
         }
 
         // Case 3: Order exists and either has accession or no instructions — just update status and specimen source
-        TestOrder updatedOrder = (TestOrder) orderService.updateOrderFulfillerStatus(order, Order.FulfillerStatus.IN_PROGRESS, "To be processed", accessionNumber);
+        TestOrder updatedOrder = (TestOrder) orderService.updateOrderFulfillerStatus(order, Order.FulfillerStatus.IN_PROGRESS, fullfillerComment, accessionNumber);
         updateSpecimenSourceManually(order, specimenSourceUuid);
         return updatedOrder;
     }
@@ -2799,7 +2806,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
                     if (fileName.endsWith(".omod")) {
                         for (String prefix : omodPrefixes) {
                             if (fileName.startsWith(prefix)) {
-                                try (DirectoryStream<Path> stream = Files.newDirectoryStream(destinationPath.getParent())) {
+                                try (DirectoryStream<Path> stream = Files.newDirectoryStream(destinationPath)) {
                                     for (Path existingFile : stream) {
                                         String existingName = existingFile.getFileName().toString();
                                         if (existingName.startsWith(prefix) && existingName.endsWith(".omod")) {

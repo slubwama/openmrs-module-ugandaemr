@@ -1,7 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <dataset>
+
+
 	<care_setting  care_setting_id="1"  name="Outpatient"  description="Out-patient care setting"  care_setting_type="OUTPATIENT"  creator="1"  date_created="2013-12-27 00:00:00"  retired="0" uuid="6f0c9a92-6f24-11e3-af88-005056821db0"/>
 	<care_setting  care_setting_id="2"  name="Inpatient"  description="In-patient care setting"  care_setting_type="INPATIENT"  creator="1"  date_created="2013-12-27 00:00:00"  retired="0"  uuid="c365e560-c3ec-11e3-9c1a-0800200c9a66"/>
+
+	<concept_class  concept_class_id="14"  name="Specimen"  description="Body or fluid specimen"  creator="1"  date_created="2004-12-02 00:00:00"  retired="0"  retired_by="1" uuid="8d492d0a-c2cc-11de-8d13-0010c6dffd0f"  changed_by="1"/>
+	<concept_datatype  concept_datatype_id="4"  name="N/A"  hl7_abbreviation="ZZ"  description="Not associated with a datatype (e.g., term answers, sets)"  creator="1"  date_created="2004-02-02 00:00:00"  retired="0"  retired_by="1" uuid="8d4a4c94-c2cc-11de-8d13-0010c6dffd0f"/>
 
 	<!-- Concepts -->
 	<concept  concept_id="1002"  retired="0" datatype_id="4"  class_id="14"  is_set="0"  creator="1"  date_created="2004-12-02 00:00:00"  version=""  changed_by="1"  date_changed="2014-05-16 15:25:46"  retired_by="1" uuid="1002AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
