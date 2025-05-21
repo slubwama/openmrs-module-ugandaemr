@@ -2098,7 +2098,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         OrderService orderService = Context.getOrderService();
         Order order = orderService.getOrderByUuid(orderUuid);
 
-        if (order == null) {
+        if (order == null || accessionNumber==null || specimenSourceUuid==null) {
             return null;
         }
         String fullfillerComment="";

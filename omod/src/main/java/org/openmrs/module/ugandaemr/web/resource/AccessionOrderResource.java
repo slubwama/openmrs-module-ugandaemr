@@ -1,7 +1,6 @@
 package org.openmrs.module.ugandaemr.web.resource;
 
 import org.openmrs.TestOrder;
-import org.openmrs.api.OrderService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.patientqueueing.api.PatientQueueingService;
 import org.openmrs.module.ugandaemr.api.UgandaEMRService;
@@ -46,30 +45,28 @@ public class AccessionOrderResource extends DelegatingCrudResource<AccessionOrde
 
     @Override
     public Object update(String uuid, SimpleObject propertiesToUpdate, RequestContext context) throws ResponseException {
-        OrderService orderService = Context.getOrderService();
         UgandaEMRService ugandaEMRService = Context.getService(UgandaEMRService.class);
-        PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
-        if (propertiesToUpdate.get("sampleId") != null || propertiesToUpdate.get("sampleId") != "null" || propertiesToUpdate.get("sampleId") != "") {
-            TestOrder testOrder = ugandaEMRService.accessionLabTest(uuid, propertiesToUpdate.get("sampleId").toString(), propertiesToUpdate.get("specimenSourceId").toString(), propertiesToUpdate.get("referenceLab").toString());
+        String accessionNumber = getRequiredProperty(propertiesToUpdate, "sampleId");
+        String specimenSourceId = getRequiredProperty(propertiesToUpdate, "specimenSourceId");
+        String referenceLab = propertiesToUpdate.get("referenceLab");
+        String unProcessedOrders = propertiesToUpdate.get("unProcessedOrders") != null ? propertiesToUpdate.get("unProcessedOrders") : "";
+        String patientQueueId = propertiesToUpdate.get("patientQueueId") != null ? propertiesToUpdate.get("patientQueueId") : "";
 
-            if (propertiesToUpdate.get("unProcessedOrders").toString().equals(1)) {
-                patientQueueingService.completePatientQueue(patientQueueingService.getPatientQueueByUuid(propertiesToUpdate.get("patientQueueId").toString()));
-            }
+        TestOrder testOrder = ugandaEMRService.accessionLabTest(uuid, accessionNumber, specimenSourceId, referenceLab);
 
-            AccessionOrder delegate = new AccessionOrder();
+        processPatientQueue(patientQueueId, unProcessedOrders);
 
-            delegate.setOrder(testOrder);
+        AccessionOrder delegate = new AccessionOrder();
 
-            ValidateUtil.validate(delegate);
-            SimpleObject ret = (SimpleObject) ConversionUtil.convertToRepresentation(testOrder, context.getRepresentation());
-            // add the 'type' discriminator if we support subclasses
-            if (hasTypesDefined()) {
-                ret.add(RestConstants.PROPERTY_FOR_TYPE, getTypeName(delegate));
-            }
-            return ret;
-        }else {
-            throw new ResourceDoesNotSupportOperationException("The accession number or the barcode or the sample id is required");
+        delegate.setOrder(testOrder);
+
+        ValidateUtil.validate(delegate);
+        SimpleObject ret = (SimpleObject) ConversionUtil.convertToRepresentation(testOrder, context.getRepresentation());
+
+        if (hasTypesDefined()) {
+            ret.add(RestConstants.PROPERTY_FOR_TYPE, getTypeName(delegate));
         }
+        return ret;
     }
 
     @Override
@@ -132,5 +129,23 @@ public class AccessionOrderResource extends DelegatingCrudResource<AccessionOrde
     @Override
     protected PageableResult doSearch(RequestContext context) {
         throw new ResourceDoesNotSupportOperationException("Operation not supported");
+    }
+
+    /**
+     * Helper method to retrieve a required property.
+     */
+    private String getRequiredProperty(SimpleObject properties, String key) {
+        String value = properties.get(key);
+        if (value == null || value.equals("")) {
+            throw new IllegalArgumentException(key + " cannot be null");
+        }
+        return value;
+    }
+
+    private void processPatientQueue(String patientQueueId, String unProcessedOrders) {
+        PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
+        if (!unProcessedOrders.equals("") && !patientQueueId.equals("") && unProcessedOrders.equals(1)) {
+            patientQueueingService.completePatientQueue(patientQueueingService.getPatientQueueByUuid(patientQueueId));
+        }
     }
 }
