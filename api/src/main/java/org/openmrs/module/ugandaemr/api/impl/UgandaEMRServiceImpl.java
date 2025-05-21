@@ -94,11 +94,11 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.DirectoryStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import java.nio.charset.StandardCharsets;
 
 import static org.openmrs.OrderType.TEST_ORDER_TYPE_UUID;
 import static org.openmrs.module.ugandaemr.UgandaEMRConstants.*;
@@ -2098,19 +2098,31 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         OrderService orderService = Context.getOrderService();
         Order order = orderService.getOrderByUuid(orderUuid);
 
-        if (order == null || accessionNumber==null || specimenSourceUuid==null) {
+        if (order == null || accessionNumber == null || specimenSourceUuid == null) {
             return null;
         }
-        String fullfillerComment="";
 
-        if(StringUtils.isNotBlank(instructions) && instructions.equalsIgnoreCase("CPHL")){
-            fullfillerComment="Order referred to CPHL";
-        }else {
-            fullfillerComment="To be processed";
+        String fulfillerComment = StringUtils.equalsIgnoreCase(instructions, "CPHL")
+                ? "Order referred to CPHL"
+                : "To be processed";
+
+        // If order has accession number and it's different, update it
+        if (StringUtils.isNotBlank(order.getAccessionNumber()) &&
+                !StringUtils.equals(accessionNumber, order.getAccessionNumber())) {
+            return (TestOrder) orderService.updateOrderFulfillerStatus(
+                    order, Order.FulfillerStatus.IN_PROGRESS, fulfillerComment, accessionNumber);
         }
 
-        // Case 1: Order has no accession number and instructions provided — create a revised TestOrder
-        if (StringUtils.isNotBlank(instructions) && order.getAccessionNumber() == null) {
+        // Case: new test order needs to be created
+        if (StringUtils.isNotBlank(instructions)) {
+            if (!validateCPHLBarCode(accessionNumber)) {
+                throw new IllegalArgumentException(String.format("SampleId %s is not a valid barcode", accessionNumber));
+            }
+
+            if (accessionNumberAlreadyUsed(accessionNumber)) {
+                throw new IllegalArgumentException(String.format("SampleId %s is already in use", accessionNumber));
+            }
+
             TestOrder testOrder = new TestOrder();
             testOrder.setAccessionNumber(accessionNumber);
             testOrder.setInstructions("REFER TO " + instructions.toUpperCase());
@@ -2127,23 +2139,20 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
             testOrder.setSpecimenSource(Context.getConceptService().getConceptByUuid(specimenSourceUuid));
 
             orderService.saveOrder(testOrder, null);
-            orderService.updateOrderFulfillerStatus(order, Order.FulfillerStatus.IN_PROGRESS, fullfillerComment);
+            orderService.updateOrderFulfillerStatus(order, Order.FulfillerStatus.IN_PROGRESS, fulfillerComment);
             orderService.voidOrder(order, "REVISED with new order " + testOrder.getOrderNumber());
 
             return testOrder;
         }
 
-        // Case 2: Order already has a different accession number — update status of the new testOrder
-        if (order.getAccessionNumber() != null && !accessionNumber.equals(order.getAccessionNumber())) {
-            orderService.updateOrderFulfillerStatus(order, Order.FulfillerStatus.IN_PROGRESS, fullfillerComment, accessionNumber);
-            return null;
-        }
+        // Case: no instructions — update existing order
+        TestOrder updatedOrder = (TestOrder) orderService.updateOrderFulfillerStatus(
+                order, Order.FulfillerStatus.IN_PROGRESS, fulfillerComment, accessionNumber);
 
-        // Case 3: Order exists and either has accession or no instructions — just update status and specimen source
-        TestOrder updatedOrder = (TestOrder) orderService.updateOrderFulfillerStatus(order, Order.FulfillerStatus.IN_PROGRESS, fullfillerComment, accessionNumber);
         updateSpecimenSourceManually(order, specimenSourceUuid);
         return updatedOrder;
     }
+
 
     private void updateSpecimenSourceManually(Order order, String specimenSourceUUID) {
         Concept specimenSource = Context.getConceptService().getConceptByUuid(specimenSourceUUID);
@@ -2884,6 +2893,33 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
                         }
                     });
         }
+    }
+
+    private boolean validateCPHLBarCode(String accessionNumber) {
+        Integer minimumCPHLBarCodeLength = Integer.parseInt(Context.getAdministrationService().getGlobalProperty("ugandaemrsync.minimumCPHLBarCodeLength"));
+        if (accessionNumber == null || accessionNumber.length() < minimumCPHLBarCodeLength) {
+            return false;
+        }
+
+        int currentYearSuffix = Year.now().getValue() % 100;
+
+        try {
+            int prefix = Integer.parseInt(accessionNumber.substring(0, 2));
+            return prefix == currentYearSuffix || prefix == (currentYearSuffix - 1);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean accessionNumberAlreadyUsed(String accessionNumber) {
+        // Escape single quotes to prevent SQL injection or errors
+        String safeAccessionNumber = accessionNumber.replace("'", "''");
+
+        // Use String.format to insert the quoted and escaped value
+        String sql = String.format("SELECT order_id FROM orders WHERE accession_number = '%s'", safeAccessionNumber);
+
+        List<List<Object>> results = Context.getAdministrationService().executeSQL(sql, true);
+        return !results.isEmpty();
     }
 
 }
