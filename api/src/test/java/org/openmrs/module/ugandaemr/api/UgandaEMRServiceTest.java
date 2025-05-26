@@ -1,5 +1,6 @@
-package org.openmrs.module.ugandaemr;
+package org.openmrs.module.ugandaemr.api;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -10,38 +11,68 @@ import java.util.List;
 
 
 import org.junit.Before;
-import org.openmrs.*;
-import org.openmrs.api.AdministrationService;
+import org.mockito.Mock;
+
+import org.openmrs.Order;
+import org.openmrs.TestOrder;
+import org.openmrs.Encounter;
+import org.openmrs.Patient;
+import org.openmrs.Concept;
 import org.openmrs.api.PatientService;
+import org.openmrs.api.OrderService;
 import org.openmrs.api.VisitService;
+import org.openmrs.api.AdministrationService;
+import org.openmrs.api.ConceptService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.ugandaemr.api.UgandaEMRService;
 import org.openmrs.test.BaseModuleContextSensitiveTest;
 
 
+
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-
 public class UgandaEMRServiceTest extends BaseModuleContextSensitiveTest {
 
     protected static final String UGANDAEMR_STANDARD_DATASET_XML = "org/openmrs/module/ugandaemr/include/standardTestDataset.xml";
+    protected static final String TEST_ORDER_STANDARD_DATASET_XML = "org/openmrs/module/ugandaemr/include/TestOrderDataset.xml";
 
 
-    protected UgandaEMRService ugandaemrService;
-    protected PatientService patientService;
-    protected VisitService visitService;
-    protected AdministrationService administrationService;
+    @Mock
+    private OrderService orderService;
+
+    @Mock
+    private ConceptService conceptService;
+
+    @Mock
+    private Order order;
+
+    @Mock
+    private Concept specimenConcept;
+    private UgandaEMRService ugandaemrService;
+    private PatientService patientService;
+    private VisitService visitService;
+    private AdministrationService administrationService;
+
+    @Before
+    public void initialize() throws Exception {
+        executeDataSet(UGANDAEMR_STANDARD_DATASET_XML);
+        executeDataSet(TEST_ORDER_STANDARD_DATASET_XML);
+    }
 
     @Before
     public void setup() throws Exception {
         executeDataSet(UGANDAEMR_STANDARD_DATASET_XML);
+        executeDataSet(TEST_ORDER_STANDARD_DATASET_XML);
         ugandaemrService = Context.getService(UgandaEMRService.class);
         patientService = Context.getPatientService();
         visitService = Context.getVisitService();
         administrationService = Context.getAdministrationService();
+        conceptService=Context.getConceptService();
+        orderService=Context.getOrderService();
     }
 
     @Test
@@ -92,7 +123,57 @@ public class UgandaEMRServiceTest extends BaseModuleContextSensitiveTest {
         Context.getPatientService();
         Patient patient = patientService.getPatient(10008);
         assertFalse(ugandaemrService.isTransferredIn(patient, new Date()));
+
     }
+/*
+    @Test
+    public void shouldCreateNewTestOrderWhenInstructionsProvidedAndNoAccessionNumberExists() {
+        TestOrder originalOrder = (TestOrder) orderService.getOrderByUuid("aa946740-bbd1-413a-bd36-4a396716cbcf");
+
+        TestOrder result = ugandaemrService.accessionLabTest(
+                "aa946740-bbd1-413a-bd36-4a396716cbcf",
+                "ACCN-001",
+                "1002AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "urgent"
+        );
+
+        assertNotNull(result);
+        assertEquals("ACCN-001", result.getAccessionNumber());
+        assertEquals("REFER TO URGENT", result.getInstructions());
+        assertEquals(Order.Action.REVISE, result.getAction());
+        assertEquals(Order.Urgency.STAT, result.getUrgency());
+        assertEquals(Order.FulfillerStatus.IN_PROGRESS, result.getFulfillerStatus());
+        assertEquals(originalOrder, result.getPreviousOrder());
+    }
+
+    @Test
+    public void shouldUpdateFulfillerStatusWhenAccessionNumberAlreadyExistsAndIsDifferent() {
+        TestOrder result = ugandaemrService.accessionLabTest(
+                "aa946740-bbd1-413a-bd36-4a396716cbcf",
+                "NEW-ACCN",
+                "1002AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "" // no instructions
+        );
+
+        assertNotNull(result);
+        assertEquals("NEW-ACCN", result.getAccessionNumber());
+        assertEquals(Order.FulfillerStatus.IN_PROGRESS, result.getFulfillerStatus());
+    }
+
+    @Test
+    public void shouldUpdateFulfillerStatusAndSpecimenWhenNoNewOrderIsCreated() {
+        TestOrder result = ugandaemrService.accessionLabTest(
+                "aa946740-bbd1-413a-bd36-4a396716cbcf",
+                "ACCN-001", // same as current
+                "1002AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                "" // no instructions
+        );
+
+        assertNotNull(result);
+        assertEquals("ACCN-001", result.getAccessionNumber());
+        assertEquals(Order.FulfillerStatus.IN_PROGRESS, result.getFulfillerStatus());
+    }*/
+
 
 
 }

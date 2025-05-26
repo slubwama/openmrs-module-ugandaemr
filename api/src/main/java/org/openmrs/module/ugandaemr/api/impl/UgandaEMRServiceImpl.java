@@ -94,11 +94,11 @@ import java.nio.file.StandardCopyOption;
 import java.nio.file.DirectoryStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Year;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import java.nio.charset.StandardCharsets;
 
 import static org.openmrs.OrderType.TEST_ORDER_TYPE_UUID;
 import static org.openmrs.module.ugandaemr.UgandaEMRConstants.*;
@@ -2097,9 +2097,33 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     public TestOrder accessionLabTest(String orderUuid, String accessionNumber, String specimenSourceUuid, String instructions) {
         OrderService orderService = Context.getOrderService();
         Order order = orderService.getOrderByUuid(orderUuid);
-        TestOrder testOrder = null;
-        if (!instructions.equals("")) {
-            testOrder = new TestOrder();
+
+        if (order == null || accessionNumber == null || specimenSourceUuid == null) {
+            return null;
+        }
+
+        String fulfillerComment = StringUtils.equalsIgnoreCase(instructions, "CPHL")
+                ? "Order referred to CPHL"
+                : "To be processed";
+
+        // If order has accession number and it's different, update it
+        if (StringUtils.isNotBlank(order.getAccessionNumber()) &&
+                !StringUtils.equals(accessionNumber, order.getAccessionNumber())) {
+            return (TestOrder) orderService.updateOrderFulfillerStatus(
+                    order, Order.FulfillerStatus.IN_PROGRESS, fulfillerComment, accessionNumber);
+        }
+
+        // Case: new test order needs to be created
+        if (StringUtils.isNotBlank(instructions)) {
+            if (!validateCPHLBarCode(accessionNumber)) {
+                throw new IllegalArgumentException(String.format("SampleId %s is not a valid barcode", accessionNumber));
+            }
+
+            if (accessionNumberAlreadyUsed(accessionNumber)) {
+                throw new IllegalArgumentException(String.format("SampleId %s is already in use", accessionNumber));
+            }
+
+            TestOrder testOrder = new TestOrder();
             testOrder.setAccessionNumber(accessionNumber);
             testOrder.setInstructions("REFER TO " + instructions.toUpperCase());
             testOrder.setConcept(order.getConcept());
@@ -2113,15 +2137,22 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
             testOrder.setAction(Order.Action.REVISE);
             testOrder.setFulfillerStatus(Order.FulfillerStatus.IN_PROGRESS);
             testOrder.setSpecimenSource(Context.getConceptService().getConceptByUuid(specimenSourceUuid));
+
             orderService.saveOrder(testOrder, null);
-            orderService.updateOrderFulfillerStatus(order, Order.FulfillerStatus.IN_PROGRESS, "Order Sent to CPHHL");
+            orderService.updateOrderFulfillerStatus(order, Order.FulfillerStatus.IN_PROGRESS, fulfillerComment);
             orderService.voidOrder(order, "REVISED with new order " + testOrder.getOrderNumber());
-        } else {
-            testOrder = (TestOrder) orderService.updateOrderFulfillerStatus(order, Order.FulfillerStatus.IN_PROGRESS, "To be processed", accessionNumber);
-            updateSpecimenSourceManually(order, specimenSourceUuid);
+
+            return testOrder;
         }
-        return testOrder;
+
+        // Case: no instructions — update existing order
+        TestOrder updatedOrder = (TestOrder) orderService.updateOrderFulfillerStatus(
+                order, Order.FulfillerStatus.IN_PROGRESS, fulfillerComment, accessionNumber);
+
+        updateSpecimenSourceManually(order, specimenSourceUuid);
+        return updatedOrder;
     }
+
 
     private void updateSpecimenSourceManually(Order order, String specimenSourceUUID) {
         Concept specimenSource = Context.getConceptService().getConceptByUuid(specimenSourceUUID);
@@ -2784,7 +2815,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
                     if (fileName.endsWith(".omod")) {
                         for (String prefix : omodPrefixes) {
                             if (fileName.startsWith(prefix)) {
-                                try (DirectoryStream<Path> stream = Files.newDirectoryStream(destinationPath.getParent())) {
+                                try (DirectoryStream<Path> stream = Files.newDirectoryStream(destinationPath)) {
                                     for (Path existingFile : stream) {
                                         String existingName = existingFile.getFileName().toString();
                                         if (existingName.startsWith(prefix) && existingName.endsWith(".omod")) {
@@ -2862,6 +2893,33 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
                         }
                     });
         }
+    }
+
+    private boolean validateCPHLBarCode(String accessionNumber) {
+        Integer minimumCPHLBarCodeLength = Integer.parseInt(Context.getAdministrationService().getGlobalProperty("ugandaemrsync.minimumCPHLBarCodeLength"));
+        if (accessionNumber == null || accessionNumber.length() < minimumCPHLBarCodeLength) {
+            return false;
+        }
+
+        int currentYearSuffix = Year.now().getValue() % 100;
+
+        try {
+            int prefix = Integer.parseInt(accessionNumber.substring(0, 2));
+            return prefix == currentYearSuffix || prefix == (currentYearSuffix - 1);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean accessionNumberAlreadyUsed(String accessionNumber) {
+        // Escape single quotes to prevent SQL injection or errors
+        String safeAccessionNumber = accessionNumber.replace("'", "''");
+
+        // Use String.format to insert the quoted and escaped value
+        String sql = String.format("SELECT order_id FROM orders WHERE accession_number = '%s'", safeAccessionNumber);
+
+        List<List<Object>> results = Context.getAdministrationService().executeSQL(sql, true);
+        return !results.isEmpty();
     }
 
 }
