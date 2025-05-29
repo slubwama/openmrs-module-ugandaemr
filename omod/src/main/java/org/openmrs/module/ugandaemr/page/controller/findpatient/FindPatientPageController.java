@@ -4,7 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.module.appframework.domain.AppDescriptor;
 import org.openmrs.module.appui.UiSessionContext;
-import org.openmrs.module.coreapps.helper.BreadcrumbHelper;
+//import org.openmrs.module.coreapps.helper.BreadcrumbHelper;
 import org.openmrs.module.ugandaemrfingerprint.core.FingerPrintConstant;
 import org.openmrs.module.ugandaemrfingerprint.remoteserver.FingerPrintGlobalProperties;
 import org.openmrs.ui.framework.UiUtils;
@@ -41,6 +41,6 @@ public class FindPatientPageController {
             model.addAttribute("registrationAppLink", app.getConfig().get("registrationAppLink").getTextValue());
         }
         model.put("fingerSocketPrintIpAddress", fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.GP_DEVICE_SOCKET_IP));
-        BreadcrumbHelper.addBreadcrumbsIfDefinedInApp(app, model, ui);
+//        BreadcrumbHelper.addBreadcrumbsIfDefinedInApp(app, model, ui);
     }
 }
