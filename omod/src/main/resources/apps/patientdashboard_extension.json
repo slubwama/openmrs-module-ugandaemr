@@ -40,17 +40,6 @@
     "requiredPrivilege": "App: ugandaemr.patientDashbord"
   },
   {
-    "id": "ugandaemr.registrationSummary.registrationSummaryLink",
-    "extensionPointId": "patientDashboard.overallActions",
-    "type": "link",
-    "label": "Goto Patient Registration Summary",
-    "url": "coreapps/clinicianfacing/patient.page?patientId={{patient.uuid}}",
-    "url": "registrationapp/registrationSummary.page?patientId={{patient.uuid}}&appId=ugandaemr.registrationapp.registerPatient",
-    "icon": "icon-file-alt",
-    "order": 15,
-    "requiredPrivilege": "App: registrationapp.registrationSummary"
-  },
-  {
     "id": "${project.parent.groupId}.${project.parent.artifactId}.patientDashboard.secondColumnFragments.nextAppointment",
     "extensionPointId": "patientDashboard.secondColumnFragments",
     "requiredPrivilege": "App: ugandaemr.widget.nextAppointment",

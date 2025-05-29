@@ -7,7 +7,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.appframework.domain.Extension;
 import org.openmrs.module.appframework.service.AppFrameworkService;
 import org.openmrs.module.appui.UiSessionContext;
-import org.openmrs.module.coreapps.CoreAppsConstants;
+//import org.openmrs.module.coreapps.CoreAppsConstants;
 import org.openmrs.module.emrapi.utils.GeneralUtils;
 import org.openmrs.ui.framework.UiFrameworkConstants;
 import org.openmrs.ui.framework.annotation.FragmentParam;
@@ -46,11 +46,11 @@ public class PatientSearchWidgetFragmentController {
 		model.addAttribute("minSearchCharacters",
 		    administrationService.getGlobalProperty(OpenmrsConstants.GLOBAL_PROPERTY_MIN_SEARCH_CHARACTERS, "1"));
 		
-		model.addAttribute("searchDelayShort",
-		    administrationService.getGlobalProperty(CoreAppsConstants.GP_SEARCH_DELAY_SHORT, "300"));
-		
-		model.addAttribute("searchDelayLong",
-		    administrationService.getGlobalProperty(CoreAppsConstants.GP_SEARCH_DELAY_LONG, "1000"));
+//		model.addAttribute("searchDelayShort",
+//		    administrationService.getGlobalProperty(CoreAppsConstants.GP_SEARCH_DELAY_SHORT, "300"));
+//
+//		model.addAttribute("searchDelayLong",
+//		    administrationService.getGlobalProperty(CoreAppsConstants.GP_SEARCH_DELAY_LONG, "1000"));
 		
 		model.addAttribute("dateFormatJS", "DD MMM YYYY"); // TODO really should be driven by global property, but currently we only have a property for the java date format
 		model.addAttribute("locale", Context.getLocale().getLanguage());
