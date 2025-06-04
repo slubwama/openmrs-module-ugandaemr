@@ -2540,42 +2540,6 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     }
 
     public void disableEnableAPPS(){
-        AppFrameworkService appFrameworkService = Context.getService(AppFrameworkService.class);
-        // disable the reference app registration page
-        appFrameworkService.disableApp("referenceapplication.registrationapp.registerPatient");
-        // disable the start visit app since all data is retrospective
-        appFrameworkService.disableExtension("org.openmrs.module.coreapps.createVisit");
-        // the extension to the edit person details
-        appFrameworkService.disableExtension("org.openmrs.module.registrationapp.editPatientDemographics");
-
-        // disable apps on the Clinican facing dashboard added through coreapps 1.12.0
-        appFrameworkService.disableApp("coreapps.mostRecentVitals");
-        appFrameworkService.disableApp("coreapps.diagnoses");
-        appFrameworkService.disableApp("coreapps.latestObsForConceptList");
-        appFrameworkService.disableApp("coreapps.obsAcrossEncounters");
-        appFrameworkService.disableApp("coreapps.obsGraph");
-        appFrameworkService.enableApp("coreapps.visitByEncounterType");
-        appFrameworkService.disableApp("coreapps.dataIntegrityViolations");
-        appFrameworkService.disableApp("fingerprint.findPatient");
-        appFrameworkService.enableApp("ugandaemr.findPatient");
-        appFrameworkService.disableApp("ugandaemr.registrationapp.registerPatient");
-
-        // enable the relationships dashboard widget
-        appFrameworkService.enableApp("coreapps.relationships");
-
-        // Remove the BIRT reports app since it is no longer supported
-        appFrameworkService.disableApp("ugandaemr.referenceapplication.birtReports");
-
-        // Home page apps clean up
-        appFrameworkService.disableApp("referenceapplication.vitals"); // Capture Vitals
-        appFrameworkService.disableApp("coreapps.activeVisits"); // Active Visits
-
-        // form entry app on the home page
-        appFrameworkService.disableApp("xforms.formentry");
-        // disable the default find patient app to provide one which allows searching for patients at the footer of the search for patients page
-        appFrameworkService.disableApp("coreapps.findPatient");
-        // form entry extension in active visits
-        appFrameworkService.disableExtension("xforms.formentry.cfpd");
     }
 
     public CheckInPatient checkInPatient(Patient patient, Location currentLocation, Location locationTo, Location queueRoom, Provider provider, String visitComment, String patientStatus, String visitTypeUuid, Integer priority) {

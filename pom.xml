@@ -121,12 +121,12 @@
 		<uiframeworkVersion>3.24.0</uiframeworkVersion>
 		<uilibraryVersion>2.0.7</uilibraryVersion>
 <!--		<xformsVersion>4.3.12</xformsVersion>-->
-		<patientqueueingVersion>1.3.2</patientqueueingVersion>
+		<patientqueueingVersion>2.0.0</patientqueueingVersion>
 		<ugandaemrSyncVersion>1.3.13</ugandaemrSyncVersion>
 		<openmrsOwaVersion>1.14.0</openmrsOwaVersion>
-		<ugandaemrfingerprintVersion>1.1.0</ugandaemrfingerprintVersion>
+<!--		<ugandaemrfingerprintVersion>1.1.0</ugandaemrfingerprintVersion>-->
 		<cohortModuleVersion>3.4.0</cohortModuleVersion>
-		<stockmanagementVersion>1.4.4</stockmanagementVersion>
+		<stockmanagementVersion>2.0.3</stockmanagementVersion>
 		<spaModuleVersion>2.0.0</spaModuleVersion>
 		<o3formsVersion>2.3.0</o3formsVersion>
 		<orderTemplatesVersion>1.0.3</orderTemplatesVersion>
@@ -247,19 +247,19 @@
 				<version>${dataexchangeVersion}</version>
 				<scope>provided</scope>
 			</dependency>
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>ugandaemrfingerprint-api</artifactId>
-				<version>${ugandaemrfingerprintVersion}</version>
-				<scope>provided</scope>
-			</dependency>
+<!--			<dependency>-->
+<!--				<groupId>org.openmrs.module</groupId>-->
+<!--				<artifactId>ugandaemrfingerprint-api</artifactId>-->
+<!--				<version>${ugandaemrfingerprintVersion}</version>-->
+<!--				<scope>provided</scope>-->
+<!--			</dependency>-->
 
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>ugandaemrfingerprint-omod</artifactId>
-				<version>${ugandaemrfingerprintVersion}</version>
-				<scope>provided</scope>
-			</dependency>
+<!--			<dependency>-->
+<!--				<groupId>org.openmrs.module</groupId>-->
+<!--				<artifactId>ugandaemrfingerprint-omod</artifactId>-->
+<!--				<version>${ugandaemrfingerprintVersion}</version>-->
+<!--				<scope>provided</scope>-->
+<!--			</dependency>-->
 
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
