@@ -1299,6 +1299,21 @@ VALUES
 			update concept set datatype_id=2 where concept_id in (165982,99601);
 		</sql>
 	</changeSet>
+
+	<changeSet id="ugandaemr-20250530-0029" author="mmwanje">
+		<preConditions onFail="CONTINUE">
+			<sqlCheck expectedResult="1">
+				select count(*) from concept where concept_id =5271;
+			</sqlCheck>
+		</preConditions>
+		<comment>
+			change concept Family Planning to coded
+		</comment>
+		<sql>
+			update concept set datatype_id=2 where concept_id =5271;
+		</sql>
+	</changeSet>
+
 </databaseChangeLog>
 
 
