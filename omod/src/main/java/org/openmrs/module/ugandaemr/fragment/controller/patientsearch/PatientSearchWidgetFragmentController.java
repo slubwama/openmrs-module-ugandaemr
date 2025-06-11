@@ -9,8 +9,8 @@ import org.openmrs.module.appframework.service.AppFrameworkService;
 import org.openmrs.module.appui.UiSessionContext;
 //import org.openmrs.module.coreapps.CoreAppsConstants;
 import org.openmrs.module.emrapi.utils.GeneralUtils;
-import org.openmrs.module.ugandaemrfingerprint.core.FingerPrintConstant;
-import org.openmrs.module.ugandaemrfingerprint.remoteserver.FingerPrintGlobalProperties;
+//import org.openmrs.module.ugandaemrfingerprint.core.FingerPrintConstant;
+//import org.openmrs.module.ugandaemrfingerprint.remoteserver.FingerPrintGlobalProperties;
 import org.openmrs.ui.framework.UiFrameworkConstants;
 import org.openmrs.ui.framework.annotation.FragmentParam;
 import org.openmrs.ui.framework.annotation.SpringBean;
@@ -24,7 +24,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import static org.openmrs.module.ugandaemrfingerprint.core.FingerPrintConstant.PATIENT_NATIONAL_ID_SIMPLE_SEARCH_STRING;
+//import static org.openmrs.module.ugandaemrfingerprint.core.FingerPrintConstant.PATIENT_NATIONAL_ID_SIMPLE_SEARCH_STRING;
 
 /**
  * Fragment controller for patient search widget; sets the min # of search characters based on global property,
@@ -65,13 +65,13 @@ public class PatientSearchWidgetFragmentController {
         }
         model.addAttribute("doInitialSearch", doInitialSearch);
 
-        FingerPrintGlobalProperties fingerPrintGlobalProperties = new FingerPrintGlobalProperties();
+//        FingerPrintGlobalProperties fingerPrintGlobalProperties = new FingerPrintGlobalProperties();
 
-        model.addAttribute("searchOnline", fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.GP_ONLINE_SEARCH_ENABLE_DISABLE));
-        model.addAttribute("simpleNationalIdString", PATIENT_NATIONAL_ID_SIMPLE_SEARCH_STRING);
-        model.addAttribute("onlineIpAddress", fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.GP_CONNECTION_SERVER_IP));
-        model.addAttribute("connectionProtocol",fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.GP_CONNECTION_PROTOCOL));
-        model.addAttribute("queryURL", FingerPrintConstant.SEARCH_URL);
+//        model.addAttribute("searchOnline", fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.GP_ONLINE_SEARCH_ENABLE_DISABLE));
+//        model.addAttribute("simpleNationalIdString", PATIENT_NATIONAL_ID_SIMPLE_SEARCH_STRING);
+//        model.addAttribute("onlineIpAddress", fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.GP_CONNECTION_SERVER_IP));
+//        model.addAttribute("connectionProtocol",fingerPrintGlobalProperties.getGlobalProperty(FingerPrintConstant.GP_CONNECTION_PROTOCOL));
+//        model.addAttribute("queryURL", FingerPrintConstant.SEARCH_URL);
 
         if (showLastViewedPatients) {
             List<Patient> patients = GeneralUtils.getLastViewedPatients(sessionContext.getCurrentUser());
