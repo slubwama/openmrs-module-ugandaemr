@@ -173,17 +173,6 @@
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>patientflags-api-metadata</artifactId>
 		</dependency>
-
-<!--		<dependency>-->
-<!--			<groupId>org.openmrs.module</groupId>-->
-<!--			<artifactId>registrationcore-api</artifactId>-->
-<!--		</dependency>-->
-
-<!--		<dependency>-->
-<!--			<groupId>org.openmrs.module</groupId>-->
-<!--			<artifactId>registrationapp-api</artifactId>-->
-<!--		</dependency>-->
-
 		<dependency>
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>reporting-api</artifactId>

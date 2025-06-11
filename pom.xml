@@ -84,7 +84,6 @@
 		<bahmniappointmentVersion>1.6.0</bahmniappointmentVersion>
 		<bedmanagementVersion>6.0.0</bedmanagementVersion>
 		<calculationVersion>1.3.0</calculationVersion>
-<!--		<coreappsVersion>1.39.0</coreappsVersion>-->
 		<databaseBackupVersion>1.3.0</databaseBackupVersion>
 		<dataEntryStatisticsVersion>1.8.0</dataEntryStatisticsVersion>
 		<dataexchangeVersion>1.3.8</dataexchangeVersion>
@@ -111,7 +110,6 @@
 		<providermanagementVersion>2.13.0</providermanagementVersion>
 		<referenceapplicationVersion>2.13.0</referenceapplicationVersion>
 		<referencemetadataVersion>2.12.0</referencemetadataVersion>
-<!--		<registrationappVersion>1.24.0</registrationappVersion>-->
 		<reportingRestVersion>1.14.0</reportingRestVersion>
 		<reportingVersion>1.25.0</reportingVersion>
 		<reportingCompatibilityVersion>2.0.9</reportingCompatibilityVersion>
@@ -120,11 +118,9 @@
 		<uicommonsVersion>2.19.0</uicommonsVersion>
 		<uiframeworkVersion>3.24.0</uiframeworkVersion>
 		<uilibraryVersion>2.0.7</uilibraryVersion>
-<!--		<xformsVersion>4.3.12</xformsVersion>-->
 		<patientqueueingVersion>2.0.0</patientqueueingVersion>
 		<ugandaemrSyncVersion>1.3.13</ugandaemrSyncVersion>
 		<openmrsOwaVersion>1.14.0</openmrsOwaVersion>
-<!--		<ugandaemrfingerprintVersion>1.1.0</ugandaemrfingerprintVersion>-->
 		<cohortModuleVersion>3.4.0</cohortModuleVersion>
 		<stockmanagementVersion>2.0.3</stockmanagementVersion>
 		<spaModuleVersion>2.0.0</spaModuleVersion>
@@ -247,19 +243,6 @@
 				<version>${dataexchangeVersion}</version>
 				<scope>provided</scope>
 			</dependency>
-<!--			<dependency>-->
-<!--				<groupId>org.openmrs.module</groupId>-->
-<!--				<artifactId>ugandaemrfingerprint-api</artifactId>-->
-<!--				<version>${ugandaemrfingerprintVersion}</version>-->
-<!--				<scope>provided</scope>-->
-<!--			</dependency>-->
-
-<!--			<dependency>-->
-<!--				<groupId>org.openmrs.module</groupId>-->
-<!--				<artifactId>ugandaemrfingerprint-omod</artifactId>-->
-<!--				<version>${ugandaemrfingerprintVersion}</version>-->
-<!--				<scope>provided</scope>-->
-<!--			</dependency>-->
 
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
@@ -387,21 +370,6 @@
 				<version>${referenceapplicationVersion}</version>
 				<scope>provided</scope>
 			</dependency>
-
-<!--			<dependency>-->
-<!--				<groupId>org.openmrs.module</groupId>-->
-<!--				<artifactId>registrationcore-api</artifactId>-->
-<!--				<version>${registrationcoreVersion}</version>-->
-<!--				<scope>provided</scope>-->
-<!--			</dependency>-->
-
-<!--			<dependency>-->
-<!--				<groupId>org.openmrs.module</groupId>-->
-<!--				<artifactId>registrationapp-api</artifactId>-->
-<!--				<version>${registrationappVersion}</version>-->
-<!--				<scope>provided</scope>-->
-<!--			</dependency>-->
-
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
 				<artifactId>reporting-api</artifactId>
@@ -458,18 +426,7 @@
 				<version>${junitParamsVersion}</version>
 				<scope>test</scope>
 			</dependency>
-<!--			<dependency>-->
-<!--				<groupId>org.openmrs.module</groupId>-->
-<!--				<artifactId>coreapps-api</artifactId>-->
-<!--				<version>${coreappsVersion}</version>-->
-<!--				<scope>provided</scope>-->
-<!--			</dependency>-->
-<!--			<dependency>-->
-<!--				<groupId>org.openmrs.module</groupId>-->
-<!--				<artifactId>coreapps-omod</artifactId>-->
-<!--				<version>${coreappsVersion}</version>-->
-<!--				<scope>provided</scope>-->
-<!--			</dependency>-->
+
 
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
