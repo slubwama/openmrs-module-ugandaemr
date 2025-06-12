@@ -69,11 +69,6 @@
 
 		<dependency>
 			<groupId>org.openmrs.module</groupId>
-			<artifactId>appframework-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.openmrs.module</groupId>
 			<artifactId>stockmanagement-api</artifactId>
 			<version>1.0.0</version>
 			<scope>provided</scope>
@@ -112,21 +107,6 @@
 		<dependency>
 			<groupId>org.openmrs</groupId>
 			<artifactId>event-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.openmrs.module</groupId>
-			<artifactId>formentryapp-omod</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.openmrs.module</groupId>
-			<artifactId>htmlformentry-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.openmrs.module</groupId>
-			<artifactId>htmlformentryui-api</artifactId>
 		</dependency>
 
 		<dependency>
@@ -188,10 +168,6 @@
 			<artifactId>serialization.xstream-api-2.0</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.openmrs.module</groupId>
-			<artifactId>uiframework-api</artifactId>
-		</dependency>
         <dependency>
             <groupId>org.openmrs.module</groupId>
             <artifactId>patientqueueing-api</artifactId>
@@ -206,7 +182,16 @@
 			<version>2.2.4</version>
 			<scope>provided</scope>
 		</dependency>
-    </dependencies>
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>webservices.rest-omod-common</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.openmrs.module</groupId>
+			<artifactId>webservices.rest-omod</artifactId>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<resources>

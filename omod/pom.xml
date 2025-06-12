@@ -75,15 +75,6 @@
 		</dependency>
 		
 		<!-- End OpenMRS core -->
-		<dependency>
-			<groupId>org.openmrs.module</groupId>
-			<artifactId>appframework-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.openmrs.module</groupId>
-			<artifactId>appui-omod</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>org.openmrs.module</groupId>
@@ -113,16 +104,6 @@
 		<dependency>
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>formentryapp-omod</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.openmrs.module</groupId>
-			<artifactId>htmlformentry-api</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.openmrs.module</groupId>
-			<artifactId>htmlformentryui-api</artifactId>
 		</dependency>
 		
 		<dependency>
@@ -173,15 +154,6 @@
 			<artifactId>providermanagement-api</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.openmrs.module</groupId>
-			<artifactId>referenceapplication-omod</artifactId>
-		</dependency>
-
-<!--		<dependency>-->
-<!--            <groupId>org.openmrs.module</groupId>-->
-<!--            <artifactId>registrationapp-api</artifactId>-->
-<!--        </dependency>-->
 
 		<dependency>
 			<groupId>org.openmrs.module</groupId>
@@ -207,11 +179,6 @@
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>serialization.xstream-api-2.0</artifactId>
 			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.openmrs.module</groupId>
-			<artifactId>uiframework-api</artifactId>
 		</dependency>
 
 		<dependency>

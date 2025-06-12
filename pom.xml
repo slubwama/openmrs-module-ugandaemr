@@ -66,21 +66,11 @@
 	</modules>
 
 	<properties>
-		<openMRSVersion>2.6.3</openMRSVersion>
+		<openMRSVersion>2.7.4</openMRSVersion>
 		<openmrsTestutilsVersion>1.3</openmrsTestutilsVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<webservices.restModuleVersion>2.47.0</webservices.restModuleVersion>
-
-		<!-- Modules Bundled for Uganda distribution  -->
-		<!-- TODO: Arrange the dependencies and variables in alphabetical order -->
-		<!-- TODO: Remove dependencies on API where omods are available -->
-		<adminuiVersion>1.6.0</adminuiVersion>
+		<webservices.restModuleVersion>2.49.0</webservices.restModuleVersion>
 		<addresshierarchyVersion>2.15.2</addresshierarchyVersion>
-		<allergyuiVersion>1.8.4</allergyuiVersion>
-		<appframeworkVersion>2.17.0</appframeworkVersion>
-		<appuiVersion>1.17.0</appuiVersion>
-		<!--<appointmentschedulingVersion>1.16.0</appointmentschedulingVersion>-->
-		<appointmentschedulinguiVersion>1.12.0</appointmentschedulinguiVersion>
 		<bahmniappointmentVersion>1.6.0</bahmniappointmentVersion>
 		<bedmanagementVersion>6.0.0</bedmanagementVersion>
 		<calculationVersion>1.3.0</calculationVersion>
@@ -91,12 +81,9 @@
 		<emrapiVersion>1.35.0</emrapiVersion>
 		<eventVersion>2.10.0</eventVersion>
 		<openmrsAtomfeedVersion>2.6.1</openmrsAtomfeedVersion>
-		<fhir2Version>2.3.0</fhir2Version>
+		<fhir2Version>2.5.0</fhir2Version>
 		<formentryappVersion>1.4.2</formentryappVersion>
 		<formfilterVersion>1.3.0</formfilterVersion>
-		<htmlformentryuiVersion>2.3.0</htmlformentryuiVersion>
-		<htmlformentryVersion>5.2.0</htmlformentryVersion>
-		<htmlwidgetsVersion>1.11.0</htmlwidgetsVersion>
 		<idgenVersion>4.10.0</idgenVersion>
 		<jacksonVersion>1.8.3</jacksonVersion>
 		<junitParamsVersion>1.0.4</junitParamsVersion>
@@ -105,7 +92,6 @@
 		<metadatamappingVersion>1.6.0</metadatamappingVersion>
 		<metadatasharingVersion>1.9.0</metadatasharingVersion>
 		<openconceptlabModuleVersion>2.4.0</openconceptlabModuleVersion>
-		<openwebappsVersion>1.13.0</openwebappsVersion>
 		<patientFlagsVersion>3.0.8</patientFlagsVersion>
 		<providermanagementVersion>2.13.0</providermanagementVersion>
 		<referenceapplicationVersion>2.13.0</referenceapplicationVersion>
@@ -113,14 +99,9 @@
 		<reportingRestVersion>1.14.0</reportingRestVersion>
 		<reportingVersion>1.25.0</reportingVersion>
 		<reportingCompatibilityVersion>2.0.9</reportingCompatibilityVersion>
-		<reportingUIVersion>1.8.0</reportingUIVersion>
 		<serializationxstreamVersion>0.2.16</serializationxstreamVersion>
-		<uicommonsVersion>2.19.0</uicommonsVersion>
-		<uiframeworkVersion>3.24.0</uiframeworkVersion>
-		<uilibraryVersion>2.0.7</uilibraryVersion>
 		<patientqueueingVersion>2.0.0</patientqueueingVersion>
-		<ugandaemrSyncVersion>1.3.13</ugandaemrSyncVersion>
-		<openmrsOwaVersion>1.14.0</openmrsOwaVersion>
+		<ugandaemrSyncVersion>2.0.0-SNAPSHOT</ugandaemrSyncVersion>
 		<cohortModuleVersion>3.4.0</cohortModuleVersion>
 		<stockmanagementVersion>2.0.3</stockmanagementVersion>
 		<spaModuleVersion>2.0.0</spaModuleVersion>
@@ -220,18 +201,6 @@
 
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
-				<artifactId>appframework-api</artifactId>
-				<version>${appframeworkVersion}</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>appui-omod</artifactId>
-				<version>${appuiVersion}</version>
-				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
 				<artifactId>calculation-api</artifactId>
 				<version>${calculationVersion}</version>
 				<scope>provided</scope>
@@ -279,26 +248,6 @@
 				<artifactId>formentryapp-omod</artifactId>
 				<version>${formentryappVersion}</version>
 				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>htmlformentryui-api</artifactId>
-				<version>${htmlformentryuiVersion}</version>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>htmlformentry-api</artifactId>
-				<version>${htmlformentryVersion}</version>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>htmlformentry-api-2.3</artifactId>
-				<version>${htmlformentryVersion}</version>
-				<scope>test</scope>
 			</dependency>
 
 			<dependency>
@@ -413,14 +362,6 @@
 			</dependency>
 
 			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>uiframework-api</artifactId>
-				<version>${uiframeworkVersion}</version>
-				<type>jar</type>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
 				<groupId>pl.pragmatists</groupId>
 				<artifactId>JUnitParams</artifactId>
 				<version>${junitParamsVersion}</version>
@@ -442,6 +383,12 @@
 				<scope>provided</scope>
 				<type>test-jar</type>
     		</dependency>
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>webservices.rest-omod</artifactId>
+				<version>${webservices.restModuleVersion}</version> <!-- Match the version you use -->
+				<scope>provided</scope>
+			</dependency>
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
 				<artifactId>cohort</artifactId>
