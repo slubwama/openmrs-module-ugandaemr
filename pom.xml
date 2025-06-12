@@ -70,47 +70,45 @@
 		<openmrsTestutilsVersion>1.3</openmrsTestutilsVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<webservices.restModuleVersion>2.49.0</webservices.restModuleVersion>
-		<addresshierarchyVersion>2.15.2</addresshierarchyVersion>
-		<bahmniappointmentVersion>1.6.0</bahmniappointmentVersion>
-		<bedmanagementVersion>6.0.0</bedmanagementVersion>
+		<addresshierarchyVersion>2.21.0</addresshierarchyVersion>
+		<bahmniappointmentVersion>2.0.2</bahmniappointmentVersion>
+		<bedmanagementVersion>6.1.0</bedmanagementVersion>
 		<calculationVersion>1.3.0</calculationVersion>
 		<databaseBackupVersion>1.3.0</databaseBackupVersion>
 		<dataEntryStatisticsVersion>1.8.0</dataEntryStatisticsVersion>
 		<dataexchangeVersion>1.3.8</dataexchangeVersion>
 		<dataintegrityVersion>4.4.4</dataintegrityVersion>
-		<emrapiVersion>1.35.0</emrapiVersion>
+		<emrapiVersion>2.3.0</emrapiVersion>
 		<eventVersion>2.10.0</eventVersion>
 		<openmrsAtomfeedVersion>2.6.1</openmrsAtomfeedVersion>
 		<fhir2Version>2.5.0</fhir2Version>
-		<formentryappVersion>1.4.2</formentryappVersion>
 		<formfilterVersion>1.3.0</formfilterVersion>
-		<idgenVersion>4.10.0</idgenVersion>
+		<htmlwidgetsVersion>1.11.0</htmlwidgetsVersion>
+		<idgenVersion>4.14.0</idgenVersion>
 		<jacksonVersion>1.8.3</jacksonVersion>
 		<junitParamsVersion>1.0.4</junitParamsVersion>
-		<legacyuiVersion>1.16.0</legacyuiVersion>
+		<legacyuiVersion>1.23.0</legacyuiVersion>
 		<metadatadeployVersion>1.13.0</metadatadeployVersion>
 		<metadatamappingVersion>1.6.0</metadatamappingVersion>
 		<metadatasharingVersion>1.9.0</metadatasharingVersion>
 		<openconceptlabModuleVersion>2.4.0</openconceptlabModuleVersion>
 		<patientFlagsVersion>3.0.8</patientFlagsVersion>
-		<providermanagementVersion>2.13.0</providermanagementVersion>
-		<referenceapplicationVersion>2.13.0</referenceapplicationVersion>
 		<referencemetadataVersion>2.12.0</referencemetadataVersion>
-		<reportingRestVersion>1.14.0</reportingRestVersion>
-		<reportingVersion>1.25.0</reportingVersion>
+		<reportingRestVersion>1.15.0</reportingRestVersion>
+		<reportingVersion>1.27.0</reportingVersion>
 		<reportingCompatibilityVersion>2.0.9</reportingCompatibilityVersion>
 		<serializationxstreamVersion>0.2.16</serializationxstreamVersion>
-		<patientqueueingVersion>2.0.0</patientqueueingVersion>
+		<patientqueueingVersion>2.0.1-SNAPSHOT</patientqueueingVersion>
 		<ugandaemrSyncVersion>2.0.0-SNAPSHOT</ugandaemrSyncVersion>
-		<cohortModuleVersion>3.4.0</cohortModuleVersion>
+		<cohortModuleVersion>3.7.3</cohortModuleVersion>
 		<stockmanagementVersion>2.0.3</stockmanagementVersion>
 		<spaModuleVersion>2.0.0</spaModuleVersion>
 		<o3formsVersion>2.3.0</o3formsVersion>
 		<orderTemplatesVersion>1.0.3</orderTemplatesVersion>
-		<attachmentsVersion>3.6.0</attachmentsVersion>
+		<attachmentsVersion>3.7.0</attachmentsVersion>
 
 		<!-- core configuration library -->
-		<ugandaemrReportsVersion>2.1.4</ugandaemrReportsVersion>
+		<ugandaemrReportsVersion>2.1.5-SNAPSHOT</ugandaemrReportsVersion>
 	</properties>
 
 	<dependencyManagement>
@@ -212,13 +210,6 @@
 				<version>${dataexchangeVersion}</version>
 				<scope>provided</scope>
 			</dependency>
-
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>dataintegrity-api</artifactId>
-				<version>${dataintegrityVersion}</version>
-				<scope>provided</scope>
-			</dependency>
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
 				<artifactId>emrapi-api</artifactId>
@@ -226,30 +217,11 @@
 				<scope>provided</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>emrapi-api-1.12</artifactId>
-				<version>${emrapiVersion}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>emrapi-api-pre2.2</artifactId>
-				<version>${emrapiVersion}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
 				<groupId>org.openmrs</groupId>
 				<artifactId>event-api</artifactId>
 				<version>${eventVersion}</version>
 				<scope>test</scope>
 			</dependency>
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>formentryapp-omod</artifactId>
-				<version>${formentryappVersion}</version>
-				<scope>provided</scope>
-			</dependency>
-
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
 				<artifactId>idgen-api</artifactId>
@@ -306,19 +278,6 @@
 				<scope>provided</scope>
 			</dependency>
 
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>providermanagement-api</artifactId>
-				<version>${providermanagementVersion}</version>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>referenceapplication-omod</artifactId>
-				<version>${referenceapplicationVersion}</version>
-				<scope>provided</scope>
-			</dependency>
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
 				<artifactId>reporting-api</artifactId>
