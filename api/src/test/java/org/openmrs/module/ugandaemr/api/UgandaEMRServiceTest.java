@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
 import org.mockito.Mock;
 
 import org.openmrs.Order;
@@ -35,25 +35,29 @@ public class UgandaEMRServiceTest extends BaseModuleContextSensitiveTest {
     protected static final String TEST_ORDER_STANDARD_DATASET_XML = "org/openmrs/module/ugandaemr/include/TestOrderDataset.xml";
 
 
+    @Mock
     private OrderService orderService;
 
+    @Mock
     private ConceptService conceptService;
 
+    @Mock
     private Order order;
 
+    @Mock
     private Concept specimenConcept;
     private UgandaEMRService ugandaemrService;
     private PatientService patientService;
     private VisitService visitService;
     private AdministrationService administrationService;
 
-    @BeforeEach
+    @Before
     public void initialize() throws Exception {
         executeDataSet(UGANDAEMR_STANDARD_DATASET_XML);
         executeDataSet(TEST_ORDER_STANDARD_DATASET_XML);
     }
 
-    @BeforeEach
+    @Before
     public void setup() throws Exception {
         executeDataSet(UGANDAEMR_STANDARD_DATASET_XML);
         executeDataSet(TEST_ORDER_STANDARD_DATASET_XML);

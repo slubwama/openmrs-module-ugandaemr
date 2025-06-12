@@ -18,7 +18,7 @@ import org.openmrs.*;
 import org.openmrs.api.EncounterService;
 import org.openmrs.api.FormService;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.webservices.rest.SimpleObject;
+import org.openmrs.module.ugandaemr.api.SimpleObject;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;

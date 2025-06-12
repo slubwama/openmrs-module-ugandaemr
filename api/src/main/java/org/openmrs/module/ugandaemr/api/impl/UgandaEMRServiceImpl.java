@@ -51,6 +51,7 @@ import org.openmrs.module.ugandaemr.UgandaEMRConstants;
 import org.openmrs.module.ugandaemr.activator.AppConfigurationInitializer;
 import org.openmrs.module.ugandaemr.activator.Initializer;
 import org.openmrs.module.ugandaemr.activator.JsonFormsInitializer;
+import org.openmrs.module.ugandaemr.api.SimpleObject;
 import org.openmrs.module.ugandaemr.api.deploy.bundle.CommonMetadataBundle;
 import org.openmrs.module.ugandaemr.api.deploy.bundle.UgandaAddressMetadataBundle;
 import org.openmrs.module.ugandaemr.api.deploy.bundle.UgandaEMRPatientFlagMetadataBundle;
@@ -74,7 +75,6 @@ import org.openmrs.notification.AlertService;
 import org.openmrs.order.OrderUtil;
 import org.openmrs.parameter.EncounterSearchCriteria;
 import org.openmrs.parameter.EncounterSearchCriteriaBuilder;
-import org.openmrs.module.webservices.rest.SimpleObject;
 import org.openmrs.util.OpenmrsUtil;
 import org.openmrs.module.stockmanagement.api.StockManagementService;
 
