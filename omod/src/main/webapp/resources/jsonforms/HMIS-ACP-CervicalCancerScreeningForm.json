@@ -96,7 +96,7 @@
                   },
                   {
                     "concept": "165046AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-                    "label": "Postnatal Clinic"
+                    "label": "ostnatal Clinic"
                   },
                   {
                     "concept": "f0d12a70-04a3-4f7f-992b-bed4ad331908",
@@ -129,6 +129,70 @@
                 ]
               },
               "validators": []
+            },
+            {
+              "label": "HIV Status",
+              "type": "obs",
+              "id": "hivStatus",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "dce0e886-30ab-102d-86b0-7a5022ba4115",
+                "answers": [
+                  {
+                    "concept": "dcdf4653-30ab-102d-86b0-7a5022ba4115",
+                    "label": "HIV-"
+                  },
+                  {
+                    "concept": "dcdf4241-30ab-102d-86b0-7a5022ba4115",
+                    "label": "HIV+"
+                  },
+                  {
+                    "concept": "dcd6865a-30ab-102d-86b0-7a5022ba4115",
+                    "label": "Unknown"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "Art Status",
+              "type": "obs",
+              "id": "artStatus",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "dca25616-30ab-102d-86b0-7a5022ba4115",
+                "answers": [
+                  {
+                    "concept": "dca2817c-30ab-102d-86b0-7a5022ba4115",
+                    "label": "On ART"
+                  },
+                  {
+                    "concept": "eeee7b94-8556-4bf8-919f-1fce764f93e6",
+                    "label": "Not On ART"
+                  },
+                  {
+                    "concept": "dc9b0596-30ab-102d-86b0-7a5022ba4115",
+                    "label": "Not Applicable"
+                  }
+                ]
+              },
+              "validators": [],
+              "hide": {
+                "hideWhenExpression": "hivStatus !== 'dcdf4241-30ab-102d-86b0-7a5022ba4115'"
+              }
+            },
+            {
+              "label": "ART No",
+              "type": "patientIdentifier",
+              "required": false,
+              "id": "artNumber",
+              "questionOptions": {
+                "rendering": "text",
+                "identifierType": "e1731641-30ab-102d-86b0-7a5022ba4115"
+              },
+              "validators": [],
+              "hide": {
+                "hideWhenExpression": "artStatus !== 'dca2817c-30ab-102d-86b0-7a5022ba4115'"
+              }
             }
           ]
         },
