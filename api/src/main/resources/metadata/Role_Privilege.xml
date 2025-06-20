@@ -1285,6 +1285,7 @@
     <role_privilege  role="HTS Data Manager"  privilege="App: ugandaemrreports.HTSClientCardDataExport"/>
     <role_privilege  role="HTS Data Manager"  privilege="App: ugandaemrreports.recencyHTSClientCardDataExport"/>
 
+    <role  role="Cashier"  description="Cashier Role"  uuid="e9b927a9-c0df-49ae-90b1-b15bcb27c7f7"/>
 
     <!--* General Data Manager *-->
     <!--role-role-->
@@ -1402,6 +1403,54 @@
 
 
     <role_privilege  role="Organizational: Clinician"  privilege="View OrderTemplates"/>
+
+    <role_privilege  role="Cashier"  privilege="Adjust Cashier Bills"/>
+    <role_privilege  role="Cashier"  privilege="App: Access Cashier Tasks"/>
+    <role_privilege  role="Cashier"  privilege="App: stockmanagement.stockItems"/>
+    <role_privilege  role="Cashier"  privilege="App: View Cashier App"/>
+    <role_privilege  role="Cashier"  privilege="Manage Billing"/>
+    <role_privilege  role="Cashier"  privilege="Manage Cashier Bills"/>
+    <role_privilege  role="Cashier"  privilege="Manage Cashier Metadata"/>
+    <role_privilege  role="Cashier"  privilege="Manage Cashier Timesheets"/>
+    <role_privilege  role="Cashier"  privilege="Next Service Point"/>
+    <role_privilege  role="Cashier"  privilege="Purge Cashier Bills"/>
+    <role_privilege  role="Cashier"  privilege="Purge Cashier Metadata"/>
+    <role_privilege  role="Cashier"  privilege="Purge Cashier Timesheets"/>
+    <role_privilege  role="Cashier"  privilege="Task: Adjust Cashier Bills"/>
+    <role_privilege  role="Cashier"  privilege="Task: Cashier Timesheets"/>
+    <role_privilege  role="Cashier"  privilege="Task: Manage Cashier Metadata"/>
+    <role_privilege  role="Cashier"  privilege="Task: Manage Cashier Module"/>
+    <role_privilege  role="Cashier"  privilege="Task: View Cashier Reports"/>
+    <role_privilege  role="Cashier"  privilege="View Cashier Bills"/>
+    <role_privilege  role="Cashier"  privilege="View Cashier Metadata"/>
+    <role_privilege  role="Cashier"  privilege="View Cashier Timesheets"/>
+
+    <role_privilege  role="Organizational: Clinician"  privilege="Manage Patient Billing"/>
+    <role_privilege  role="Privilege Level: Full"  privilege="Manage Patient Billing"/>
+    <role_privilege  role="Privilege Level: High"  privilege="Manage Patient Billing"/>
+    <role_privilege  role="Triage"  privilege="Manage Patient Billing"/>
+
+    <role_privilege  role="Triage"  privilege="Adjust Cashier Bills"/>
+    <role_privilege  role="Triage"  privilege="App: View Cashier App"/>
+    <role_privilege  role="Triage"  privilege="Manage Cashier Bills"/>
+    <role_privilege  role="Triage"  privilege="Purge Cashier Bills"/>
+    <role_privilege  role="Triage"  privilege="Task: Adjust Cashier Bills"/>
+    <role_privilege  role="Triage"  privilege="Task: Manage Cashier Metadata"/>
+    <role_privilege  role="Triage"  privilege="Task: Manage Cashier Module"/>
+    <role_privilege  role="Triage"  privilege="View Cashier Bills"/>
+    <role_privilege  role="Triage"  privilege="View Cashier Metadata"/>
+
+    <role_privilege  role="Organizational: Clinician"  privilege="Adjust Cashier Bills"/>
+    <role_privilege  role="Organizational: Clinician"  privilege="App: Access Cashier Tasks"/>
+    <role_privilege  role="Organizational: Clinician"  privilege="App: View Cashier App"/>
+    <role_privilege  role="Organizational: Clinician"  privilege="Manage Cashier Bills"/>
+    <role_privilege  role="Organizational: Clinician"  privilege="Manage Cashier Metadata"/>
+    <role_privilege  role="Organizational: Clinician"  privilege="Purge Cashier Bills"/>
+    <role_privilege  role="Organizational: Clinician"  privilege="Purge Cashier Metadata"/>
+    <role_privilege  role="Organizational: Clinician"  privilege="Task: Adjust Cashier Bills"/>
+    <role_privilege  role="Organizational: Clinician"  privilege="Task: Manage Cashier Metadata"/>
+    <role_privilege  role="Organizational: Clinician"  privilege="Task: Manage Cashier Module"/>
+
 </dataset>
 
 
