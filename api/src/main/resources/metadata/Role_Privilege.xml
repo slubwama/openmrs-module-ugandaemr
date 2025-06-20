@@ -1286,6 +1286,7 @@
     <role_privilege  role="HTS Data Manager"  privilege="App: ugandaemrreports.recencyHTSClientCardDataExport"/>
 
     <role  role="Cashier"  description="Cashier Role"  uuid="e9b927a9-c0df-49ae-90b1-b15bcb27c7f7"/>
+    <role_role  parent_role="Base Role"  child_role="Cashier"/>
 
     <!--* General Data Manager *-->
     <!--role-role-->
