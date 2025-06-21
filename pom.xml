@@ -426,12 +426,6 @@
 				<artifactId>cohort</artifactId>
 				<version>${cohortModuleVersion}</version>
 			</dependency>
-			<dependency>
-				<groupId>org.json</groupId>
-				<artifactId>json</artifactId>
-				<version>20231013</version>
-				<type>jar</type>
-			</dependency>
 
 			<dependency>
 				<groupId>org.openmrs.module</groupId>

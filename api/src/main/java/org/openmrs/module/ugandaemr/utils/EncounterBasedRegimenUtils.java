@@ -13,7 +13,6 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.ObjectNode;
-import org.json.JSONObject;
 import org.openmrs.*;
 import org.openmrs.api.EncounterService;
 import org.openmrs.api.FormService;
@@ -139,10 +138,12 @@ public class EncounterBasedRegimenUtils {
 
             switch (conceptUuid) {
                 case CURRENT_DRUGS:
-                    regimen = obs.getValueCoded() != null ?
-                            obs.getValueCoded().getFullySpecifiedName(Locale.ENGLISH).getName() : "Unresolved Regimen name";
+                    regimen = obs.getValueCoded() != null
+                            ? obs.getValueCoded().getFullySpecifiedName(Locale.ENGLISH).getName()
+                            : "Unresolved Regimen name";
                     try {
-                        regimenShort = getRegimenNameFromRegimensXMLString(obs.getValueCoded().getUuid(), getRegimenConceptJson());
+                        regimenShort = getRegimenNameFromRegimensXMLString(
+                                obs.getValueCoded().getUuid(), getRegimenConceptJson());
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
@@ -151,7 +152,9 @@ public class EncounterBasedRegimenUtils {
 
                 case CURRENT_DRUG_NON_STANDARD:
                     if (obs.getValueCoded() != null) {
-                        nonstandardRegimen.append(obs.getValueCoded().getFullySpecifiedName(Locale.ENGLISH).getName().toUpperCase()).append("/");
+                        nonstandardRegimen
+                                .append(obs.getValueCoded().getFullySpecifiedName(Locale.ENGLISH).getName().toUpperCase())
+                                .append("/");
                         regimenUuid = obs.getValueCoded().getUuid();
                     }
                     break;
@@ -202,22 +205,17 @@ public class EncounterBasedRegimenUtils {
             longDisplay = regimen;
         }
 
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("startDate", startDate);
-        jsonObject.put("endDate", end);
-        jsonObject.put("regimenShortDisplay", shortDisplay);
-        jsonObject.put("regimenLine", line);
-        jsonObject.put("regimenLongDisplay", longDisplay);
-        jsonObject.put("changeReasons", changeReasons);
-        jsonObject.put("regimenUuid", regimenUuid != null ? regimenUuid : "");
-        jsonObject.put("current", current);
-
-        try {
-            return SimpleObject.parseJson(jsonObject.toString());
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        }
+        return new SimpleObject()
+                .add("startDate", startDate)
+                .add("endDate", end)
+                .add("regimenShortDisplay", shortDisplay)
+                .add("regimenLine", line)
+                .add("regimenLongDisplay", longDisplay)
+                .add("changeReasons", changeReasons)
+                .add("regimenUuid", regimenUuid != null ? regimenUuid : "")
+                .add("current", current);
     }
+
 
 
     public static String getRegimenNameFromRegimensXMLString(String conceptRef, String regimenJson) throws IOException {

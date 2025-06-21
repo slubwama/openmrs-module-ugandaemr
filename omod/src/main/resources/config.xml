@@ -65,6 +65,26 @@
             org.openmrs.module.webservices.rest
         </require_module>
 
+        <require_module>
+            org.openmrs.module.addresshierarchy
+        </require_module>
+
+        <require_module>
+            org.openmrs.module.metadatasharing
+        </require_module>
+
+        <require_module>
+            org.openmrs.module.patientflags
+        </require_module>
+
+        <require_module>
+            org.openmrs.module.reporting
+        </require_module>
+
+        <require_module>
+            org.openmrs.module.reportingcompatibility
+        </require_module>
+
 	</require_modules>
 	
 	<aware_of_modules>
