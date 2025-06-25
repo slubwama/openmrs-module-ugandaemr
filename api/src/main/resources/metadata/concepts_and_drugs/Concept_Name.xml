@@ -6807,5 +6807,4 @@
     <concept_name  concept_name_id="199038"  concept_id="199029"  name="CACX Screening/Treatment"  locale="en"  locale_preferred="1"  creator="1"  date_created="2024-11-12 13:37:28"  concept_name_type="FULLY_SPECIFIED"  voided="0" uuid="a35a0840-ecdf-44b5-a6ea-97f0855ba496"/>
     <concept_name  concept_name_id="199039"  concept_id="199030"  name="Known Diabetic and controlled on lifestyle modification"  locale="en"  locale_preferred="1"  creator="1"  date_created="2024-11-13 11:16:57"  concept_name_type="FULLY_SPECIFIED"  voided="0"  uuid="78f2e1da-15bc-4872-b3d3-7a2522e5c6c7"/>
     <concept_name  concept_name_id="199040"  concept_id="199031"  name="Known Diabetic and controlled on medication and lifestyle modification"  locale="en"  locale_preferred="1"  creator="1"  date_created="2024-11-13 11:18:29"  concept_name_type="FULLY_SPECIFIED"  voided="0"  uuid="4ced5e42-b1ed-44c7-ae22-fbc3d6492db8"/>
-
 </dataset>
