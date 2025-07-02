@@ -1771,19 +1771,12 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     }
 
     private String getMetadataPath(String type) {
-        String appDataDir = "";
-
+        String appDataDir = OpenmrsUtil.getApplicationDataDirectory();
 
         // Check if metadata initialization is enabled
         boolean initialiseMetadataOnStart = Boolean.parseBoolean(
                 Context.getAdministrationService().getGlobalProperty("ugandaemr.initialiseMetadataOnStart")
         );
-
-        if (type.equals("jsonforms")) {
-            appDataDir = "form";
-        } else {
-            appDataDir = OpenmrsUtil.getApplicationDataDirectory();
-        }
 
         // Default paths when initializing metadata on start
         Map<String, String> defaultPaths = new HashMap<>();
