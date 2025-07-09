@@ -92,7 +92,6 @@
 		<metadatasharingVersion>1.9.0</metadatasharingVersion>
 		<o3formsVersion>2.3.0</o3formsVersion>
 		<openconceptlabModuleVersion>2.4.0</openconceptlabModuleVersion>
-		<openMRSVersion>2.7.4</openMRSVersion>
 		<openmrsAtomfeedVersion>2.6.1</openmrsAtomfeedVersion>
 		<openmrsTestutilsVersion>1.3</openmrsTestutilsVersion>
 		<orderTemplatesVersion>1.0.3</orderTemplatesVersion>
@@ -106,7 +105,6 @@
 		<spaModuleVersion>2.0.0</spaModuleVersion>
 		<stockmanagementVersion>2.0.3</stockmanagementVersion>
 		<teleconsultationVersion>2.0.0</teleconsultationVersion>
-		<!-- core configuration library -->
 		<ugandaemrReportsVersion>2.1.5-SNAPSHOT</ugandaemrReportsVersion>
 		<ugandaemrSyncVersion>2.0.0-SNAPSHOT</ugandaemrSyncVersion>
 		<webservices.restModuleVersion>2.49.0</webservices.restModuleVersion>
