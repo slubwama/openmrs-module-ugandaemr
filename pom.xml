@@ -107,6 +107,7 @@
 		<o3formsVersion>2.3.0</o3formsVersion>
 		<orderTemplatesVersion>1.0.3</orderTemplatesVersion>
 		<attachmentsVersion>3.7.0</attachmentsVersion>
+		<initializerVersion>2.9.0</initializerVersion>
 
 		<!-- core configuration library -->
 		<ugandaemrReportsVersion>2.1.5-SNAPSHOT</ugandaemrReportsVersion>

@@ -65,6 +65,8 @@ public class CommonMetadataBundle extends AbstractMetadataBundle {
 
         //Install Encounter Type
         log.info("Installing EncounterTypes");
+        install(EncounterTypes.ART_SUMMARY_ENCOUNTER_TYPE);
+        install(EncounterTypes.ART_ENCOUNTER_TYPE);
         install(EncounterTypes.PNC_ENCOUNTER_TYPE);
         install(EncounterTypes.OPD_ENCOUNTER);
         install(EncounterTypes.TB_SUMMARY_ENCOUNTER);
@@ -88,14 +90,11 @@ public class CommonMetadataBundle extends AbstractMetadataBundle {
         install(EncounterTypes.CACX_SCREENING_LOG);
         install(EncounterTypes.CACX_TREATMENT_REGISTER);
         install(EncounterTypes.COVID19_VACCINATION_TRACKING);
-
         install(EncounterTypes.SMS_ENROLLMENT);
         install(EncounterTypes.FAMILY_PLANNING_ENCOUNTER);
         install(EncounterTypes.NEW_BORN_INPATIENT_ENCOUNTER);
         install(EncounterTypes.IN_PATIENT_ENCOUNTER);
         install(EncounterTypes.CHILD_HEALTH_ENCOUNTER);
-
-
         install(EncounterTypes.SMC_FOLLOWUP);
         install(EncounterTypes.LAB_REQUEST_ENCOUNTER);
         install(EncounterTypes.INTER_FACILITY_LINKAGE_ENCOUNTER);
@@ -109,6 +108,22 @@ public class CommonMetadataBundle extends AbstractMetadataBundle {
         install(EncounterTypes.PROCEDURE_RESULTS_ENCOUNTER);
         install(EncounterTypes.HIV_SELF_TESTING_ENCOUNTER);
         install(EncounterTypes.HTS_CONTACT_TRACING_ENCOUNTER);
+        install(EncounterTypes.ATTACHMENT_UPLOAD);
+        install(EncounterTypes.DISCHARGE);
+        install(EncounterTypes.ADMISSION);
+        install(EncounterTypes.VISIT_NOTE);
+        install(EncounterTypes.CHECK_OUT);
+        install(EncounterTypes.CHECK_IN);
+        install(EncounterTypes.TRANSFER);
+        install(EncounterTypes.VITALS);
+        install(EncounterTypes.LAB_ENCOUNTER);
+        install(EncounterTypes.SMC_ENCOUNTER);
+        install(EncounterTypes.EID_CARD_ENCOUNTER);
+        install(EncounterTypes.ART_HEALTH_EDUCATION);
+        install(EncounterTypes.EID_CARD_SUMMARY);
+        install(EncounterTypes.MATERNITY_ENCOUNTER);
+        install(EncounterTypes.EARLY_INFANT_DIAGNOSIS_REQUEST);
+
 
 
         //installing programs metadata

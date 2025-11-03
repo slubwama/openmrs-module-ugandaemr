@@ -2036,10 +2036,6 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     public void installCommonMetadata() {
         MetadataDeployService deployService=Context.getService(MetadataDeployService.class);
         try {
-            log.info("Installing standard metadata using the packages.xml file");
-            MetadataUtil.setupStandardMetadata(getClass().getClassLoader());
-            log.info("Standard metadata installed");
-
             log.info("Installing metadata");
             log.info("Installing commonly used metadata");
             deployService.installBundle(Context.getRegisteredComponents(CommonMetadataBundle.class).get(0));
@@ -2048,7 +2044,16 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
             deployService.installBundle(Context.getRegisteredComponents(UgandaAddressMetadataBundle.class).get(0));
             log.info("Finished installing addresshierarchy");
 
-            // install concepts
+        } catch (Exception e) {
+            Module mod = ModuleFactory.getModuleById("ugandaemr");
+            ModuleFactory.stopModule(mod);
+            throw new RuntimeException("failed to install the common metadata ", e);
+        }
+    }
+
+    public void installPatientFlags() {
+        MetadataDeployService deployService=Context.getService(MetadataDeployService.class);
+        try {
             log.info("Installing patient flags");
             deployService.installBundle(Context.getRegisteredComponents(UgandaEMRPatientFlagMetadataBundle.class).get(0));
             log.info("Finished installing patient flags");

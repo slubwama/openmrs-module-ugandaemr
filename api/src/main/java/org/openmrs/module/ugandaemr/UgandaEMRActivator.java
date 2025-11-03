@@ -82,6 +82,8 @@ public class UgandaEMRActivator extends org.openmrs.module.BaseModuleActivator {
                 administrationService.saveGlobalProperty(initialiseMetaDataOnStart);
             }
 
+            ugandaEMRService.installPatientFlags();
+
             dataImporter.importData("metadata/appointment.xml");
 
             dataImporter.importData("metadata/Programs.xml");
