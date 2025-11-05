@@ -24,6 +24,23 @@
 		<sql splitStatements="true" stripComments="true">SET FOREIGN_KEY_CHECKS=1;</sql>
 	</changeSet>
 
+	<changeSet id="ugandaemr-20251101-role-and-privilege-ref" author="slubwama">
+		<preConditions onFail="MARK_RAN" onError="HALT">
+			<and>
+				<tableExists tableName="role"/>
+				<tableExists tableName="role_role"/>
+				<tableExists tableName="role_privilege"/>
+				<tableExists tableName="privilege"/>
+			</and>
+		</preConditions>
+
+		<comment>Run roles and privileges reference updates for UgandaEMR with FK checks disabled</comment>
+
+		<sql splitStatements="true" stripComments="true">SET FOREIGN_KEY_CHECKS=0;</sql>
+		<sqlFile path="liquibase/sql/role_and_privilege.sql"  splitStatements="true" stripComments="true"/>
+		<sql splitStatements="true" stripComments="true">SET FOREIGN_KEY_CHECKS=1;</sql>
+	</changeSet>
+
 	<changeSet id="ugandaemr-20251101-initial_metadata" author="slubwama">
 		<preConditions onFail="MARK_RAN" onError="HALT">
 			<and>
@@ -821,8 +838,11 @@ VALUES
 		</insert>
 	</changeSet>
 
-	<changeSet id="ugandaemr-20240314-1654" author="slubwama">
+	<changeSet id="ugandaemr-20251105-1654" author="slubwama">
 		<preConditions onFail="CONTINUE">
+			<and>
+				<tableExists tableName="appointment_service"/>
+			</and>
 			<sqlCheck expectedResult="1">
 				select count(*) from appointment_service where uuid="348e1cba-ffd4-4994-be3d-cd409d190b9f";
 			</sqlCheck>
@@ -1458,6 +1478,30 @@ VALUES
 			update liquibasechangelog set   MD5SUM="8:e477471ac14e504234e45c5490ecb6a0" where ID="stockmanagement-1758855877841-332" AND   MD5SUM="8:3d6d3f97bec84454996da0cc248e0f1d";
 			update liquibasechangelog set   MD5SUM="8:aea8af274b5e3a0c01794e34de6807a9" where ID="stockmanagement-1758855877841-333" AND   MD5SUM="8:ba17bee92d14027c12d900280fee161c";
 		</sql>
+	</changeSet>
+
+
+	<changeSet id="ugandaemr-20251105-post-metadata-installation-task" author="slubwama">
+		<preConditions onFail="MARK_RAN">
+			<sqlCheck expectedResult="0">
+				SELECT COUNT(*) FROM scheduler_task_config
+				WHERE schedulable_class = 'org.openmrs.module.ugandaemr.tasks.PostMetaDataInstallationTask'
+			</sqlCheck>
+		</preConditions>
+		<comment>Inserting Post MetaData Installation Task into 'schedule_task_config' table</comment>
+		<insert tableName="scheduler_task_config">
+			<column name="name" value="Post MetaData Installation" />
+			<column name="description" value="Installation of metadata post start incase it failed on start " />
+			<column name="schedulable_class" value="org.openmrs.module.ugandaemr.tasks.PostMetaDataInstallationTask" />
+			<column name="start_time_pattern" value="MM/dd/yyyy HH:mm:ss" />
+			<column name="start_time" valueDate="2017-06-01T11:59:59" />
+			<column name="repeat_interval" value="86400" />
+			<column name="date_created" valueDate="CURRENT_TIMESTAMP" />
+			<column name="created_by" value="1" />
+			<column name="start_on_startup" value="0"/>
+			<column name="started" value="0"/>
+			<column name="uuid" value="2d8812bc-ba60-11f0-b8b7-f4d343d76c98" />
+		</insert>
 	</changeSet>
 
 </databaseChangeLog>
