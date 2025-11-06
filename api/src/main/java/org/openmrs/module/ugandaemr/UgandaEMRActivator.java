@@ -73,6 +73,7 @@ public class UgandaEMRActivator extends org.openmrs.module.BaseModuleActivator {
             if (initialiseMetaDataOnStart.getPropertyValue().equals("true")) {
 
                 // initialise forms and concepts and other metadata like privileges, personal attribute types
+                addConcepts("metadata/", dataImporter);
                 addStockManagementData("metadata/", dataImporter);
                 for (Initializer initializer : ugandaEMRService.initialiseForms()) {
                     initializer.started();
@@ -82,21 +83,21 @@ public class UgandaEMRActivator extends org.openmrs.module.BaseModuleActivator {
                 administrationService.saveGlobalProperty(initialiseMetaDataOnStart);
             }
 
-                ugandaEMRService.installPatientFlags();
+            ugandaEMRService.installPatientFlags();
 
-                // initialise primary Identifier
-                ugandaEMRService.initializePrimaryIdentifierTypeMapping();
+            // initialise primary Identifier
+            ugandaEMRService.initializePrimaryIdentifierTypeMapping();
 
-                // update the name of the default health center with that stored in the global property
-                ugandaEMRService.setHealthFacilityLocation();
+            // update the name of the default health center with that stored in the global property
+            ugandaEMRService.setHealthFacilityLocation();
 
-                ugandaEMRService.setFlagStatus();
+            ugandaEMRService.setFlagStatus();
 
-                // cleanup liquibase change logs to enable installation of data integrity module
-                ugandaEMRService.removeOldChangeLocksForDataIntegrityModule();
+            // cleanup liquibase change logs to enable installation of data integrity module
+            ugandaEMRService.removeOldChangeLocksForDataIntegrityModule();
 
-                // generate OpenMRS ID for patients without the identifier
-                ugandaEMRService.generateOpenMRSIdentifierForPatientsWithout();
+            // generate OpenMRS ID for patients without the identifier
+            ugandaEMRService.generateOpenMRSIdentifierForPatientsWithout();
 
             log.info("ugandaemr Module started");
 
