@@ -111,6 +111,9 @@
 
 		<!-- core configuration library -->
 		<ugandaemrReportsVersion>2.1.5-SNAPSHOT</ugandaemrReportsVersion>
+
+		<!-- content packs -->
+		<ugandaemr-content.version>1.0.0-SNAPSHOT</ugandaemr-content.version>
 	</properties>
 
 	<dependencyManagement>
