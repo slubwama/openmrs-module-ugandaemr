@@ -55,6 +55,21 @@ public class CommonMetadataBundle extends AbstractMetadataBundle {
         install(PersonAttributeTypes.NATIONALITY);
         install(PersonAttributeTypes.EMAIL_ADDRESS);
         install(PersonAttributeTypes.EDUCATION_LEVEL);
+        install(PersonAttributeTypes.RACE);
+        install(PersonAttributeTypes.BIRTHPLACE);
+        install(PersonAttributeTypes.CITIZENSHIP);
+        install(PersonAttributeTypes.MOTHERS_NAME);
+        install(PersonAttributeTypes.TELEPHONE_NUMBER);
+        install(PersonAttributeTypes.UNKNOWN_PATIENT);
+        install(PersonAttributeTypes.TEST_PATIENT);
+        install(PersonAttributeTypes.FINGERPRINT);
+        install(PersonAttributeTypes.FATHERS_NAME);
+        install(PersonAttributeTypes.CARE_GIVER_NAME);
+        install(PersonAttributeTypes.CARE_GIVER_TELEPHONE_NUMBER);
+        install(PersonAttributeTypes.COMMON_NAME);
+        install(PersonAttributeTypes.LAND_MARK_FEATURE);
+        install(PersonAttributeTypes.DIRECTIONS_TO_PATIENT_HOME);
+        install(PersonAttributeTypes.EMAIL);
         log.info("Person AttributeTypes installed");
 
 
