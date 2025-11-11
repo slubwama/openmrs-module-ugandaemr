@@ -133,6 +133,7 @@ public class CommonMetadataBundle extends AbstractMetadataBundle {
         install(EncounterTypes.EID_CARD_SUMMARY);
         install(EncounterTypes.MATERNITY_ENCOUNTER);
         install(EncounterTypes.EARLY_INFANT_DIAGNOSIS_REQUEST);
+        install(EncounterTypes.ANC_ENCOUNTER_TYPE);
 
 
         // Install Encounter Role

@@ -41,29 +41,6 @@
 		<sql splitStatements="true" stripComments="true">SET FOREIGN_KEY_CHECKS=1;</sql>
 	</changeSet>
 
-	<changeSet id="ugandaemr-20251101-initial_metadata" author="slubwama">
-		<preConditions onFail="MARK_RAN" onError="HALT">
-			<and>
-				<tableExists tableName="encounter_type"/>
-			</and>
-			<sqlCheck expectedResult="0">
-				SELECT count(*) from encounter_type;
-			</sqlCheck>
-			<sqlCheck expectedResult="0">
-				SELECT count(*) from location;
-			</sqlCheck>
-		</preConditions>
-
-		<comment>Run initial metadata for updates for UgandaEMR with FK checks disabled</comment>
-
-		<sql splitStatements="true" stripComments="true">SET FOREIGN_KEY_CHECKS=0;</sql>
-		<sqlFile path="liquibase/sql/initial_metadata.sql"  splitStatements="true" stripComments="true"/>
-		<sql splitStatements="true" stripComments="true">SET FOREIGN_KEY_CHECKS=1;</sql>
-	</changeSet>
-
-
-
-
 	<changeSet id="ugandaemr-27112020-1441" author="ssmusoke">
 		<preConditions onFail="MARK_RAN" onError="MARK_RAN">
 			<sqlCheck expectedResult="100">
