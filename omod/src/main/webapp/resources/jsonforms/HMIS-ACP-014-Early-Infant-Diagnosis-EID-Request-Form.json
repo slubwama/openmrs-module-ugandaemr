@@ -1,7 +1,7 @@
 {
   "name": "HMIS ACP 014: Early Infant Diagnosis (EID) Request Form",
   "processor": "EncounterFormProcessor",
-  "encounterType": "3ca75ce7-8cbe-4970-8fe4-697bc2ce7d8f",
+  "encounterType": "d211f5a7-b0b7-4021-8224-72c58866600e",
   "uuid": "84eb332d-e977-41e2-a081-03f6f875b323",
   "description": "This form is used to carry out tests on an exposed infant",
   "version": "4.1.1",
