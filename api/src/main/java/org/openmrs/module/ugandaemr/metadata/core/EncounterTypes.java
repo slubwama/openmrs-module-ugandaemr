@@ -924,7 +924,7 @@ public class EncounterTypes {
 
         @Override
         public String description() {
-            return "The encounter type where EIR Lab requests are made";
+            return "";
         }
 
         public String uuid() {
