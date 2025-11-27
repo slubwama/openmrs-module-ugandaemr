@@ -589,7 +589,7 @@
     <concept_name  concept_name_id="199521"  concept_id="199520"  name="Dispatch Date"  locale="en"  locale_preferred="1"  creator="1"  date_created="2025-06-14 17:06:08"  concept_name_type="FULLY_SPECIFIED"  voided="0"  uuid="79df645a-7513-4be0-81bc-28aa1dcb6bc4"/>
     <concept_name  concept_name_id="199522"  concept_id="199521"  name="Nutrion Unit"  locale="en"  locale_preferred="1"  creator="1"  date_created="2025-06-14 17:07:23"  concept_name_type="FULLY_SPECIFIED"  voided="0" uuid="60721928-60b8-4c0d-95ed-50d5889bd08d"/>
     <concept_name  concept_name_id="199523"  concept_id="199522"  name="Children's Ward"  locale="en"  locale_preferred="1"  creator="1"  date_created="2025-06-14 17:07:38"  concept_name_type="FULLY_SPECIFIED"  voided="0" uuid="64850704-d1f1-4917-8791-698ee613624b"/>
-    <concept_name  concept_name_id="199524"  concept_id="199523"  name="Type of Tes"  locale="en"  locale_preferred="1"  creator="1"  date_created="2025-06-14 17:09:26"  concept_name_type="FULLY_SPECIFIED"  voided="0"  uuid="16c14fe1-d129-4664-b96a-4b4405f6641d"/>
+    <concept_name  concept_name_id="199524"  concept_id="199523"  name="Type of EID Test"  locale="en"  locale_preferred="1"  creator="1"  date_created="2025-06-14 17:09:26"  concept_name_type="FULLY_SPECIFIED"  voided="0"  uuid="16c14fe1-d129-4664-b96a-4b4405f6641d"/>
     <concept_name  concept_name_id="199525"  concept_id="199524"  name="Delivered at Health Facility"  locale="en"  locale_preferred="1"  creator="1"  date_created="2025-06-14 17:12:52"  concept_name_type="FULLY_SPECIFIED"  voided="0" uuid="c73749ea-90ad-4903-b22c-f5849bedb7ac"/>
 
     <concept_name  concept_name_id="199526"  concept_id="199525"  name="DIABETES REVIEW"  locale="en"  locale_preferred="1"  creator="1"  date_created="2025-06-23 13:02:36"  concept_name_type="FULLY_SPECIFIED"  voided="0" uuid="22db66f6-4d94-45b6-bde5-f6c23d6fbf9a"/>
@@ -913,4 +913,6 @@
     <concept_name  concept_name_id="199839"  concept_id="199810"  name="Ridmal"                 locale="en"  locale_preferred="1"  creator="1"  date_created="2025-11-16 23:16:26"  concept_name_type="FULLY_SPECIFIED"  voided="0"   uuid="908dff4f-bcff-4ba4-88cf-34eabe1e1325"/>
     <concept_name  concept_name_id="199840"  concept_id="199811"  name="Pyramax"                locale="en"  locale_preferred="1"  creator="1"  date_created="2025-11-16 23:17:27"  concept_name_type="FULLY_SPECIFIED"  voided="0"   uuid="da8678c6-e72c-44d5-b901-a3cb68340436"/>
 
+    <concept_name  concept_name_id="199844"  concept_id="199813"  name="Testing Date"  locale="en"  locale_preferred="1"  creator="1"  date_created="2025-11-27 16:34:04"  concept_name_type="FULLY_SPECIFIED"  voided="0"    uuid="704edea5-e698-4f85-bf41-dceaa6d1d249"/>
+    <concept_name  concept_name_id="199842"  concept_id="199812"  name="Lab Device Name"  locale="en"  locale_preferred="1"  creator="1"  date_created="2025-11-27 15:55:45"  concept_name_type="FULLY_SPECIFIED"  voided="0"   uuid="d5af1175-4a2f-4e15-8def-eab2adbcee6c"/>
 </dataset>

@@ -169,7 +169,30 @@
               "type": "obs",
               "required": "true",
               "questionOptions": {
-                "rendering": "select"
+                "rendering": "radio",
+                "concept": "c35086eb-c1f8-434a-91bd-3e3832c51622",
+                "answers": [
+                  {
+                    "concept": "2bd42567-a507-4dd7-956e-17cfb350bdea",
+                    "label": "1st"
+                  },
+                  {
+                    "concept": "068ed6a2-4b81-4c21-a75f-d2e9c98c265a",
+                    "label": "2nd"
+                  },
+                  {
+                    "concept": "9a07b530-c41a-4a56-be39-4f27528a3807",
+                    "label": "3rd"
+                  },
+                  {
+                    "concept": "57c357ea-b4de-491e-99aa-962a62ff368f",
+                    "label": "PCR Test"
+                  },
+                  {
+                    "concept": "1751ec63-225f-437c-a3eb-8e9e9e615855",
+                    "label": "SCD"
+                  }
+                ]
               },
               "id": "typeOfTest",
               "label": "Type of Test"
@@ -333,7 +356,7 @@
       "label": "Test Details",
       "sections": [
         {
-          "label": "Test Details",
+          "label": "Order For Tests",
           "isExpanded": "true",
           "questions": [
             {
@@ -366,7 +389,7 @@
               "type": "obs",
               "questionOptions": {
                 "rendering": "text",
-                "concept": ""
+                "concept": "93e44915-e411-4e21-867e-8951cfbd80cc"
               },
               "id": "pocDeviceUsed",
               "label": "POC Device Used"
@@ -443,7 +466,7 @@
               "type": "obs",
               "questionOptions": {
                 "rendering": "datetime",
-                "concept": "5b4037d6-a7e2-11ed-afa1-0242ac120002"
+                "concept": "64ce869e-e68b-4c99-b02e-db65cbb2457e"
               },
               "id": "testingDate",
               "label": "Testing Date",
