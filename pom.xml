@@ -110,10 +110,10 @@
 		<initializerVersion>2.9.0</initializerVersion>
 
 		<!-- core configuration library -->
-		<ugandaemrReportsVersion>2.1.5-SNAPSHOT</ugandaemrReportsVersion>
+		<ugandaemrReportsVersion>2.1.6</ugandaemrReportsVersion>
 
 		<!-- content packs -->
-		<ugandaemr-content.version>1.0.0-SNAPSHOT</ugandaemr-content.version>
+		<ugandaemr-content.version>1.0.0</ugandaemr-content.version>
 	</properties>
 
 	<dependencyManagement>
