@@ -74,7 +74,7 @@ public class UgandaEMRActivator extends org.openmrs.module.BaseModuleActivator {
                 addConcepts("metadata/", dataImporter);
                 addStockManagementData("metadata/", dataImporter);
                 addStockManagementData("metadata/", dataImporter);
-
+                addRolePrivilege("metadata/", dataImporter);
                 try {
                     addVisitTypes("metadata/", dataImporter);
                 }catch (Exception e) {
