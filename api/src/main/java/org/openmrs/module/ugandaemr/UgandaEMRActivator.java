@@ -75,11 +75,6 @@ public class UgandaEMRActivator extends org.openmrs.module.BaseModuleActivator {
                 addStockManagementData("metadata/", dataImporter);
                 addStockManagementData("metadata/", dataImporter);
                 addRolePrivilege("metadata/", dataImporter);
-                try {
-                    addVisitTypes("metadata/", dataImporter);
-                }catch (Exception e) {
-                    log.error(e.getMessage());
-                }
 
                 for (Initializer initializer : ugandaEMRService.initialiseForms()) {
                     initializer.started();
