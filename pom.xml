@@ -53,9 +53,9 @@
 	</organization>
 
 	<scm>
-		<connection>scm:git:git@github.com:mohuganda/openmrs-module-ugandaemr.git</connection>
-		<developerConnection>scm:git:git@github.com:mohuganda/openmrs-module-ugandaemr.git</developerConnection>
-		<url>scm:git:https://github.com/mohuganda/openmrs-module-ugandaemr</url>
+		<connection>scm:git:git@github.com:METS-Programme/openmrs-module-ugandaemr.git</connection>
+		<developerConnection>scm:git:git@github.com:METS-Programme/openmrs-module-ugandaemr.git</developerConnection>
+		<url>scm:git:https://github.com/METS-Programme/openmrs-module-ugandaemr</url>
 		<tag>HEAD</tag>
 	</scm>
 
