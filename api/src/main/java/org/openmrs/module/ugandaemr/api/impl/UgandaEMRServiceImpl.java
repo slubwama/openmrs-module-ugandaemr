@@ -1915,11 +1915,11 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         log.info("import to Concept_Reference Table  Successful");
 
         log.info("import  to Concept_Reference_Range Table  Starting");
-        dataImporter.importData(metaDataFilePath + "concepts_and_drugs/Concept_Reference_Range.xml");
+        dataImporter.importData(metaDataFilePath+"concepts_and_drugs/Concept_Reference_Range.xml");
         log.info("import to Concept_Reference_Range Table  Successful");
 
         log.info("import  to Concept_Reference_Range Table  Starting");
-        dataImporter.importData(metaDataFilePath + "concepts_and_drugs/tools-2024/Concept_Reference_Range.xml");
+        dataImporter.importData(metaDataFilePath+"concepts_and_drugs/tools-2024/Concept_Reference_Range.xml");
         log.info("import to Concept_Reference_Range Table  Successful");
 
         log.info("Retire Meta data");
