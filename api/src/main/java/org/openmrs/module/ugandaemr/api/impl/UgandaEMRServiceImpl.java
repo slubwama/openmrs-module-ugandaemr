@@ -1915,11 +1915,11 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         log.info("import to Concept_Reference Table  Successful");
 
         log.info("import  to Concept_Reference_Range Table  Starting");
-        dataImporter.importData(metaDataFilePath+"concepts_and_drugs/Concept_Reference_Range.xml");
+        dataImporter.importData(metaDataFilePath + "concepts_and_drugs/Concept_Reference_Range.xml");
         log.info("import to Concept_Reference_Range Table  Successful");
 
         log.info("import  to Concept_Reference_Range Table  Starting");
-        dataImporter.importData(metaDataFilePath+"concepts_and_drugs/tools-2024/Concept_Reference_Range.xml");
+        dataImporter.importData(metaDataFilePath + "concepts_and_drugs/tools-2024/Concept_Reference_Range.xml");
         log.info("import to Concept_Reference_Range Table  Successful");
 
         log.info("Retire Meta data");
@@ -2423,20 +2423,39 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     }
 
     private boolean validateCPHLBarCode(String accessionNumber) {
-        Integer minimumCPHLBarCodeLength = Integer.parseInt(Context.getAdministrationService().getGlobalProperty("ugandaemrsync.minimumCPHLBarCodeLength"));
-        if (accessionNumber == null || accessionNumber.length() < minimumCPHLBarCodeLength) {
+        if (accessionNumber == null || accessionNumber.trim().isEmpty()) {
+            return false;
+        }
+        accessionNumber = accessionNumber.trim();
+
+        int minimumCPHLBarCodeLength = 10;
+        try {
+            String gpValue = Context.getAdministrationService()
+                    .getGlobalProperty("ugandaemrsync.minimumCPHLBarCodeLength");
+            if (gpValue != null) {
+                minimumCPHLBarCodeLength = Integer.parseInt(gpValue);
+            }
+        } catch (NumberFormatException ignored) {
+            log.error(ignored);
+        }
+
+        if (accessionNumber.length() < minimumCPHLBarCodeLength || accessionNumber.length() < 2) {
             return false;
         }
 
         int currentYearSuffix = Year.now().getValue() % 100;
+        int previousYearSuffix = (currentYearSuffix == 0) ? 99 : currentYearSuffix - 1;
 
+        int prefix;
         try {
-            int prefix = Integer.parseInt(accessionNumber.substring(0, 2));
-            return prefix == currentYearSuffix || prefix == (currentYearSuffix - 1);
+            prefix = Integer.parseInt(accessionNumber.substring(0, 2));
         } catch (NumberFormatException e) {
             return false;
         }
+
+        return prefix == currentYearSuffix || prefix == previousYearSuffix;
     }
+
 
     private boolean accessionNumberAlreadyUsed(String accessionNumber) {
         // Escape single quotes to prevent SQL injection or errors
