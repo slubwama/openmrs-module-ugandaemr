@@ -747,14 +747,14 @@
           ]
         },
         {
-          "label": "HIV Test Results From Lab",
+          "label": "HIV Test and  Results",
           "isExpanded": "false",
           "questions": [
             {
               "label": "HIV Test Order",
               "type": "testOrder",
               "id": "hivTestOrder",
-              "required": "true",
+              "required": false,
               "questionOptions": {
                 "rendering": "repeating",
                 "orderSettingUuid": "OUTPATIENT",
