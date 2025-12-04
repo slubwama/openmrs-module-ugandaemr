@@ -747,14 +747,14 @@
           ]
         },
         {
-          "label": "HIV Test and  Results",
+          "label": "HIV Test Results From Lab",
           "isExpanded": "false",
           "questions": [
             {
               "label": "HIV Test Order",
               "type": "testOrder",
               "id": "hivTestOrder",
-              "required": false,
+              "required": "true",
               "questionOptions": {
                 "rendering": "repeating",
                 "orderSettingUuid": "OUTPATIENT",
@@ -860,6 +860,30 @@
                   "label": "FInal Result"
                 }
               ]
+            },
+            {
+              "label": "Sample sent to Reference Laboratory",
+              "type": "obs",
+              "id": "sampleSentToLab",
+              "required": "false",
+              "questionOptions": {
+                "rendering": "radio",
+                "concept": "11316f54-0437-449c-b698-9e2dc48daa11",
+                "answers": [
+                  {
+                    "concept": "1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "Yes"
+                  },
+                  {
+                    "concept": "1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+                    "label": "No"
+                  },
+                  {
+                    "concept": "701d63e2-9641-4360-a5a1-8e2043a4249b",
+                    "label": "Not Collected"
+                  }
+                ]
+              }
             }
           ]
         },
