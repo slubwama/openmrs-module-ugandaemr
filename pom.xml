@@ -100,7 +100,7 @@
 		<reportingCompatibilityVersion>2.0.9</reportingCompatibilityVersion>
 		<serializationxstreamVersion>0.2.16</serializationxstreamVersion>
 		<patientqueueingVersion>2.0.1</patientqueueingVersion>
-		<ugandaemrSyncVersion>2.0.4</ugandaemrSyncVersion>
+		<ugandaemrSyncVersion>2.0.5</ugandaemrSyncVersion>
 		<cohortModuleVersion>3.7.3</cohortModuleVersion>
 		<stockmanagementVersion>2.0.3</stockmanagementVersion>
 		<spaModuleVersion>2.0.0</spaModuleVersion>
