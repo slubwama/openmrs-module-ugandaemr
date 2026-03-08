@@ -239,7 +239,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     @Override
     public void generateAndSaveUICForPatientsWithOut() {
         PatientService patientService = Context.getPatientService();
-        List list = getAdministrationService().executeSQL("select patient.patient_id from patient where patient_id NOT IN(select patient.patient_id from patient inner join patient_identifier pi on (patient.patient_id = pi.patient_id)  inner join patient_identifier_type pit on (pi.identifier_type = pit.patient_identifier_type_id) where pit.uuid='877169c4-92c6-4cc9-bf45-1ab95faea242')", true);
+        List list = Context.getAdministrationService().executeSQL("select patient.patient_id from patient where patient_id NOT IN(select patient.patient_id from patient inner join patient_identifier pi on (patient.patient_id = pi.patient_id)  inner join patient_identifier_type pit on (pi.identifier_type = pit.patient_identifier_type_id) where pit.uuid='877169c4-92c6-4cc9-bf45-1ab95faea242')", true);
         PatientIdentifierType patientIdentifierType = patientService.getPatientIdentifierTypeByUuid("877169c4-92c6-4cc9-bf45-1ab95faea242");
         for (Object object : list) {
             Integer patientId = (Integer) ((ArrayList) object).get(0);
@@ -372,7 +372,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
 
         String currentDate = formatterExt.format(OpenmrsUtil.firstSecondOfDay(new Date()));
 
-        AdministrationService administrationService = getAdministrationService();
+        AdministrationService administrationService = Context.getAdministrationService();
 
         String visitTypeUUID = administrationService.getGlobalProperty("ugandaemr.autoCloseVisit.visitTypeUUID");
 
@@ -647,7 +647,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
      * @throws ParseException
      */
     public boolean isSampleIdExisting(String sampleId, String orderNumber) throws ParseException {
-        List list = getAdministrationService().executeSQL(String.format("select * from orders where accession_number=\"%s\"", sampleId), true);
+        List list = Context.getAdministrationService().executeSQL(String.format("select * from orders where accession_number=\"%s\"", sampleId), true);
         boolean exists = false;
         if (!list.isEmpty()) {
             exists = true;
@@ -714,7 +714,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         }
 
 
-        List list = getAdministrationService().executeSQL(query, true);
+        List list = Context.getAdministrationService().executeSQL(query, true);
 
 
         Set<Order> unProcesedOrderList = new HashSet<>();
@@ -755,7 +755,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
 
         query = String.format(query, encounterId);
 
-        List list = getAdministrationService().executeSQL(query, true);
+        List list = Context.getAdministrationService().executeSQL(query, true);
         Set<Order> unProcesedOrderList = new HashSet<>();
 
         Set<Order> proccesedOrderList = new HashSet<>();
@@ -834,7 +834,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
 
     public Set<DrugOrderMapper> processDrugOrders(Set<Order> orders) {
         Set<DrugOrderMapper> orderMappers = new HashSet<>();
-        boolean enableStockManagement = Boolean.parseBoolean(getAdministrationService().getGlobalProperty("ugandaemr.enableStockManagement"));
+        boolean enableStockManagement = Boolean.parseBoolean(Context.getAdministrationService().getGlobalProperty("ugandaemr.enableStockManagement"));
         OrderType orderType = Context.getOrderService().getOrderTypeByUuid(ORDER_TYPE_DRUG_UUID);
         orders = orders.stream().filter(order -> order.getOrderType().equals(orderType) && order.isActive()).collect(Collectors.toSet());
 
@@ -973,7 +973,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     public boolean testOrderHasResults(Order order) {
         boolean hasOrder = false;
 
-        List list = getAdministrationService().executeSQL("select obs_id from obs where order_id=" + order.getOrderId() + "", true);
+        List list = Context.getAdministrationService().executeSQL("select obs_id from obs where order_id=" + order.getOrderId() + "", true);
 
         if (!list.isEmpty()) {
             hasOrder = true;
@@ -1232,7 +1232,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
 
 
     public boolean patientQueueExists(Encounter encounter, Location locationTo, Location locationFrom, PatientQueue.Status status) throws ParseException {
-        List list = getAdministrationService().executeSQL("select patient_queue_id from patient_queue where encounter_id=" + encounter.getEncounterId() + " AND status='" + status.name() + "' AND location_to=" + locationTo.getLocationId() + " AND location_from=" + locationFrom.getLocationId() + " AND date_created BETWEEN \"" + org.openmrs.module.ugandaemr.utils.DateFormatUtil.dateFormtterString(encounter.getEncounterDatetime(), DAY_START_TIME) + "\" AND \"" + org.openmrs.module.ugandaemr.utils.DateFormatUtil.dateFormtterString(encounter.getEncounterDatetime(), DAY_END_TIME) + "\"", true);
+        List list = Context.getAdministrationService().executeSQL("select patient_queue_id from patient_queue where encounter_id=" + encounter.getEncounterId() + " AND status='" + status.name() + "' AND location_to=" + locationTo.getLocationId() + " AND location_from=" + locationFrom.getLocationId() + " AND date_created BETWEEN \"" + org.openmrs.module.ugandaemr.utils.DateFormatUtil.dateFormtterString(encounter.getEncounterDatetime(), DAY_START_TIME) + "\" AND \"" + org.openmrs.module.ugandaemr.utils.DateFormatUtil.dateFormtterString(encounter.getEncounterDatetime(), DAY_END_TIME) + "\"", true);
         boolean orderExists = false;
         if (!list.isEmpty()) {
             orderExists = true;
@@ -1740,7 +1740,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     private void updateSpecimenSourceManually(Order order, String specimenSourceUUID) {
         Concept specimenSource = Context.getConceptService().getConceptByUuid(specimenSourceUUID);
         if (specimenSource != null) {
-            getAdministrationService().executeSQL(String.format(SPECIMEN_MANUAL_UPDATE_QUERY, specimenSource.getConceptId(), order.getOrderId()), false);
+            Context.getAdministrationService().executeSQL(String.format(SPECIMEN_MANUAL_UPDATE_QUERY, specimenSource.getConceptId(), order.getOrderId()), false);
         }
     }
 
@@ -1748,7 +1748,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     public Map initializeMetaData() {
 
         Map results = new HashMap<>();
-        AdministrationService administrationService = getAdministrationService();
+        AdministrationService administrationService = Context.getAdministrationService();
 
         try {
             log.info("Start import of Concepts,privillages,personAttribute provider attribute type etc...");
@@ -1776,7 +1776,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
 
         // Check if metadata initialization is enabled
         boolean initialiseMetadataOnStart = Boolean.parseBoolean(
-                getAdministrationService().getGlobalProperty("ugandaemr.initialiseMetadataOnStart")
+                Context.getAdministrationService().getGlobalProperty("ugandaemr.initialiseMetadataOnStart")
         );
 
         // Default paths when initializing metadata on start
@@ -1793,22 +1793,22 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
             // Get path from global properties
             switch (type) {
                 case "jsonforms":
-                    relativePath = getAdministrationService().getGlobalProperty("ugandaemr.metadata.jsonFormPath");
+                    relativePath = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.jsonFormPath");
                     break;
                 case "htmlforms":
-                    relativePath = getAdministrationService().getGlobalProperty("ugandaemr.metadata.htmlFormPath");
+                    relativePath = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.htmlFormPath");
                     break;
                 case "metadata":
-                    relativePath = getAdministrationService().getGlobalProperty("ugandaemr.metadata.path");
+                    relativePath = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.path");
                     break;
                 case "configuration":
-                    relativePath = getAdministrationService().getGlobalProperty("ugandaemr.configuration");
+                    relativePath = Context.getAdministrationService().getGlobalProperty("ugandaemr.configuration");
                     break;
                 case "frontend":
-                    relativePath = getAdministrationService().getGlobalProperty("ugandaemr.frontend");
+                    relativePath = Context.getAdministrationService().getGlobalProperty("ugandaemr.frontend");
                     break;
                 case "modules":
-                    relativePath = getAdministrationService().getGlobalProperty("ugandaemr.modules");
+                    relativePath = Context.getAdministrationService().getGlobalProperty("ugandaemr.modules");
                     break;
                 default:
                     relativePath = null;
@@ -1916,11 +1916,11 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         log.info("import to Concept_Reference Table  Successful");
 
         log.info("import  to Concept_Reference_Range Table  Starting");
-        dataImporter.importData(metaDataFilePath + "concepts_and_drugs/Concept_Reference_Range.xml");
+        dataImporter.importData(metaDataFilePath+"concepts_and_drugs/Concept_Reference_Range.xml");
         log.info("import to Concept_Reference_Range Table  Successful");
 
         log.info("import  to Concept_Reference_Range Table  Starting");
-        dataImporter.importData(metaDataFilePath + "concepts_and_drugs/tools-2024/Concept_Reference_Range.xml");
+        dataImporter.importData(metaDataFilePath+"concepts_and_drugs/tools-2024/Concept_Reference_Range.xml");
         log.info("import to Concept_Reference_Range Table  Successful");
 
         log.info("Retire Meta data");
@@ -1991,7 +1991,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
      **/
     public void generateOpenMRSIdentifierForPatientsWithout() {
         PatientService patientService = Context.getPatientService();
-        AdministrationService as = getAdministrationService();
+        AdministrationService as = Context.getAdministrationService();
         AlertService alertService = Context.getAlertService();
 
         List<List<Object>> patientIds = as.executeSQL("SELECT patient_id FROM patient_identifier WHERE patient_id NOT IN (SELECT patient_id FROM patient_identifier p INNER JOIN patient_identifier_type pt ON (p.identifier_type = pt.patient_identifier_type_id AND pt.uuid = '05a29f94-c0ed-11e2-94be-8c13b969e334'))", true);
@@ -2071,11 +2071,11 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     }
 
     public void removeOldChangeLocksForDataIntegrityModule() {
-        String gpVal = getAdministrationService().getGlobalProperty("dataintegrity.database_version");
+        String gpVal = Context.getAdministrationService().getGlobalProperty("dataintegrity.database_version");
         // remove data integrity locks for an version below 4
         // some gymnastics to get the major version number from semver like 2.5.3
         if ((gpVal == null) || new Integer(gpVal.substring(0, gpVal.indexOf("."))).intValue() < 4) {
-            AdministrationService as = getAdministrationService();
+            AdministrationService as = Context.getAdministrationService();
             log.warn("Removing liquibase change log locks for previously installed data integrity instance");
             as.executeSQL("delete from liquibasechangelog WHERE ID like 'dataintegrity%';", false);
         }
@@ -2083,7 +2083,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
 
     public List<Initializer> initialiseForms() {
         String jsonFormsPath = getMetadataPath("jsonforms") + "/";
-        String initialiseMetaDataOnStart = getAdministrationService().getGlobalProperty("ugandaemr.initialiseMetadataOnStart");
+        String initialiseMetaDataOnStart = Context.getAdministrationService().getGlobalProperty("ugandaemr.initialiseMetadataOnStart");
 
         List<Initializer> l = new ArrayList<Initializer>();
         l.add(new AppConfigurationInitializer());
@@ -2099,7 +2099,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
 
     public void setHealthFacilityLocation() {
         LocationService locationService = Context.getLocationService();
-        AdministrationService administrationService = getAdministrationService();
+        AdministrationService administrationService = Context.getAdministrationService();
         Location healthCenter = locationService.getLocationByUuid("629d78e9-93e5-43b0-ad8a-48313fd99117");
 
         if (healthCenter != null) {
@@ -2109,7 +2109,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     }
 
     public void setFlagStatus() {
-        AdministrationService administrationService = getAdministrationService();
+        AdministrationService administrationService = Context.getAdministrationService();
         String flagstatus = administrationService.getGlobalProperty("ugandaemr.patientflags.disabledFlags");
 
         if (flagstatus != null) {
@@ -2231,10 +2231,10 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     }
 
     public void downloadFormsAndMetaDataFromGitHub() {
-        String repoOwner = getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.organization");
-        String repoName = getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.reponame");
-        String branch = getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.branch.metadata");
-        String folderToCopy = getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.metadata.directory");
+        String repoOwner = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.organization");
+        String repoName = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.reponame");
+        String branch = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.branch.metadata");
+        String folderToCopy = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.metadata.directory");
         String destinationRoot = getMetadataPath("configuration");
 
         try {
@@ -2247,10 +2247,10 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     }
 
     public void downloadFrontendFromGitHub() {
-        String repoOwner = getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.organization");
-        String repoName = getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.reponame");
-        String branch = getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.branch.frontend");
-        String folderToCopy = getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.frontend.directory");
+        String repoOwner = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.organization");
+        String repoName = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.reponame");
+        String branch = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.branch.frontend");
+        String folderToCopy = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.frontend.directory");
         String destinationRoot = getMetadataPath("frontend");
 
         try {
@@ -2262,10 +2262,10 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     }
 
     public void downloadOmodsFromGitHub() {
-        String repoOwner = getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.organization");
-        String repoName = getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.reponame");
-        String branch = getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.branch.modules");
-        String folderToCopy = getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.modules.directory");
+        String repoOwner = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.organization");
+        String repoName = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.reponame");
+        String branch = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.branch.modules");
+        String folderToCopy = Context.getAdministrationService().getGlobalProperty("ugandaemr.metadata.github.modules.directory");
         String destinationRoot = getMetadataPath("modules");
 
         try {
@@ -2469,7 +2469,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
             return false;
         }
 
-        String minLengthGp = getAdministrationService()
+        String minLengthGp = Context.getAdministrationService()
                 .getGlobalProperty("ugandaemrsync.minimumCPHLBarCodeLength");
 
         if (StringUtils.isBlank(minLengthGp)) {
