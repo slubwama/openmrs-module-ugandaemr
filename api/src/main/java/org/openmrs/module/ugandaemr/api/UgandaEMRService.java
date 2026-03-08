@@ -428,5 +428,7 @@ public interface UgandaEMRService extends OpenmrsService {
     public void downloadFrontendFromGitHub();
     public void downloadOmodsFromGitHub();
 
+    public List<Patient> getPatientByPhoneNumber(String phoneNumber);
 
+    public Provider getLeastBusyProviderForLocation(Location location);
 }
