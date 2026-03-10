@@ -55,6 +55,7 @@ import org.openmrs.module.ugandaemr.api.SimpleObject;
 import org.openmrs.module.ugandaemr.api.deploy.bundle.CommonMetadataBundle;
 import org.openmrs.module.ugandaemr.api.deploy.bundle.UgandaAddressMetadataBundle;
 import org.openmrs.module.ugandaemr.api.deploy.bundle.UgandaEMRPatientFlagMetadataBundle;
+import org.openmrs.module.ugandaemr.api.model.NonPatientQueue;
 import org.openmrs.module.ugandaemr.api.queuemapper.CheckInPatient;
 import org.openmrs.module.ugandaemr.api.queuemapper.Identifier;
 import org.openmrs.module.ugandaemr.api.queuemapper.PatientQueueVisitMapper;
@@ -2534,6 +2535,125 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
 
         Integer providerId = ((Number) row.get(0)).intValue();
         return Context.getProviderService().getProvider(providerId);
+    }
+
+
+    @Override
+    public NonPatientQueue createQueueEntry(String displayName, String phoneNumber, NonPatientQueue.NonPatientQueueType queueType,
+                                            Location currentLocation, Location locationTo, Location queueRoom,
+                                            Integer priority, String comment) {
+        NonPatientQueue queue = new NonPatientQueue();
+        queue.setUuid(UUID.randomUUID().toString());
+        queue.setDisplayName(displayName);
+        queue.setPhoneNumber(phoneNumber);
+        queue.setQueueType(queueType);
+        queue.setCurrentLocation(currentLocation);
+        queue.setLocationTo(locationTo);
+        queue.setQueueRoom(queueRoom);
+        queue.setPriority(priority);
+        queue.setComment(comment);
+        queue.setStatus(NonPatientQueue.NonPatientQueueStatus.WAITING);
+        queue.setTicketNumber(generateTicketNumber(queueType));
+        return dao.saveNonPatientQueue(queue);
+    }
+
+    @Override
+    public NonPatientQueue saveQueueEntry(NonPatientQueue queue) {
+        return dao.saveNonPatientQueue(queue);
+    }
+
+    @Override
+    public NonPatientQueue getQueueEntryById(Integer id) {
+        return dao.getNonPatientQueueById(id);
+    }
+
+    @Override
+    public NonPatientQueue getQueueEntryByUuid(String uuid) {
+        return dao.getNonPatientQueueByUuid(uuid);
+    }
+
+    @Override
+    public NonPatientQueue getQueueEntryByTicketNumber(String ticketNumber) {
+        return dao.getNonPatientQueueByTicketNumber(ticketNumber);
+    }
+
+    @Override
+    public List<NonPatientQueue> getQueueEntriesByQueueRoom(Location queueRoom) {
+        return dao.getNonPatientQueuesByQueueRoom(queueRoom);
+    }
+
+    @Override
+    public List<NonPatientQueue> getQueueEntriesByQueueRoomAndStatus(Location queueRoom, NonPatientQueue.NonPatientQueueStatus status) {
+        return dao.getNonPatientQueuesByQueueRoomAndStatus(queueRoom, status);
+    }
+
+    @Override
+    public List<NonPatientQueue> getAllActiveQueueEntries() {
+        return dao.getAllActiveNonPatientQueues();
+    }
+
+    @Override
+    public NonPatientQueue callQueueEntry(NonPatientQueue queue, Provider provider) {
+        queue.setStatus(NonPatientQueue.NonPatientQueueStatus.CALLED);
+        queue.setCalledBy(provider);
+        queue.setCalledAt(new Date());
+        return dao.saveNonPatientQueue(queue);
+    }
+
+    @Override
+    public NonPatientQueue markArrived(NonPatientQueue queue) {
+        queue.setStatus(NonPatientQueue.NonPatientQueueStatus.ARRIVED);
+        queue.setArrivedAt(new Date());
+        return dao.saveNonPatientQueue(queue);
+    }
+
+    @Override
+    public NonPatientQueue startServing(NonPatientQueue queue, Provider provider) {
+        queue.setStatus(NonPatientQueue.NonPatientQueueStatus.SERVING);
+        queue.setServedBy(provider);
+        queue.setStartedAt(new Date());
+        return dao.saveNonPatientQueue(queue);
+    }
+
+    @Override
+    public NonPatientQueue completeQueueEntry(NonPatientQueue queue, Provider provider) {
+        queue.setStatus(NonPatientQueue.NonPatientQueueStatus.COMPLETED);
+        queue.setServedBy(provider);
+        queue.setEndedAt(new Date());
+        return dao.saveNonPatientQueue(queue);
+    }
+
+    @Override
+    public void voidQueueEntry(NonPatientQueue queue, String reason) {
+        queue.setVoided(true);
+        queue.setVoidReason(reason);
+        dao.saveNonPatientQueue(queue);
+    }
+
+    private String generateTicketNumber(NonPatientQueue.NonPatientQueueType queueType) {
+        String prefix = resolvePrefix(queueType);
+        String datePart = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+        long numberPart = System.currentTimeMillis() % 1000;
+        return datePart + "-" + prefix + "-" + String.format("%03d", numberPart);
+    }
+
+    private String resolvePrefix(NonPatientQueue.NonPatientQueueType queueType) {
+        if (queueType == null) {
+            return "GEN";
+        }
+        if (queueType.equals(NonPatientQueue.NonPatientQueueType.REGISTRATION)) {
+            return "REG";
+        }
+        if (queueType.equals(NonPatientQueue.NonPatientQueueType.VISITOR)) {
+            return "VIS";
+        }
+        if (queueType.equals(NonPatientQueue.NonPatientQueueType.ADMIN)) {
+            return "ADM";
+        }
+        if (queueType.equals(NonPatientQueue.NonPatientQueueType.PAYMENT)) {
+            return "PAY";
+        }
+        return "GEN";
     }
 
 }

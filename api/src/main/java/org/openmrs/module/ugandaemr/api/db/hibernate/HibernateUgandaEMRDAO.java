@@ -13,6 +13,7 @@
  */
 package org.openmrs.module.ugandaemr.api.db.hibernate;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -22,12 +23,14 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.openmrs.Encounter;
+import org.openmrs.Location;
 import org.openmrs.Obs;
 import org.openmrs.Order;
 import org.openmrs.api.APIException;
 import org.openmrs.module.ugandaemr.api.db.UgandaEMRDAO;
 import org.openmrs.module.ugandaemr.PublicHoliday;
 import org.openmrs.module.ugandaemr.api.lab.OrderObs;
+import org.openmrs.module.ugandaemr.api.model.NonPatientQueue;
 import org.openmrs.util.OpenmrsUtil;
 
 /**
@@ -146,6 +149,64 @@ public class HibernateUgandaEMRDAO implements UgandaEMRDAO {
 
 	public OrderObs getOrderObsByOrder(Order order){
 		return (OrderObs) sessionFactory.getCurrentSession().createCriteria(OrderObs.class).add(Restrictions.eq("order", order)).uniqueResult();
+	}
+
+
+	@Override
+	public NonPatientQueue saveNonPatientQueue(NonPatientQueue queue) {
+		sessionFactory.getCurrentSession().saveOrUpdate(queue);
+		return queue;
+	}
+
+	@Override
+	public NonPatientQueue getNonPatientQueueById(Integer id) {
+		return (NonPatientQueue) sessionFactory.getCurrentSession().get(NonPatientQueue.class, id);
+	}
+
+	@Override
+	public NonPatientQueue getNonPatientQueueByUuid(String uuid) {
+		return (NonPatientQueue) sessionFactory.getCurrentSession()
+				.createQuery("from NonPatientQueue q where q.uuid = :uuid")
+				.setParameter("uuid", uuid)
+				.uniqueResult();
+	}
+
+	@Override
+	public NonPatientQueue getNonPatientQueueByTicketNumber(String ticketNumber) {
+		return (NonPatientQueue) sessionFactory.getCurrentSession()
+				.createQuery("from NonPatientQueue q where q.ticketNumber = :ticketNumber and q.voided = false")
+				.setParameter("ticketNumber", ticketNumber)
+				.uniqueResult();
+	}
+
+	@Override
+	public List<NonPatientQueue> getNonPatientQueuesByQueueRoom(Location queueRoom) {
+		return sessionFactory.getCurrentSession()
+				.createQuery("from NonPatientQueue q where q.queueRoom = :queueRoom and q.voided = false order by q.dateCreated asc")
+				.setParameter("queueRoom", queueRoom)
+				.list();
+	}
+
+	@Override
+	public List<NonPatientQueue> getNonPatientQueuesByQueueRoomAndStatus(Location queueRoom, NonPatientQueue.NonPatientQueueStatus status) {
+		return sessionFactory.getCurrentSession()
+				.createQuery("from NonPatientQueue q where q.queueRoom = :queueRoom and q.status = :status and q.voided = false order by q.dateCreated asc")
+				.setParameter("queueRoom", queueRoom)
+				.setParameter("status", status)
+				.list();
+	}
+
+	@Override
+	public List<NonPatientQueue> getAllActiveNonPatientQueues() {
+		return sessionFactory.getCurrentSession()
+				.createQuery("from NonPatientQueue q where q.status in (:statuses) and q.voided = false order by q.dateCreated asc")
+				.setParameterList("statuses", Arrays.asList("WAITING", "CALLED", "ARRIVED", "SERVING"))
+				.list();
+	}
+
+	@Override
+	public void deleteNonPatientQueue(NonPatientQueue queue) {
+		sessionFactory.getCurrentSession().delete(queue);
 	}
 
 

@@ -35,11 +35,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-@Resource(
-        name = RestConstants.VERSION_1 + "/selfcheckinpatient",
-        supportedClass = CheckInPatient.class,
-        supportedOpenmrsVersions = {"1.9.* - 9.*"}
-)
+@Resource(name = RestConstants.VERSION_1 + "/selfcheckinpatient", supportedClass = CheckInPatient.class, supportedOpenmrsVersions = {"1.9.* - 9.*"})
 public class SelfCheckInPatientResource extends DelegatingCrudResource<CheckInPatient> {
 
     private static final String PHONE_ATTRIBUTE_TYPE_UUID = "14d4f066-15f5-102d-96e4-000c29c2a5d7";
