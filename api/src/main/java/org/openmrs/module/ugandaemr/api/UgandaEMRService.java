@@ -441,7 +441,7 @@ public interface UgandaEMRService extends OpenmrsService {
 
     public NonPatientQueue getQueueEntryByUuid(String uuid);
 
-    public NonPatientQueue getQueueEntryByTicketNumber(String ticketNumber);
+    public List<NonPatientQueue> getQueueEntryByTicketNumber(String ticketNumber, Date fromDate, Date toDate);
 
     public List<NonPatientQueue> getQueueEntriesByQueueRoom(Location queueRoom, Date fromDate, Date toDate);
 

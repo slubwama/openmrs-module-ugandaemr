@@ -182,14 +182,15 @@ public class HibernateUgandaEMRDAO implements UgandaEMRDAO {
 	}
 
 	@Override
-	public NonPatientQueue getNonPatientQueueByTicketNumber(String ticketNumber) {
+	public List<NonPatientQueue> getNonPatientQueueByTicketNumber(String ticketNumber, Date fromDate, Date toDate) {
 
 		Criteria criteria = getSession().createCriteria(NonPatientQueue.class);
 
+		criteria.add(Restrictions.between("dateCreated", fromDate, toDate));
 		criteria.add(Restrictions.in("ticketNumber", ticketNumber));
 		criteria.add(Restrictions.in("voided", false));
 
-		return (NonPatientQueue) criteria.uniqueResult();
+		return criteria.list();
 	}
 
 	@Override

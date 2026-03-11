@@ -78,7 +78,7 @@ public interface UgandaEMRDAO {
 
 	public NonPatientQueue getNonPatientQueueByUuid(String uuid);
 
-	public NonPatientQueue getNonPatientQueueByTicketNumber(String ticketNumber);
+	public List<NonPatientQueue> getNonPatientQueueByTicketNumber(String ticketNumber, Date fromDate, Date toDate);
 
 	public List<NonPatientQueue> getNonPatientQueuesByQueueRoom(List<Location> queueRoom, Date fromDate, Date toDate);
 

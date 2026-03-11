@@ -2551,8 +2551,8 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     }
 
     @Override
-    public NonPatientQueue getQueueEntryByTicketNumber(String ticketNumber) {
-        return dao.getNonPatientQueueByTicketNumber(ticketNumber);
+    public List<NonPatientQueue> getQueueEntryByTicketNumber(String ticketNumber, Date fromDate, Date toDate) {
+        return dao.getNonPatientQueueByTicketNumber(ticketNumber, fromDate, toDate);
     }
 
     @Override
