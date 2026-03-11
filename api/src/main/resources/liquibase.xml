@@ -1684,7 +1684,7 @@
         </insert>
     </changeSet>
 
-    <changeSet id="create-ugemr-non-patient-queue" author="openai">
+    <changeSet id="ugandaemr-20260310-create-non-patient-queue" author="slubwama">
         <createTable tableName="non_patient_queue">
             <column name="non_patient_queue_id" type="INT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -1734,60 +1734,60 @@
         </createTable>
 
         <addForeignKeyConstraint
-                baseTableName="ugemr_non_patient_queue"
+                baseTableName="non_patient_queue"
                 baseColumnNames="creator"
                 referencedTableName="users"
                 referencedColumnNames="user_id"
-                constraintName="fk_ugemr_npq_creator"/>
+                constraintName="fk_npq_creator"/>
 
         <addForeignKeyConstraint
-                baseTableName="ugemr_non_patient_queue"
+                baseTableName="non_patient_queue"
                 baseColumnNames="changed_by"
                 referencedTableName="users"
                 referencedColumnNames="user_id"
-                constraintName="fk_ugemr_npq_changed_by"/>
+                constraintName="fk_npq_changed_by"/>
 
         <addForeignKeyConstraint
-                baseTableName="ugemr_non_patient_queue"
+                baseTableName="non_patient_queue"
                 baseColumnNames="voided_by"
                 referencedTableName="users"
                 referencedColumnNames="user_id"
-                constraintName="fk_ugemr_npq_voided_by"/>
+                constraintName="fk_npq_voided_by"/>
 
         <addForeignKeyConstraint
-                baseTableName="ugemr_non_patient_queue"
+                baseTableName="non_patient_queue"
                 baseColumnNames="current_location"
                 referencedTableName="location"
                 referencedColumnNames="location_id"
-                constraintName="fk_ugemr_npq_current_location"/>
+                constraintName="fk_npq_current_location"/>
 
         <addForeignKeyConstraint
-                baseTableName="ugemr_non_patient_queue"
+                baseTableName="non_patient_queue"
                 baseColumnNames="location_to"
                 referencedTableName="location"
                 referencedColumnNames="location_id"
-                constraintName="fk_ugemr_npq_location_to"/>
+                constraintName="fk_npq_location_to"/>
 
         <addForeignKeyConstraint
-                baseTableName="ugemr_non_patient_queue"
+                baseTableName="non_patient_queue"
                 baseColumnNames="queue_room"
                 referencedTableName="location"
                 referencedColumnNames="location_id"
-                constraintName="fk_ugemr_npq_queue_room"/>
+                constraintName="fk_npq_queue_room"/>
 
         <addForeignKeyConstraint
-                baseTableName="ugemr_non_patient_queue"
+                baseTableName="non_patient_queue"
                 baseColumnNames="called_by"
                 referencedTableName="provider"
                 referencedColumnNames="provider_id"
-                constraintName="fk_ugemr_npq_called_by"/>
+                constraintName="fk_npq_called_by"/>
 
         <addForeignKeyConstraint
-                baseTableName="ugemr_non_patient_queue"
+                baseTableName="non_patient_queue"
                 baseColumnNames="served_by"
                 referencedTableName="provider"
                 referencedColumnNames="provider_id"
-                constraintName="fk_ugemr_npq_served_by"/>
+                constraintName="fk_npq_served_by"/>
     </changeSet>
 
 </databaseChangeLog>

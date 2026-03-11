@@ -80,9 +80,9 @@ public interface UgandaEMRDAO {
 
 	public NonPatientQueue getNonPatientQueueByTicketNumber(String ticketNumber);
 
-	public List<NonPatientQueue> getNonPatientQueuesByQueueRoom(Location queueRoom);
+	public List<NonPatientQueue> getNonPatientQueuesByQueueRoom(List<Location> queueRoom, Date fromDate, Date toDate);
 
-	public List<NonPatientQueue> getNonPatientQueuesByQueueRoomAndStatus(Location queueRoom, NonPatientQueue.NonPatientQueueStatus status);
+	public List<NonPatientQueue> getNonPatientQueuesByQueueRoomAndStatus(List<Location> queueRoom, NonPatientQueue.NonPatientQueueStatus status);
 
 	public List<NonPatientQueue> getAllActiveNonPatientQueues();
 

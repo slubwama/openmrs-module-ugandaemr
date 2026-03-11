@@ -1,13 +1,16 @@
 package org.openmrs.module.ugandaemr.web.resource;
 
 import org.openmrs.Location;
+import org.openmrs.LocationTag;
 import org.openmrs.Provider;
 import org.openmrs.api.LocationService;
 import org.openmrs.api.ProviderService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.ugandaemr.PublicHoliday;
 import org.openmrs.module.ugandaemr.api.UgandaEMRService;
 import org.openmrs.module.ugandaemr.api.model.NonPatientQueue;
 import org.openmrs.module.webservices.rest.SimpleObject;
+import org.openmrs.module.webservices.rest.web.ConversionUtil;
 import org.openmrs.module.webservices.rest.web.RequestContext;
 import org.openmrs.module.webservices.rest.web.RestConstants;
 import org.openmrs.module.webservices.rest.web.annotation.Resource;
@@ -20,6 +23,7 @@ import org.openmrs.module.webservices.rest.web.resource.impl.NeedsPaging;
 import org.openmrs.module.webservices.rest.web.response.ResourceDoesNotSupportOperationException;
 import org.openmrs.module.webservices.rest.web.response.ResponseException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -58,7 +62,7 @@ public class NonPatientQueueResource extends DelegatingCrudResource<NonPatientQu
         validateNotNull(locationTo, "Destination location not found");
         validateNotNull(queueRoom, "Queue room not found");
 
-        return service.createQueueEntry(
+        NonPatientQueue delegate = service.createQueueEntry(
                 displayName,
                 phoneNumber,
                 NonPatientQueue.NonPatientQueueType.fromString(queueType),
@@ -68,6 +72,14 @@ public class NonPatientQueueResource extends DelegatingCrudResource<NonPatientQu
                 priority,
                 comment
         );
+
+        SimpleObject response = (SimpleObject) ConversionUtil.convertToRepresentation(delegate, context.getRepresentation());
+
+        if (hasTypesDefined()) {
+            response.add(RestConstants.PROPERTY_FOR_TYPE, getTypeName(delegate));
+        }
+
+        return response;
     }
 
     @Override
@@ -105,12 +117,17 @@ public class NonPatientQueueResource extends DelegatingCrudResource<NonPatientQu
 
     @Override
     public NeedsPaging<NonPatientQueue> doGetAll(RequestContext context) {
-        throw new ResourceDoesNotSupportOperationException("Use search parameters");
+        return new NeedsPaging<NonPatientQueue>(new ArrayList<NonPatientQueue>(Context.getService(UgandaEMRService.class).getAllActiveQueueEntries()),
+                context);
     }
 
     @Override
     protected PageableResult doSearch(RequestContext context) {
-        throw new ResourceDoesNotSupportOperationException("Search implementation can be added next");
+
+        List<NonPatientQueue> nonPatientQueues = Context.getService(UgandaEMRService.class).getAllActiveQueueEntries();
+
+        return new NeedsPaging<NonPatientQueue>(new ArrayList<NonPatientQueue>(),
+                context);
     }
 
     @Override

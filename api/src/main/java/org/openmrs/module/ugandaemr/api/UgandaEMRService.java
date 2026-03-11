@@ -443,7 +443,7 @@ public interface UgandaEMRService extends OpenmrsService {
 
     public NonPatientQueue getQueueEntryByTicketNumber(String ticketNumber);
 
-    public List<NonPatientQueue> getQueueEntriesByQueueRoom(Location queueRoom);
+    public List<NonPatientQueue> getQueueEntriesByQueueRoom(Location queueRoom, Date fromDate, Date toDate);
 
     public List<NonPatientQueue> getQueueEntriesByQueueRoomAndStatus(Location queueRoom, NonPatientQueue.NonPatientQueueStatus status);
 

@@ -4,30 +4,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.openmrs.CareSetting;
-import org.openmrs.Concept;
-import org.openmrs.ConceptNumeric;
-import org.openmrs.DrugOrder;
-import org.openmrs.Encounter;
-import org.openmrs.EncounterType;
-import org.openmrs.EncounterRole;
-import org.openmrs.Location;
-import org.openmrs.Obs;
-import org.openmrs.Order;
-import org.openmrs.OrderType;
-import org.openmrs.Patient;
-import org.openmrs.Provider;
-import org.openmrs.PatientIdentifier;
-import org.openmrs.PatientIdentifierType;
-import org.openmrs.PatientProgram;
-import org.openmrs.PatientProgramAttribute;
-import org.openmrs.ProgramAttributeType;
-import org.openmrs.Person;
-import org.openmrs.Relationship;
-import org.openmrs.TestOrder;
-import org.openmrs.Visit;
-import org.openmrs.VisitType;
-import org.openmrs.User;
+import org.openmrs.*;
 import org.openmrs.api.*;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.impl.BaseOpenmrsService;
@@ -97,6 +74,7 @@ import java.util.zip.ZipInputStream;
 
 import static org.openmrs.OrderType.TEST_ORDER_TYPE_UUID;
 import static org.openmrs.api.context.Context.getAdministrationService;
+import static org.openmrs.module.patientqueueing.PatientQueueingConfig.ROOM_TAG_UUID;
 import static org.openmrs.module.ugandaemr.UgandaEMRConstants.*;
 import static org.openmrs.module.ugandaemr.metadata.core.EncounterTypes.TRANSFER_IN;
 import static org.openmrs.module.ugandaemr.metadata.core.EncounterTypes.TRANSFER_OUT;
@@ -1917,11 +1895,11 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         log.info("import to Concept_Reference Table  Successful");
 
         log.info("import  to Concept_Reference_Range Table  Starting");
-        dataImporter.importData(metaDataFilePath+"concepts_and_drugs/Concept_Reference_Range.xml");
+        dataImporter.importData(metaDataFilePath + "concepts_and_drugs/Concept_Reference_Range.xml");
         log.info("import to Concept_Reference_Range Table  Successful");
 
         log.info("import  to Concept_Reference_Range Table  Starting");
-        dataImporter.importData(metaDataFilePath+"concepts_and_drugs/tools-2024/Concept_Reference_Range.xml");
+        dataImporter.importData(metaDataFilePath + "concepts_and_drugs/tools-2024/Concept_Reference_Range.xml");
         log.info("import to Concept_Reference_Range Table  Successful");
 
         log.info("Retire Meta data");
@@ -2578,13 +2556,21 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     }
 
     @Override
-    public List<NonPatientQueue> getQueueEntriesByQueueRoom(Location queueRoom) {
-        return dao.getNonPatientQueuesByQueueRoom(queueRoom);
+    public List<NonPatientQueue> getQueueEntriesByQueueRoom(Location queueRoom, Date fromDate, Date toDate) {
+        LocationTag queueRomTag = Context.getLocationService().getLocationTagByUuid(ROOM_TAG_UUID);
+
+        List<Location> childLocations = new ArrayList<>();
+        flattenLocationHierarchy(queueRoom, childLocations, queueRomTag, true);
+        return dao.getNonPatientQueuesByQueueRoom(childLocations, fromDate, toDate);
     }
 
     @Override
     public List<NonPatientQueue> getQueueEntriesByQueueRoomAndStatus(Location queueRoom, NonPatientQueue.NonPatientQueueStatus status) {
-        return dao.getNonPatientQueuesByQueueRoomAndStatus(queueRoom, status);
+        LocationTag queueRomTag = Context.getLocationService().getLocationTagByUuid(ROOM_TAG_UUID);
+
+        List<Location> childLocations = new ArrayList<>();
+        flattenLocationHierarchy(queueRoom, childLocations, queueRomTag, true);
+        return dao.getNonPatientQueuesByQueueRoomAndStatus(childLocations, status);
     }
 
     @Override
@@ -2654,6 +2640,21 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
             return "PAY";
         }
         return "GEN";
+    }
+
+    private void flattenLocationHierarchy(Location parentLocation, List<Location> childLocations, LocationTag locationTag,
+                                          boolean onlyInQueueRooms) {
+        if (onlyInQueueRooms) {
+            if (parentLocation.getTags().contains(locationTag)) {
+                childLocations.add(parentLocation);
+            }
+        } else {
+            childLocations.add(parentLocation);
+        }
+
+        for (Location childLocation : parentLocation.getChildLocations(false)) {
+            flattenLocationHierarchy(childLocation, childLocations, locationTag, onlyInQueueRooms);
+        }
     }
 
 }

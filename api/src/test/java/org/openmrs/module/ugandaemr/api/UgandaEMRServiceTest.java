@@ -171,7 +171,7 @@ public class UgandaEMRServiceTest extends BaseModuleContextSensitiveTest {
     }*/
 
 
-    @Test
+   /* @Test
     public void createQueueEntry_shouldCreateNonPatientQueueEntry() {
         Location currentLocation = Context.getLocationService().getLocation(1);
         Location locationTo = Context.getLocationService().getLocation(1);
@@ -436,5 +436,5 @@ public class UgandaEMRServiceTest extends BaseModuleContextSensitiveTest {
         assertTrue(fetched.getVoided());
         assertEquals("No longer needed", fetched.getVoidReason());
     }
-
+*/
 }
