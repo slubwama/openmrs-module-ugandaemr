@@ -53,14 +53,15 @@
 			<artifactId>calculation-api</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.openmrs.module</groupId>
-			<artifactId>dataexchange-api</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>emrapi-api</artifactId>
+			</dependency>
+
+		<dependency>
+			<groupId>org.dbunit</groupId>
+			<artifactId>dbunit</artifactId>
 		</dependency>
 
 

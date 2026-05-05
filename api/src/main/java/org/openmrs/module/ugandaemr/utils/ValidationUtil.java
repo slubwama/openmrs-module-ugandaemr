@@ -1,10 +1,8 @@
-package org.openmrs.module.ugandaemr.util;
+package org.openmrs.module.ugandaemr.utils;
 
 import org.apache.commons.lang3.StringUtils;
-import org.openmrs.util.OpenmrsUtil;
 
 import java.util.Date;
-import java.util.UUID;
 import java.util.regex.Pattern;
 
 /**
