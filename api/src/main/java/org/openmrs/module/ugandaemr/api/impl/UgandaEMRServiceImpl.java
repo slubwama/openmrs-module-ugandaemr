@@ -36,7 +36,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.Module;
 import org.openmrs.module.ModuleFactory;
-import org.openmrs.module.dataexchange.DataImporter;
+import org.openmrs.module.ugandaemr.utils.DataImporter;
 import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.emrapi.adt.AdtService;
 import org.openmrs.module.idgen.IdentifierSource;
@@ -70,6 +70,9 @@ import org.openmrs.module.ugandaemr.metadata.core.PatientIdentifierTypes;
 import org.openmrs.module.ugandaemr.pharmacy.DispensingModelWrapper;
 import org.openmrs.module.ugandaemr.pharmacy.mapper.DrugOrderMapper;
 import org.openmrs.module.ugandaemr.pharmacy.mapper.PharmacyMapper;
+import org.openmrs.module.ugandaemr.utils.DateUtil;
+import org.openmrs.module.ugandaemr.utils.PerformanceUtil;
+import org.openmrs.module.ugandaemr.utils.ValidationUtil;
 import org.openmrs.notification.Alert;
 import org.openmrs.notification.AlertService;
 import org.openmrs.order.OrderUtil;
@@ -87,7 +90,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.DirectoryStream;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
@@ -240,8 +242,8 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         List list = Context.getAdministrationService().executeSQL("select patient.patient_id from patient where patient_id NOT IN(select patient.patient_id from patient inner join patient_identifier pi on (patient.patient_id = pi.patient_id)  inner join patient_identifier_type pit on (pi.identifier_type = pit.patient_identifier_type_id) where pit.uuid='877169c4-92c6-4cc9-bf45-1ab95faea242')", true);
         PatientIdentifierType patientIdentifierType = patientService.getPatientIdentifierTypeByUuid("877169c4-92c6-4cc9-bf45-1ab95faea242");
         // OPTIMIZATION: Use batch processing to avoid N+1 query problem
-        List<Integer> patientIds = org.openmrs.module.ugandaemr.util.PerformanceUtil.extractPatientIds(list);
-        Map<Integer, Patient> patientMap = org.openmrs.module.ugandaemr.util.PerformanceUtil.getPatientsBatch(patientIds);
+        List<Integer> patientIds = PerformanceUtil.extractPatientIds(list);
+        Map<Integer, Patient> patientMap = PerformanceUtil.getPatientsBatch(patientIds);
 
         for (Integer patientId : patientIds) {
             Patient patient = patientMap.get(patientId);
@@ -371,14 +373,14 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
      */
     public void stopActiveOutPatientVisits() {
 
-        String currentDate = org.openmrs.module.ugandaemr.util.DateUtil.formatISODate(new Date());
+        String currentDate = DateUtil.formatISODate(new Date());
 
         AdministrationService administrationService = Context.getAdministrationService();
 
         String visitTypeUUID = administrationService.getGlobalProperty("ugandaemr.autoCloseVisit.visitTypeUUID");
 
         // Validate the visitTypeUUID to prevent SQL injection
-        org.openmrs.module.ugandaemr.util.ValidationUtil.requireValidUUID(visitTypeUUID, "Visit Type UUID");
+        ValidationUtil.requireValidUUID(visitTypeUUID, "Visit Type UUID");
 
         VisitService visitService = Context.getVisitService();
 
@@ -668,7 +670,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
      */
     public boolean isSampleIdExisting(String sampleId, String orderNumber) throws ParseException {
         // Validate sample ID to prevent SQL injection
-        org.openmrs.module.ugandaemr.util.ValidationUtil.requireValidSampleId(sampleId);
+        ValidationUtil.requireValidSampleId(sampleId);
 
         // Use validated input - sample ID is strictly validated to prevent SQL injection
         List list = Context.getAdministrationService().executeSQL(
@@ -749,8 +751,8 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
 
         // OPTIMIZATION: Use batch processing to avoid N+1 query problem
         if (!list.isEmpty()) {
-            List<Integer> orderIds = org.openmrs.module.ugandaemr.util.PerformanceUtil.extractOrderIds(list);
-            Map<Integer, Order> orderMap = org.openmrs.module.ugandaemr.util.PerformanceUtil.getOrdersBatch(orderIds);
+            List<Integer> orderIds = PerformanceUtil.extractOrderIds(list);
+            Map<Integer, Order> orderMap = PerformanceUtil.getOrdersBatch(orderIds);
 
             for (Integer orderId : orderIds) {
                 Order order = orderMap.get(orderId);
@@ -794,8 +796,8 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
 
         // OPTIMIZATION: Use batch processing to avoid N+1 query problem
         if (!list.isEmpty()) {
-            List<Integer> orderIds = org.openmrs.module.ugandaemr.util.PerformanceUtil.extractOrderIds(list);
-            Map<Integer, Order> orderMap = org.openmrs.module.ugandaemr.util.PerformanceUtil.getOrdersBatch(orderIds);
+            List<Integer> orderIds = PerformanceUtil.extractOrderIds(list);
+            Map<Integer, Order> orderMap = PerformanceUtil.getOrdersBatch(orderIds);
 
             for (Integer orderId : orderIds) {
                 Order order = orderMap.get(orderId);
@@ -1738,7 +1740,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
 
     public String generateLabNumber(String orderUuid) {
         Order order = Context.getOrderService().getOrderByUuid(orderUuid);
-        String date = org.openmrs.module.ugandaemr.util.DateUtil.formatForLabNumber(new Date());
+        String date = DateUtil.formatForLabNumber(new Date());
         String defaultSampleId = "LAB-" + order.getPatient().getPatientId() + "-" + date;
         return defaultSampleId;
     }
@@ -1905,7 +1907,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     }
 
     public void importMetaDataFromXMLFiles() {
-        DataImporter dataImporter = Context.getRegisteredComponent("dataImporter", DataImporter.class);
+        DataImporter dataImporter = Context.getRegisteredComponent("ugandaemrDataImporter", DataImporter.class);
         String metaDataFilePath = getMetadataPath("metadata") + "/";
         log.info("import  to Concept Table  Starting");
         dataImporter.importData(metaDataFilePath + "concepts_and_drugs/Concept.xml");
@@ -2888,8 +2890,8 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
      * Calculate date before reference date by offset
      */
     private String getDateBefore(Date referenceDate, int noOfMonths, int noOfYears) {
-        Date resultDate = org.openmrs.module.ugandaemr.util.DateUtil.getDateBefore(referenceDate, -noOfMonths, -noOfYears);
-        return org.openmrs.module.ugandaemr.util.DateUtil.formatISODate(resultDate);
+        Date resultDate = DateUtil.getDateBefore(referenceDate, -noOfMonths, -noOfYears);
+        return DateUtil.formatISODate(resultDate);
     }
 
 }

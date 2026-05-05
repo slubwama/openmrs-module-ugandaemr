@@ -5,7 +5,7 @@ import org.openmrs.EncounterType;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.EncounterService;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.ugandaemr.util.ValidationUtil;
+import org.openmrs.module.ugandaemr.utils.ValidationUtil;
 
 import java.util.HashMap;
 import java.util.Map;

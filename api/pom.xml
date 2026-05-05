@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.openmrs.module</groupId>
 		<artifactId>ugandaemr</artifactId>
-		<version>5.0.5</version>
+		<version>5.0.6-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>ugandaemr-api</artifactId>
@@ -53,14 +53,15 @@
 			<artifactId>calculation-api</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.openmrs.module</groupId>
-			<artifactId>dataexchange-api</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>emrapi-api</artifactId>
+			</dependency>
+
+		<dependency>
+			<groupId>org.dbunit</groupId>
+			<artifactId>dbunit</artifactId>
 		</dependency>
 
 

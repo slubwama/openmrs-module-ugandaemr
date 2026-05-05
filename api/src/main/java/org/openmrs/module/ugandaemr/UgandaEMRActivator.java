@@ -20,7 +20,7 @@ import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.Module;
 import org.openmrs.module.ModuleFactory;
-import org.openmrs.module.dataexchange.DataImporter;
+import org.openmrs.module.ugandaemr.utils.DataImporter;
 import org.openmrs.module.ugandaemr.activator.*;
 import org.openmrs.module.ugandaemr.api.UgandaEMRService;
 
@@ -113,7 +113,7 @@ public class UgandaEMRActivator extends org.openmrs.module.BaseModuleActivator {
      * Following the same order as the original importInternalMetaData method
      */
     private void executeMetadataInitializers() {
-        DataImporter dataImporter = Context.getRegisteredComponent("dataImporter", DataImporter.class);
+        DataImporter dataImporter = Context.getRegisteredComponent("ugandaemrDataImporter", DataImporter.class);
 
         // Critical initializers - will stop module on failure
         // Following the order from original importInternalMetaData method:

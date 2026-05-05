@@ -1,4 +1,4 @@
-package org.openmrs.module.ugandaemr.util;
+package org.openmrs.module.ugandaemr.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

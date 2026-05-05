@@ -2,7 +2,7 @@ package org.openmrs.module.ugandaemr.activator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.module.dataexchange.DataImporter;
+import org.openmrs.module.ugandaemr.utils.DataImporter;
 
 /**
  * Initializer that imports all concepts and drugs metadata.
