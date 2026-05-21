@@ -1540,6 +1540,37 @@ VALUES
 		</sql>
 	</changeSet>
 
+	<changeSet id="ugandaemr-20260521-cleanup-obsolete-scheduled-tasks" author="slubwama">
+		<comment>Remove obsolete scheduled tasks from the database</comment>
+		<sql>
+			DELETE FROM scheduler_task_config_property WHERE task_config_id IN (
+			    SELECT task_config_id FROM scheduler_task_config WHERE schedulable_class IN (
+			        'org.openmrs.module.dataintegrity.*',
+			        'org.openmrs.module.formentry.ProcessFormEntryQueueTask',
+			        'org.openmrs.scheduler.tasks.ProcessHL7InQueueTask',
+			        'org.openmrs.scheduler.tasks.CheckInternetConnectivityTask',
+			        'org.openmrs.module.ugandaemrsync.tasks.SendAllDataCentralServerTask',
+			        'org.openmrs.module.ugandaemrsync.tasks.HIVExposedInfantDataTask',
+			        'org.openmrs.module.ugandaemrsync.tasks.MPOXScreeningTask',
+			        'org.openmrs.module.ugandaemrsync.tasks.HTSDataTask',
+			        'org.openmrs.module.ugandaemrsync.tasks.TBDataTask',
+			        'org.openmrs.module.ugandaemrsync.tasks.CrossBorderIntegrationSyncTask'
+			    ) OR schedulable_class LIKE 'org.openmrs.module.dataintegrity.%'
+			);
+			DELETE FROM scheduler_task_config WHERE schedulable_class IN (
+			    'org.openmrs.module.formentry.ProcessFormEntryQueueTask',
+			    'org.openmrs.scheduler.tasks.ProcessHL7InQueueTask',
+			    'org.openmrs.scheduler.tasks.CheckInternetConnectivityTask',
+			    'org.openmrs.module.ugandaemrsync.tasks.SendAllDataCentralServerTask',
+			    'org.openmrs.module.ugandaemrsync.tasks.HIVExposedInfantDataTask',
+			    'org.openmrs.module.ugandaemrsync.tasks.MPOXScreeningTask',
+			    'org.openmrs.module.ugandaemrsync.tasks.HTSDataTask',
+			    'org.openmrs.module.ugandaemrsync.tasks.TBDataTask',
+			    'org.openmrs.module.ugandaemrsync.tasks.CrossBorderIntegrationSyncTask'
+			) OR schedulable_class LIKE 'org.openmrs.module.dataintegrity.%';
+		</sql>
+	</changeSet>
+
 </databaseChangeLog>
 
 
