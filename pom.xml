@@ -69,7 +69,7 @@
 		<openMRSVersion>2.7.8</openMRSVersion>
 		<openmrsTestutilsVersion>1.3</openmrsTestutilsVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<webservices.restModuleVersion>2.51.0</webservices.restModuleVersion>
+		<webservices.restModuleVersion>2.49.0</webservices.restModuleVersion>
 		<addresshierarchyVersion>2.21.0</addresshierarchyVersion>
 		<bahmniappointmentVersion>2.0.2</bahmniappointmentVersion>
 		<bahmniappointmentVersion>2.0.2</bahmniappointmentVersion>
