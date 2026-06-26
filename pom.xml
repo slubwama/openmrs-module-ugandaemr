@@ -88,9 +88,7 @@
 		<jacksonVersion>1.8.3</jacksonVersion>
 		<junitParamsVersion>1.0.4</junitParamsVersion>
 		<legacyuiVersion>1.23.0</legacyuiVersion>
-		<metadatadeployVersion>1.13.0</metadatadeployVersion>
 		<metadatamappingVersion>1.6.0</metadatamappingVersion>
-		<metadatasharingVersion>1.10.0</metadatasharingVersion>
 		<openconceptlabModuleVersion>2.4.0</openconceptlabModuleVersion>
 		<patientFlagsVersion>3.0.8</patientFlagsVersion>
 		<reportingRestVersion>1.15.0</reportingRestVersion>
