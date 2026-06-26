@@ -121,9 +121,6 @@ public class UgandaEMRActivator extends org.openmrs.module.BaseModuleActivator {
         // 2. addRolePrivilege
         executeInitializer(new RolePrivilegeInitializer(dataImporter));
 
-        // 3. addVisitTypes
-        executeNonCriticalInitializer(new VisitTypesInitializer(dataImporter));
-
         // 4. addRelationship
         executeInitializer(new RelationshipTypesInitializer(dataImporter));
 
