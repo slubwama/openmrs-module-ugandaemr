@@ -215,31 +215,13 @@
 			</dependency>
 
 			<!-- custom module -->
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>addresshierarchy-api</artifactId>
-				<version>${addresshierarchyVersion}</version>
-				<scope>provided</scope>
-			</dependency>
 
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>calculation-api</artifactId>
-				<version>${calculationVersion}</version>
-				<scope>provided</scope>
-			</dependency>
 
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
 				<artifactId>emrapi-api</artifactId>
 				<version>${emrapiVersion}</version>
 				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.openmrs</groupId>
-				<artifactId>event-api</artifactId>
-				<version>${eventVersion}</version>
-				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
@@ -264,73 +246,13 @@
 
 			<dependency>
 				<groupId>org.openmrs.module</groupId>
-				<artifactId>metadatadeploy-api</artifactId>
-				<version>${metadatadeployVersion}</version>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
 				<artifactId>metadatamapping-api</artifactId>
 				<version>${metadatamappingVersion}</version>
 				<scope>provided</scope>
 			</dependency>
 
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>metadatasharing-api</artifactId>
-				<version>${metadatasharingVersion}</version>
-				<scope>provided</scope>
-			</dependency>
 
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>patientflags-api</artifactId>
-				<version>${patientFlagsVersion}</version>
-				<scope>provided</scope>
-			</dependency>
 
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>patientflags-api-metadata</artifactId>
-				<version>${patientFlagsVersion}</version>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>reporting-api</artifactId>
-				<version>${reportingVersion}</version>
-				<scope>test</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>reporting-api-1.9</artifactId>
-				<version>${reportingVersion}</version>
-				<scope>test</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>reportingcompatibility-api</artifactId>
-				<version>${reportingCompatibilityVersion}</version>
-				<scope>test</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>serialization.xstream-api</artifactId>
-				<version>${serializationxstreamVersion}</version>
-				<scope>provided</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>serialization.xstream-api-2.0</artifactId>
-				<version>${serializationxstreamVersion}</version>
-				<scope>test</scope>
-			</dependency>
 
 			<dependency>
 				<groupId>org.openmrs.contrib</groupId>
@@ -438,11 +360,6 @@
 				<artifactId>webservices.rest-omod-2.7</artifactId>
 				<version>${webservices.restModuleVersion}</version> <!-- Match the version you use -->
 				<scope>provided</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.openmrs.module</groupId>
-				<artifactId>cohort</artifactId>
-				<version>${cohortModuleVersion}</version>
 			</dependency>
 
 			<dependency>
