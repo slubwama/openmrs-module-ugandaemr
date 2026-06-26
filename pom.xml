@@ -106,7 +106,7 @@
 		<ugandaemrReportsVersion>2.1.6</ugandaemrReportsVersion>
 
 		<!-- content packs -->
-		<ugandaemr-content.version>1.0.11-SNAPSHOT</ugandaemr-content.version>
+		<ugandaemr-content.version>1.0.11</ugandaemr-content.version>
 	</properties>
 
 	<dependencyManagement>
