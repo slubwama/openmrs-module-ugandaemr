@@ -1848,6 +1848,7 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
         Map<String, String> defaultPaths = new HashMap<>();
         defaultPaths.put("jsonforms", "jsonforms/");
         defaultPaths.put("metadata", "metadata/");
+        defaultPaths.put("ampathforms", "configuration/ampathforms/");
 
         String relativePath;
 
@@ -1874,6 +1875,9 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
                     break;
                 case "modules":
                     relativePath = Context.getAdministrationService().getGlobalProperty("ugandaemr.modules");
+                    break;
+                case "ampathforms":
+                    relativePath = Context.getAdministrationService().getGlobalProperty("ugandaemr.configuration.ampathFormsPath");
                     break;
                 default:
                     relativePath = null;
@@ -1999,13 +2003,26 @@ public class UgandaEMRServiceImpl extends BaseOpenmrsService implements UgandaEM
     }
 
     public List<Initializer> initialiseForms() {
-        String jsonFormsPath = getMetadataPath("jsonforms") + "/";
+        String ampathFormsPath = getMetadataPath("ampathforms");
 
-        List<Initializer> l = new ArrayList<Initializer>();
-        l.add(new AppConfigurationInitializer());
+        List<Initializer> initializers = new ArrayList<Initializer>();
+        initializers.add(new AppConfigurationInitializer());
 
-        l.add(new JsonFormsInitializer(UgandaEMRConstants.MODULE_ID, jsonFormsPath));
-        return l;
+        // Iterate through all subdirectories in ampathforms
+        File ampathFormsDir = new File(ampathFormsPath);
+        if (ampathFormsDir.exists() && ampathFormsDir.isDirectory()) {
+            File[] subdirectories = ampathFormsDir.listFiles(File::isDirectory);
+            if (subdirectories != null) {
+                for (File subDir : subdirectories) {
+                    log.info("Adding forms initializer for subdirectory: " + subDir.getName());
+                    initializers.add(new JsonFormsInitializer(UgandaEMRConstants.MODULE_ID, subDir.getAbsolutePath() + "/"));
+                }
+            }
+        } else {
+            log.error("Ampath forms directory not found or is not a directory: " + ampathFormsPath);
+        }
+
+        return initializers;
     }
 
 
